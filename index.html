@@ -252,6 +252,10 @@
   .shloka .mean{font-size:13px;color:var(--ink);margin-top:10px;border-top:1px solid var(--line);padding-top:10px}
   .shloka .mean b{color:var(--ink)}
   .shloka .trad{font-size:11px;color:var(--muted);margin-top:8px}
+  /* textual-source citation — where the Sanskrit/Tamil and its translation came from */
+  .src-cite{font-size:11px;color:var(--muted);margin-top:6px}
+  .src-cite a{color:var(--peacock);text-decoration:none;font-weight:600}
+  .sh-card .src-cite{margin-top:8px}
   .shloka .browse{display:inline-block;margin-top:12px;font-size:12.5px;font-weight:700;color:var(--saffron);cursor:pointer}
   .shloka .browse:active{opacity:.6}
   /* the YouTube link — an <a>, so it needs its own text-decoration reset */
@@ -482,6 +486,10 @@
   .node-card.wide{grid-column:1/-1;display:flex;align-items:center;gap:12px}
   .node-card.wide .ic{margin:0;font-size:24px;flex:none}
   .node-card.disabled{opacity:.55;cursor:default}
+  .node-card.disabled h3{display:inline-flex;align-items:center;gap:6px}
+  .soon{display:inline-block;font-size:9px;font-weight:700;letter-spacing:.03em;
+    text-transform:uppercase;color:var(--muted);background:transparent;
+    border:1px solid var(--line);border-radius:20px;padding:1px 7px;flex:none}
 
   /* practice-card header colours (breathing & movement library) */
   .recipe .top.p1{background:linear-gradient(160deg,#e2f0da,#b7dba3)}
@@ -495,6 +503,90 @@
     color:var(--muted);text-transform:none}
   .eyebrow{font-size:10.5px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;
     color:var(--leaf,#4c7c3a);margin-bottom:6px}
+  /* ---------- "Why this exists" screen ---------- */
+  .why-lead{padding:2px 16px 10px}
+  .why-lead h1{font-size:23px;margin:2px 0 6px;font-weight:800;letter-spacing:-.2px}
+  .why-lead p{margin:0;font-size:14px;color:var(--muted);line-height:1.55}
+  .acc{margin:0 16px 10px;border:1px solid var(--line);border-radius:14px;
+    background:var(--panel);overflow:hidden;box-shadow:var(--shadow)}
+  .acc>summary{list-style:none;cursor:pointer;padding:13px 15px;font-weight:700;
+    font-size:14px;display:flex;align-items:center;gap:9px}
+  .acc>summary::-webkit-details-marker{display:none}
+  .acc>summary::after{content:'＋';margin-left:auto;color:var(--saffron);font-weight:700;
+    font-size:15px;flex:none}
+  .acc[open]>summary::after{content:'－'}
+  .acc[open]>summary{border-bottom:1px solid var(--line)}
+  .acc .accbody{padding:13px 15px 15px;font-size:13.5px;line-height:1.62;color:var(--ink)}
+  .acc .accbody p{margin:0 0 11px}
+  .acc .accbody p:last-child{margin-bottom:0}
+  .acc .accbody em{color:var(--muted)}
+
+  /* the 1%-a-day compounding figure */
+  .curve{margin:2px 0 12px;background:var(--bg);border:1px solid var(--line);
+    border-radius:12px;padding:12px 12px 8px}
+  .curve svg{display:block;width:100%;height:auto}
+  .curve .cap2{font-size:11px;color:var(--muted);text-align:center;margin-top:6px}
+
+  /* ---------- feedback, waitlist, share ---------- */
+  .fab{position:absolute;right:13px;bottom:15px;z-index:20;width:46px;height:46px;
+    border-radius:50%;border:1px solid var(--line);background:var(--panel);
+    box-shadow:0 3px 14px rgba(40,30,15,.16);font-size:19px;cursor:pointer;
+    display:flex;align-items:center;justify-content:center;padding:0}
+  .fab:active{transform:scale(.94)}
+
+  /* the sheet used for the survey needs to scroll — the narration sheet does not */
+  .sheet.tall{max-height:86%;display:flex;flex-direction:column}
+  .sheet.tall .sbody{overflow-y:auto;flex:1;margin:0 -18px;padding:0 18px}
+  .sheet.tall .sbody::-webkit-scrollbar{width:0}
+
+  .q{margin:0 0 17px}
+  .q>label{display:block;font-size:13.5px;font-weight:700;margin:0 0 3px}
+  .q .hint{font-size:11.5px;color:var(--muted);margin:0 0 7px;font-weight:400}
+  .opts{display:flex;flex-wrap:wrap;gap:7px}
+  .opt{font-size:12.5px;padding:7px 12px;border-radius:999px;border:1px solid var(--line);
+    background:transparent;color:var(--muted);cursor:pointer;text-align:left}
+  .opt:active{transform:scale(.96)}
+  .opt.on{background:var(--saffron);color:#fff;border-color:var(--saffron)}
+  .fld{width:100%;font:inherit;font-size:13.5px;padding:10px 12px;border-radius:11px;
+    border:1px solid var(--line);background:var(--bg);color:var(--ink);resize:vertical}
+  .fld:focus{outline:2px solid var(--saffron);outline-offset:-1px}
+  textarea.fld{min-height:62px}
+  .btn-primary{width:100%;font:inherit;font-size:14px;font-weight:700;padding:13px;
+    border-radius:13px;border:0;background:var(--saffron);color:#fff;cursor:pointer}
+  .btn-primary:active{transform:scale(.985)}
+  .btn-primary[disabled]{opacity:.5;cursor:default}
+  .btn-ghost{width:100%;font:inherit;font-size:13px;font-weight:600;padding:11px;
+    border-radius:13px;border:1px solid var(--line);background:transparent;
+    color:var(--muted);cursor:pointer;margin-top:8px}
+  .privacy{font-size:11px;color:var(--muted);line-height:1.5;margin:10px 0 0}
+
+  /* email capture + share, on the welcome screen */
+  .capture{margin:0 16px 12px;padding:15px;border-radius:16px;background:var(--saffron-soft);
+    border:1px solid var(--line)}
+  .capture h3{margin:0 0 4px;font-size:14.5px;font-weight:800}
+  .capture p{margin:0 0 10px;font-size:12.5px;color:var(--muted);line-height:1.5}
+  .capture .row{display:flex;gap:7px}
+  .capture .row .fld{flex:1;background:var(--panel)}
+  .capture .row button{flex:none;padding:0 15px;font:inherit;font-size:13px;font-weight:700;
+    border:0;border-radius:11px;background:var(--saffron);color:#fff;cursor:pointer}
+  .share-row{display:flex;gap:8px;margin:0 16px 14px}
+  .share-row button{flex:1;font:inherit;font-size:12.5px;font-weight:600;padding:11px 8px;
+    border-radius:12px;border:1px solid var(--line);background:var(--panel);
+    color:var(--ink);cursor:pointer;box-shadow:var(--shadow)}
+  .share-row button:active{transform:scale(.97)}
+
+  /* honest framing band, first thing on the welcome screen */
+  .arrival{margin:12px 16px 2px;padding:11px 13px;border-radius:13px;
+    background:var(--saffron-soft);border:1px solid var(--line);
+    font-size:12px;line-height:1.55;color:var(--muted)}
+  .arrival b{color:var(--ink);font-weight:700}
+
+  /* toast */
+  .toast{position:absolute;left:50%;bottom:74px;transform:translate(-50%,14px);
+    z-index:40;background:var(--ink);color:var(--bg);font-size:12.5px;font-weight:600;
+    padding:10px 16px;border-radius:999px;opacity:0;pointer-events:none;
+    transition:opacity .22s,transform .22s;max-width:88%;text-align:center}
+  .toast.on{opacity:1;transform:translate(-50%,0)}
 </style>
 </head>
 <body data-mode="kids">
@@ -606,8 +698,9 @@
             <div class="say">Say it slowly, three times: <i>Om — Na-mo — Bha-ga-va-te — Va-su-de-vaya.</i></div>
             <div class="mean"><b>What it means:</b> "I bow to Krishna, who lives in everyone and everything." A little hello to the birthday boy.</div>
             <div class="trad">A widely-used Krishna mantra (the 12-syllable dwadashakshari).</div>
+            <div class="src-cite">Text: <a href="https://shlokam.org/shloka/om-namo-bhagavate-vasudevaya.htm" target="_blank" rel="noopener">shlokam.org — Sanskrit lyrics with English meaning</a></div>
             <div class="browse" onclick="show('shlokas')">🕉️ See all the shlokas →</div>
-            <a class="browse yt" href="https://www.youtube.com/results?search_query=Om%20Namo%20Bhagavate%20Vasudevaya%20chanting%20Carnatic%20priest%20pronunciation" target="_blank" rel="noopener">🎥 Search recordings →</a>
+            <a class="browse yt" href="https://www.youtube.com/watch?v=felGgBmnx-I" target="_blank" rel="noopener">🎥 A recording (unconfirmed) →</a>
           </div>
 
           <div class="shloka parent-only">
@@ -978,17 +1071,17 @@
         <div class="grp">
           <h2>📍 Places</h2>
           <div class="grid2">
-            <div class="node-card disabled"><div class="ic">🐄</div><h3>Gokul</h3><p>the village she raised him in</p></div>
-            <div class="node-card disabled"><div class="ic">🌳</div><h3>Vrindavan</h3><p>where he grew up</p></div>
+            <div class="node-card disabled"><div class="ic">🐄</div><h3>Gokul<span class="soon">soon</span></h3><p>the village she raised him in</p></div>
+            <div class="node-card disabled"><div class="ic">🌳</div><h3>Vrindavan<span class="soon">soon</span></h3><p>where he grew up</p></div>
           </div>
         </div>
         <div class="grp">
           <h2>🍲 Recipe</h2>
-          <div class="grid2"><div class="node-card wide disabled"><div class="ic">🧈</div><div><h3>Fresh Butter &amp; Aval</h3><p>what she churned every morning</p></div></div></div>
+          <div class="grid2"><div class="node-card wide disabled"><div class="ic">🧈</div><div><h3>Fresh Butter &amp; Aval<span class="soon">soon</span></h3><p>what she churned every morning</p></div></div></div>
         </div>
         <div class="grp">
           <h2>💭 Concept</h2>
-          <div class="grid2"><div class="node-card wide disabled"><div class="ic">💗</div><div><h3>Vatsalya bhakti</h3><p>devotion expressed as parental love</p></div></div></div>
+          <div class="grid2"><div class="node-card wide disabled"><div class="ic">💗</div><div><h3>Vatsalya bhakti<span class="soon">soon</span></h3><p>devotion expressed as parental love</p></div></div></div>
         </div>
 
         
@@ -997,6 +1090,12 @@
 
       
       <section class="screen" id="screen-welcome" hidden>
+        
+        <div class="arrival">
+          <b>An early draft, not a finished app.</b> Everything here is real content you can
+          read, but it hasn't been checked yet by someone who knows the tradition, and some
+          pages are still marked <i>soon</i>. I'd rather show you it early than polished.
+        </div>
         <div class="wel-hero">
           <div class="lamp">🪔</div>
           <h1>Daily Practice</h1>
@@ -1043,7 +1142,166 @@
 
           <button class="wel-go" onclick="goToday()">Start today →</button>
         </div>
+
+        
+        <div class="capture" style="margin-top:16px">
+          <h3>Why this exists</h3>
+          <p>I grew up on stories — from my grandmother, from my parents, from whatever I
+            could get hold of and read. Children growing up here are surrounded by different
+            things. I didn't want the thread to go quiet just because we moved.</p>
+          <p style="margin-bottom:0">So: five minutes a day. A story, a verse, three breaths.
+            Not a class, nothing to keep up with, nothing to fall behind on.</p>
+          <div class="browse" style="margin-top:10px" onclick="show('why')">Why it's shaped this way →</div>
+        </div>
+
+        <div class="share-row">
+          <button onclick="shareApp()">📤 Send to someone</button>
+          <button onclick="openFeedback()">💬 Tell me what you think</button>
+        </div>
+
         <div style="height:20px"></div>
+      </section>
+
+      
+      <section class="screen" id="screen-why" hidden>
+        <div class="appbar">
+          <button class="back" onclick="show('welcome')">‹ Home</button>
+          <span class="cal">Why this exists</span>
+        </div>
+
+        <div class="why-lead">
+          <h1>Why this exists</h1>
+          <p>The honest version, in as much detail as you want it.</p>
+        </div>
+
+        <details class="acc" open>
+          <summary>⏳ Five minutes, every day</summary>
+          <div class="accbody">
+            <p>Five minutes a day beats an hour once a month. Not because five minutes is a
+              lot — it obviously isn't — but because the every-day part is what compounds.</p>
+
+            <div class="curve">
+              <svg viewBox="0 0 344 170" role="img"
+                   aria-label="Two curves over one year. Improving one percent a day rises slowly, then steeply, to about thirty-seven times. Slipping one percent a day falls close to zero.">
+                
+                <line x1="34" y1="136.9" x2="286" y2="136.9"
+                      stroke="var(--line)" stroke-width="1" stroke-dasharray="3 3"/>
+                
+                <line x1="34" y1="14" x2="34" y2="146" stroke="var(--line)" stroke-width="1"/>
+                <line x1="34" y1="146" x2="286" y2="146" stroke="var(--line)" stroke-width="1"/>
+                
+                <path d="M34,136.9 L54.7,135.8 L75.4,134.3 L96.1,132.3 L116.8,129.6
+                         L137.6,126.0 L158.3,121.1 L179,114.6 L199.7,105.7 L220.4,93.8
+                         L241.1,77.7 L261.8,56.0 L286,21.0"
+                      fill="none" stroke="var(--peacock)" stroke-width="2.4"
+                      stroke-linecap="round" stroke-linejoin="round"/>
+                
+                <path d="M34,136.9 L75.4,138.3 L116.8,139.1 L158.3,139.5 L199.7,139.7
+                         L241.1,139.9 L286,139.9"
+                      fill="none" stroke="var(--rose)" stroke-width="2.4"
+                      stroke-linecap="round" stroke-linejoin="round"/>
+                <circle cx="286" cy="21.0" r="3.2" fill="var(--peacock)"/>
+                <circle cx="286" cy="139.9" r="3.2" fill="var(--rose)"/>
+                
+                <text x="293" y="24.5" font-size="10" font-weight="700"
+                      fill="var(--peacock)">37×</text>
+                <text x="293" y="143.4" font-size="10" font-weight="700"
+                      fill="var(--rose)">0.03×</text>
+                <text x="34" y="159" font-size="9.5" fill="var(--muted)">Day 1</text>
+                <text x="286" y="159" text-anchor="end" font-size="9.5"
+                      fill="var(--muted)">One year</text>
+                <text x="30" y="140" text-anchor="end" font-size="9.5"
+                      fill="var(--muted)">1×</text>
+              </svg>
+              <div class="cap2">1% better every day · 1% worse every day</div>
+            </div>
+
+            <p>That illustration comes from James Clear's <i>Atomic Habits</i>: improve by 1% a
+              day and you end the year roughly 37 times better off; slip by 1% a day and you
+              end it near zero.</p>
+            <p>It's a metaphor rather than a measurement — nobody can actually quantify being
+              1% better at anything. But the <i>shape</i> of the curve is the honest part, and
+              it's the whole reason this asks for five minutes instead of an hour.</p>
+            <p>The flat, boring beginning is the part most things don't survive. So there's
+              nothing here to keep up with, and no streak to lose.</p>
+          </div>
+        </details>
+
+        <details class="acc">
+          <summary>🌬️ Why breathing</summary>
+          <div class="accbody">
+            <p>Three breaths, every day, at the end.</p>
+            <p>The mechanism is real and well described: breathing out slowly is what slows
+              the heart. A long exhale shifts you toward the calming side of the nervous
+              system, and you can measure it. That part isn't in dispute.</p>
+            <p>What I won't claim is that three breaths a day will make your child calmer. The
+              research on breathing programmes for children is genuinely mixed, and some large
+              trials have found no effect at all.</p>
+            <p>What it reliably does is smaller, and I think still worth it: it gives a child
+              <b>a named thing they can do</b> when they're upset — something they already
+              know, that they don't have to be taught in the moment. That's the honest version
+              of the promise.</p>
+          </div>
+        </details>
+
+        <details class="acc">
+          <summary>📖 Why stories, verses and food</summary>
+          <div class="accbody">
+            <p>These are the three things that actually carried the tradition into my life, so
+              they're the three things here.</p>
+            <p><b>Stories</b>, because that's how any of it reached me — told, not taught.</p>
+            <p><b>Verses</b>, because a shloka is a small thing to learn and it stays with you
+              for decades. You don't need to understand all of it the first time. Nobody
+              does.</p>
+            <p><b>Food</b>, because it's the part most families still do. Cooking something
+              together on the day is not a lesser version of observing it. Often it
+              <i>is</i> the observance.</p>
+          </div>
+        </details>
+
+        <details class="acc">
+          <summary>🌏 Growing up away from where this came from</summary>
+          <div class="accbody">
+            <p>This is the part I care most about.</p>
+            <p>A child who knows where they come from has one less thing to work out later.
+              Not to wall themselves off — the opposite. It's easier to be open to everything
+              around you when you're not quietly unsure about your own background.</p>
+            <p>Roots and reach aren't in tension; the first makes the second cheaper. I'd
+              rather children take the best of where they live <i>and</i> know what's behind
+              them, than have to pick.</p>
+          </div>
+        </details>
+
+        <details class="acc">
+          <summary>🙏 What this is, and isn't</summary>
+          <div class="accbody">
+            <p>This is an invitation to be curious about a tradition, not an instruction to
+              believe anything.</p>
+            <p>You do not have to be observant, or Hindu, or sure about any of it. Anyone is
+              welcome here. There's no requirement, no ranking, and nothing you have to have
+              been born into.</p>
+            <p>It's meant to be a useful, honest resource — that's all.</p>
+          </div>
+        </details>
+
+        <details class="acc">
+          <summary>🤖 Who wrote this, and who checks it</summary>
+          <div class="accbody">
+            <p>I'm a student of this, not a teacher of it. I practise, I read, and I get
+              things wrong.</p>
+            <p>Yes — I drafted this with AI. Nothing reaches a family until someone who knows
+              the tradition has checked it, and that pass hasn't happened yet. That's why
+              you're seeing it labelled as a draft rather than presented as finished.</p>
+            <p>The festival dates are the one thing I've started checking against a published
+              panchangam, because a wrong date is the fastest way to lose your trust. Several
+              were wrong. They're corrected now.</p>
+            <p><b>If something here looks wrong to you, please tell me.</b> That's partly why
+              you're seeing it this early.</p>
+            <div class="browse" style="margin-top:4px" onclick="openFeedback()">💬 Tell me what you think →</div>
+          </div>
+        </details>
+
+        <div style="height:24px"></div>
       </section>
 
       
@@ -1060,7 +1318,7 @@
           <h1>Skanda Sashti</h1>
           <div class="sub">Soorasamharam · the day Murugan ends a long fear</div>
           <div class="when">
-            <span>📅 Sat, Nov 14, 2026</span><span class="dot"></span><span>🦚 six days of build-up</span>
+            <span>📅 Sun, Nov 15, 2026</span><span class="dot"></span><span>🦚 six days of build-up</span>
             <span class="dot"></span><span id="ss-rel"></span>
           </div>
         </div>
@@ -1333,7 +1591,7 @@
             <div class="node-card wide" onclick="show('node')"><div class="ic">⛰️</div>
               <div><h3>Krishna Lifts the Mountain</h3><p>holding a hill up for seven days</p></div></div>
             <div class="node-card wide disabled"><div class="ic">🏹</div>
-              <div><h3>Arjuna's doubt</h3><p>not built yet — the Gita's opening</p></div></div>
+              <div><h3>Arjuna's doubt<span class="soon">soon</span></h3><p>the Gita's opening</p></div></div>
           </div>
         </div>
 
@@ -1351,11 +1609,11 @@
           <h2>📅 Days it turns up</h2>
           <div class="grid2">
             <div class="node-card wide" onclick="show('sashti')"><div class="ic">🔱</div>
-              <div><h3>Skanda Sashti</h3><p>Nov 14, 2026</p></div></div>
+              <div><h3>Skanda Sashti</h3><p>Nov 15, 2026</p></div></div>
             <div class="node-card wide disabled"><div class="ic">🗡️</div>
-              <div><h3>Navaratri</h3><p>Oct 11 — the same shape, with the Goddess</p></div></div>
+              <div><h3>Navaratri<span class="soon">soon</span></h3><p>Oct 11 — the same shape, with the Goddess</p></div></div>
             <div class="node-card wide disabled"><div class="ic">🪔</div>
-              <div><h3>Deepavali</h3><p>Nov 8 — and again, with Narakasura</p></div></div>
+              <div><h3>Deepavali<span class="soon">soon</span></h3><p>Nov 8 — and again, with Narakasura</p></div></div>
           </div>
         </div>
 
@@ -1397,6 +1655,50 @@
       <p id="info-msg"></p>
       <button class="close" onclick="closeInfo()">Got it</button>
     </div>
+
+    
+    <div class="sheet-bg" id="fb-bg" onclick="closeFeedback()"></div>
+    <div class="sheet tall" id="fb-sheet">
+      <div class="grab"></div>
+      <h3>💬 Tell me what you think</h3>
+      <div class="sbody" id="fb-body">
+        <div class="q">
+          <label>How do you know me?</label>
+          <div class="hint">So I know whether I'm hearing from friends or from strangers.</div>
+          <div class="opts" id="fb-know">
+            <button class="opt" onclick="pickOne(this)">Family</button>
+            <button class="opt" onclick="pickOne(this)">Friend</button>
+            <button class="opt" onclick="pickOne(this)">Friend of a friend</button>
+            <button class="opt" onclick="pickOne(this)">Work</button>
+            <button class="opt" onclick="pickOne(this)">Temple or community</button>
+            <button class="opt" onclick="pickOne(this)">We've never met</button>
+          </div>
+        </div>
+        <div class="q">
+          <label>What did you make of it?</label>
+          <div class="hint">Anything at all — what worked, what didn't, what confused you.</div>
+          <textarea class="fld" id="fb-text" placeholder="Type here…"></textarea>
+        </div>
+        <div class="q">
+          <label>Did anything look wrong?</label>
+          <div class="hint">A date, a name, a story told differently from how you know it. Optional.</div>
+          <textarea class="fld" id="fb-wrong" placeholder="Optional…"></textarea>
+        </div>
+        <div class="q">
+          <label>Email <span style="font-weight:400;color:var(--muted)">(optional)</span></label>
+          <div class="hint">Only if you're happy for me to reply.</div>
+          <input class="fld" id="fb-email" type="email" inputmode="email"
+                 autocomplete="email" placeholder="you@example.com" />
+        </div>
+        <button class="btn-primary" id="fb-send" onclick="submitFeedback()">Send</button>
+        <button class="btn-ghost" onclick="closeFeedback()">Not now</button>
+        <p class="privacy">Goes to me and nobody else. I won't publish your name or pass on
+          your email. Please don't include anyone else's personal details.</p>
+      </div>
+    </div>
+
+    <div class="toast" id="toast"></div>
+    <button class="fab" id="fab" onclick="openFeedback()" aria-label="Tell me what you think">💬</button>
 
   </div>
   </div>
@@ -4436,7 +4738,7 @@ const FESTIVALS = [
     adult:'Nine nights, conventionally divided three-and-three-and-three between <b>Durga</b>, <b>Lakshmi</b> and <b>Saraswati</b> — power, abundance, knowledge.<br><br>The Tamil expression is the <b>Golu</b> (Kolu) rather than the Bengali pandal or the Gujarati garba, and it is worth noticing what the arrangement is <i>saying</i>: the divine at the top, and at the bottom, deliberately, a market and a street. The whole world is on the same staircase.<br><br>The <b>Devi Mahatmyam</b> is the textual centre, and the Mahishasura story it tells is the same architecture as Narakasura at Deepavali and Soorapadman at Skanda Sashti. Reading the three in one year is one of the more useful things this calendar can do.',
     story:'durga', shloka:'yadevi', practice:'lion', together:['sundal','golu'] },
 
-  { mon:'OCT', day:'18', yr:'2026', name:'Saraswati Puja · Ayudha Puja', emoji:'📚', hue:'h-water',
+  { mon:'OCT', day:'20', yr:'2026', name:'Saraswati Puja · Ayudha Puja', emoji:'📚', hue:'h-water',
     hook:'Books, instruments and tools are set down and honoured.',
     sub:'The ninth night — everything you work with gets a rest',
     note:'📚 put your tools down',
@@ -4445,7 +4747,7 @@ const FESTIVALS = [
     adult:'<b>Saraswati Puja</b> and <b>Ayudha Puja</b> fall together on the ninth night. <i>Ayudha</i> means weapon or implement: historically arms were laid down and honoured, and the practice generalised to whatever a household actually works with — tools, instruments, ledgers, vehicles.<br><br>The claim underneath it is worth drawing out for a child: your competence is not entirely your own. It arrives through instruments, teachers and materials, and once a year you set them down and look at them.<br><br>Books being unreadable for a day is also the origin of the delightful loophole every Tamil student knows — you cannot possibly study today.',
     story:'durga', shloka:'saraswati', practice:'three', together:['sundal','golu'] },
 
-  { mon:'OCT', day:'19', yr:'2026', name:'Vijayadashami', emoji:'✏️', hue:'h-gold',
+  { mon:'OCT', day:'21', yr:'2026', name:'Vijayadashami', emoji:'✏️', hue:'h-gold',
     hook:'The tenth day — when children start something new.',
     sub:'Vidyarambham · the day you begin',
     note:'✏️ the good day to start',
@@ -4464,11 +4766,11 @@ const FESTIVALS = [
     adult:'The Tamil Deepavali and the North Indian Diwali share a name and very little else. Here it is <b>Naraka Chaturthi</b>: Krishna and Satyabhama defeating Narakasura, marked before sunrise with the oil bath (<i>ganga snanam</i>), rather than Rama\'s return marked in the evening.<br><br>The detail that carries the day is Narakasura\'s dying request — that the day of his death be one of bathing, new clothes, lamps and sweets rather than mourning. Every Tamil family with oil in their hair at 5am is keeping a promise made to somebody who had done everything wrong.<br><br>On fireworks: they are not ancient, they are an environmental and animal-welfare problem, and they are also the thing children love most. Decide your family\'s line rather than improvising it on the night.',
     story:'narakasura', shloka:'asatoma', practice:'flame', together:['oilbath','pancha'] },
 
-  { mon:'NOV', day:'14', yr:'2026', name:'Skanda Sashti', emoji:'🔱', hook:'Murugan\'s six days against fear itself.',
+  { mon:'NOV', day:'15', yr:'2026', name:'Skanda Sashti', emoji:'🔱',hook:'Murugan\'s six days against fear itself.',
     tags:['festival','murugan','sect-saiva','srilanka'], action:'sashti' },
 
   /* --- Karthigai (Nov-Dec) --- */
-  { mon:'NOV', day:'28', yr:'2026', name:'Karthigai Deepam', emoji:'🕯️', hue:'h-gold',
+  { mon:'NOV', day:'24', yr:'2026', name:'Karthigai Deepam', emoji:'🕯️', hue:'h-gold',
     hook:'The oldest festival of lights in the Tamil year — a row of lamps at every door.',
     sub:'Not one lamp. A row of them.',
     note:'🕯️ the Krittika star in Karthigai',
@@ -4496,7 +4798,7 @@ const FESTIVALS = [
     adult:'Margazhi is the month the Tamil year takes most seriously: cold, dark mornings, and a daily practice rather than a single festival. Andal\'s <b>Thiruppavai</b> runs one verse a day for thirty days, and in Sri Vaishnava households it is the most reliably kept observance of the year <i>because</i> it is daily.<br><br>This matters for what we are building. The Thiruppavai is a thirty-day streak that has been running for roughly twelve hundred years, in company, first thing in the morning, at low intensity. The format we are asking families to adopt is not our invention — it is the oldest one here.<br><br>It also ends perfectly: the last verse, then Pongal the next morning.',
     story:'ganeshahead', shloka:'thiruppavai27', practice:'three', together:['kolam','margazhidawn'] },
 
-  { mon:'DEC', day:'22', yr:'2026', name:'Arudra Darshanam', emoji:'🔥', hue:'h-clay',
+  { mon:'DEC', day:'24', yr:'2026', name:'Arudra Darshanam', emoji:'🔥', hue:'h-clay',
     hook:'The night the dancing Shiva is carried out to be seen.',
     sub:'Darshanam — the seeing',
     note:'🔥 the longest nights of the year',
@@ -4562,56 +4864,56 @@ const SHLOKAS = [
   { id:'sahanau', title:'Om Saha Nau Avatu — the learning-together shloka', level:'simple', lang:'Sanskrit',
     tags:['shloka','sanskrit','simple','deeper','universal','study','sect-panhindu'],
     verse:['Om saha nau avatu, saha nau bhunaktu,','Saha viryam karavavahai,','Tejasvi nau adhitam astu.'],
-    youtube:{"url":"https://www.youtube.com/watch?v=Ba9G4A-AVlY","curated":true,"credit":"Sri Govind Prakash Ghanapatigal, Sri Satyanarayana Bhat & Sri K. Suresh"}, literal:'May [the divine] protect us both; may it nourish us both; may we work together with vigour; may what we study together be radiant.',
+    youtube:{"url":"https://www.youtube.com/watch?v=Ba9G4A-AVlY","curated":true,"credit":"Sri Govind Prakash Ghanapatigal, Sri Satyanarayana Bhat & Sri K. Suresh"}, source:{url:'https://greenmesg.org/stotras/vedas/om_sahana_vavatu.php', name:'greenmesg.org — Sanskrit text with English translation'}, literal:'May [the divine] protect us both; may it nourish us both; may we work together with vigour; may what we study together be radiant.',
     intended:'Said by teacher and student before learning — but it fits a parent and child on a sofa exactly as well. Nobody here is the expert; you are both being taught by the same thing. That is the shloka this whole practice is built on.',
     links:'Everyday days · the serial stories',
     verify:'wording, transliteration, the literal translation, the interpretive meaning, and source attribution (Taittiriya / Krishna Yajurveda tradition)' },
   { id:'vasudeva12', title:'Om Namo Bhagavate Vasudevaya', level:'simple', lang:'Sanskrit',
     tags:['shloka','sanskrit','simple','krishna','wake','sect-vaishnava'],
     verse:['Om Namo Bhagavate Vasudevaya'],
-    youtube:{"url":"https://www.youtube.com/results?search_query=Om%20Namo%20Bhagavate%20Vasudevaya%20chanting%20Carnatic%20priest%20pronunciation","curated":false}, literal:'Om — then: salutation (namo) to the Lord (bhagavate), to Vasudeva.',
+    youtube:{"url":"https://www.youtube.com/watch?v=felGgBmnx-I","curated":false,"note":"Generic meditation-music channel; no reciter credentials given."}, source:{url:'https://shlokam.org/shloka/om-namo-bhagavate-vasudevaya.htm', name:'shlokam.org — Sanskrit lyrics with English meaning'}, literal:'Om — then: salutation (namo) to the Lord (bhagavate), to Vasudeva.',
     intended:'A complete taking-refuge in Krishna, the divine that dwells within all beings. "Vasudeva" is heard both as "son of Vasudeva" and as "the all-pervading one."',
     links:'Janmashtami · The Midnight Escape',
     verify:'transliteration, pronunciation, the literal wording, and the intended meaning (interpretive)' },
   { id:'jagadguru', title:'Vasudeva-sutam devam — the birthday shloka', level:'deeper', lang:'Sanskrit',
     tags:['shloka','sanskrit','deeper','krishna','bigday','sect-vaishnava'],
     verse:['Vasudeva-sutam devam, Kamsa-Chanura-mardanam,','Devaki-paramanandam, Krishnam vande jagadgurum.'],
-    youtube:{"url":"https://www.youtube.com/results?search_query=Vasudeva%20sutam%20devam%20Krishna%20dhyana%20slokam%20chanting","curated":false}, literal:'The divine son of Vasudeva; crusher of Kamsa and Chanura; the supreme joy of Devaki — I bow (vande) to Krishna, teacher of the world (jagadguru).',
+    youtube:{"url":"https://www.youtube.com/watch?v=E18BcYdjjA0","curated":false,"note":"Titled to match this exact shloka (Krishnashtakam); channel/reciter not otherwise verified."}, source:{url:'https://jkyog.in/en/wisdom/blog/vasudeva-sutam-devam', name:'JKYog — Krishnashtakam by Adi Shankaracharya, Sanskrit + meaning'}, literal:'The divine son of Vasudeva; crusher of Kamsa and Chanura; the supreme joy of Devaki — I bow (vande) to Krishna, teacher of the world (jagadguru).',
     intended:'You seat Krishna in the heart by remembering him: the one who lifts tyranny, the delight of those who love him, the teacher of all. Each name is a small meditation, not a fact-list. It names the very people in the Midnight Escape story.',
     links:'Janmashtami · The Midnight Escape',
     verify:'wording, sandhi, transliteration, the literal translation, the interpretive meaning, and attribution' },
   { id:'vakratunda', title:'Vakratunda Mahakaya', level:'simple', lang:'Sanskrit',
     tags:['shloka','sanskrit','simple','ganesha','bigday','study','sect-panhindu'],
     verse:['Vakratunda Mahakaya, Suryakoti Samaprabha,','Nirvighnam kuru me deva, sarva-karyeshu sarvada.'],
-    youtube:{"url":"https://www.youtube.com/results?search_query=Vakratunda%20Mahakaya%20slokam%20chanting%20pandit%20pronunciation","curated":false}, literal:'O curved-trunked one, great of body, radiant as ten million suns: make [my work] free of obstacles, O god, in all deeds, always.',
+    youtube:{"url":"https://www.youtube.com/watch?v=poUKWeFxSi8","curated":false,"note":"Sung by Shankar Mahadevan, a well-known professional playback/classical singer — real public figure, but not a priest and not confirmed as the definitive pronunciation."}, source:{url:'https://greenmesg.org/stotras/ganesha/vakratunda_mahakaya.php', name:'greenmesg.org — Sanskrit text with English translation'}, literal:'O curved-trunked one, great of body, radiant as ten million suns: make [my work] free of obstacles, O god, in all deeds, always.',
     intended:'Please clear the way — inside and out — before I begin anything. The curved trunk and vast form are also read as symbols of the cosmic, Om-shaped divine.',
     links:'Ganesha Chaturthi',
     verify:'wording, transliteration, the literal wording, and the interpretive meaning' },
   { id:'asatoma', title:'Asato ma sad gamaya', level:'deeper', lang:'Sanskrit',
     tags:['shloka','sanskrit','deeper','universal','bedtime','sect-panhindu'],
     verse:['Asato ma sad gamaya,','Tamaso ma jyotir gamaya,','Mrityor ma amritam gamaya.'],
-    youtube:{"url":"https://www.youtube.com/results?search_query=Asato%20ma%20sad%20gamaya%20chanting%20Upanishad%20pandit","curated":false}, literal:'From the unreal (asat) lead me to the real (sat); from darkness (tamas) to light (jyotis); from death (mrityu) to the deathless (amrita).',
+    youtube:{"url":"https://www.youtube.com/watch?v=ah8A07TuMTM","curated":false,"note":"Lyrics-focused devotional channel; no reciter credentials given."}, source:{url:'https://vivekavani.com/bru1c3v28/', name:'VivekaVani — Brihadaranyaka Upanishad 1.3.28, Sanskrit + translation'}, literal:'From the unreal (asat) lead me to the real (sat); from darkness (tamas) to light (jyotis); from death (mrityu) to the deathless (amrita).',
     intended:'Carry me from illusion to truth, from unknowing to wisdom, from bondage and mortality to liberation. "From death to the deathless" means inner freedom — not avoiding dying.',
     links:'Deepavali · a universal shloka (Brihadaranyaka Upanishad)',
     verify:'transliteration, the literal translation, the interpretive meaning, and source attribution' },
   { id:'thiruppavai1', title:'Margazhi thingal — from the Thiruppavai of Andal', level:'deeper', lang:'Tamil',
     tags:['shloka','tamil','deeper','andal','wake','sect-vaishnava'],
     verse:['Margazhi thingal madi niraindha nannalaal…'],
-    youtube:{"url":"https://www.youtube.com/results?search_query=Thiruppavai%20pasuram%201%20Margazhi%20thingal%20recitation","curated":false}, literal:'In the month of Margazhi, on this good day of the full bright moon… (the opening words of the first shloka).',
+    youtube:{"url":"https://www.youtube.com/watch?v=3Cb1nflAVsw","curated":false,"note":"Described as a children's learn-along rendition; channel not otherwise verified."}, source:{url:'https://divyaprabandham.koyil.org/index.php/2014/12/thiruppavai-01-margazhi-thingal/', name:'koyil.org — Divya Prabandham, Thiruppavai 1 with commentary'}, literal:'In the month of Margazhi, on this good day of the full bright moon… (the opening words of the first shloka).',
     intended:'Andal sets a sacred, expectant mood and calls her friends to the dawn vow (nombu) to reach Krishna together — the season itself becomes the invitation. Deeper Sri Vaishnava readings hear the longing of the soul turning toward the divine.',
     links:'Aadi Pooram · Andal · the Thiruppavai',
     verify:'Tamil wording, transliteration, pronunciation, the literal translation, and especially the interpretive Sri Vaishnava meaning — verify carefully' },
   { id:'saravana', title:'Om Saravana Bhava — the Murugan shloka', level:'simple', lang:'Sanskrit',
     tags:['shloka','sanskrit','simple','murugan','wake','sect-saiva','srilanka'],
     verse:['Om Saravana Bhava'],
-    youtube:{"url":"https://www.youtube.com/results?search_query=Om%20Saravana%20Bhava%20chanting%20Murugan%20mantra%20pandit","curated":false}, literal:'Om — [salutation to] the one born in the Saravana reeds.',
+    youtube:{"url":"https://www.youtube.com/watch?v=Kjvl2C2zXbI","curated":false,"note":"Tamil-language video specifically framed as teaching correct pronunciation; reciter not otherwise verified."}, source:{url:'https://mahakatha.com/mantras/subramanya/om-saravanabhavaya-namah/', name:'Mahakatha — meaning and significance'}, literal:'Om — [salutation to] the one born in the Saravana reeds.',
     intended:'Murugan\'s birth-name mantra, said for courage. Tamil homes give it to children as their first chant, and it is heard constantly at Skanda Sashti and in Sri Lankan Tamil temples.',
     links:'Skanda Sashti · Murugan',
     verify:'transliteration, pronunciation, the literal wording, the interpretive meaning, and how it is traditionally taught to children' },
   { id:'thirumurai', title:'Namachivaya vaazhga — from the Thirumurai', level:'deeper', lang:'Tamil',
     tags:['shloka','tamil','deeper','shiva','study','sect-saiva','srilanka'],
     verse:['Namachivaaya vaazhga, nadhan thaal vaazhga.'],
-    youtube:{"url":"https://www.youtube.com/results?search_query=Sivapuranam%20Namachivaya%20vaazhga%20recitation","curated":false}, literal:'May "namah Shivaya" flourish; may the feet of the Lord flourish. (The opening of Manikkavachakar\'s Sivapuranam.)',
+    youtube:{"url":"https://www.youtube.com/watch?v=Rgt8SdRh08E","curated":false,"note":"Sung by O.S. Arun, an established Carnatic vocalist — real public figure, but not a priest specifically."}, source:{url:'https://www.bramagnanaporsabai.com/thiruvasagam-02-the-tamil-veda-where-the-soul-blooms/', name:'Brama Gnana Porsabai Peedam — Thiruvasagam commentary'}, literal:'May "namah Shivaya" flourish; may the feet of the Lord flourish. (The opening of Manikkavachakar\'s Sivapuranam.)',
     intended:'A Tamil Saiva opening that blesses the chant itself before blessing the god — the words are treated as a living thing. Learnt by heart in Tamil Saiva households the way the Thiruppavai is in Vaishnava ones.',
     links:'Shiva · the Thirumurai · Thiruvasagam',
     verify:'Tamil wording, transliteration, attribution to Manikkavachakar / Sivapuranam, the literal translation, and the interpretive framing — verify carefully' },
@@ -4620,56 +4922,56 @@ const SHLOKAS = [
   { id:'trishanti', title:'Om Shanti Shanti Shanti — the three peaces', level:'simple', lang:'Sanskrit',
     tags:['shloka','sanskrit','simple','deeper','universal','wake','bedtime','sect-panhindu'],
     verse:['Om Shanti Shanti Shanti'],
-    youtube:{"url":"https://www.youtube.com/results?search_query=Om%20Shanti%20Shanti%20Shanti%20mantra%20chanting%20pandit","curated":false}, literal:'Om. Peace, peace, peace.',
+    youtube:{"url":"https://www.youtube.com/watch?v=q8bnR0yKW_M","curated":false,"note":"Generic peace-mantra/background-music channel; weakest pick in this set — no reciter credentials, no textual framing."}, source:{url:'https://en.wikipedia.org/wiki/Shanti_Mantras', name:'Wikipedia — Shanti Mantras'}, literal:'Om. Peace, peace, peace.',
     intended:'Said three times, not for emphasis but for three different troubles: what comes from the world around us, what comes from other people, and what we make inside ourselves. This is the shloka the three daily breaths are counted against — say one on each out-breath and the practice and the words become one thing.',
     links:'every day · the three breaths · Breathing',
     verify:'the tri-shanti gloss (adhyatmika / adhibhautika / adhidaivika), whether it is right to teach children that mapping, and whether pairing it with the breathing is a legitimate framing or our own invention' },
   { id:'namahshivaya', title:'Om Namah Shivaya', level:'simple', lang:'Sanskrit',
     tags:['shloka','sanskrit','simple','shiva','bedtime','sect-saiva','srilanka'],
     verse:['Om Namah Shivaya'],
-    youtube:{"url":"https://www.youtube.com/results?search_query=Om%20Namah%20Shivaya%20panchakshara%20mantra%20chanting%20Vedic%20pandit","curated":false}, literal:'Om — salutation (namah) to Shiva.',
+    youtube:{"url":"https://www.youtube.com/watch?v=vmNjc_EzQx8","curated":false,"note":"Generic repetition-chant channel; no reciter credentials given."}, source:{url:'https://en.wikipedia.org/wiki/Om_Namah_Shivaya', name:'Wikipedia — Om Namah Shivaya'}, literal:'Om — salutation (namah) to Shiva.',
     intended:'The five-syllable mantra (panchakshara), counted as the heart of Saiva practice. Short enough for the smallest child and deep enough that people say it for a lifetime.',
     links:'Karthigai Deepam · Thiruvathirai · Arudra Darshanam · Shiva',
     verify:'transliteration, the panchakshara claim, pronunciation, and how it is traditionally given to children' },
   { id:'yadevi', title:'Ya Devi Sarva Bhuteshu', level:'deeper', lang:'Sanskrit',
     tags:['shloka','sanskrit','deeper','devi','bigday','sect-shakta'],
     verse:['Ya Devi sarva bhuteshu, shakti rupena samsthita,','Namastasyai namastasyai namastasyai namo namaha.'],
-    youtube:{"url":"https://www.youtube.com/results?search_query=Ya%20Devi%20Sarva%20Bhuteshu%20Devi%20Mahatmyam%20chanting%20pandit","curated":false}, literal:'She who abides in all beings in the form of power (shakti) — salutations to her, salutations to her, salutations to her, again and again.',
+    youtube:{"url":"https://www.youtube.com/watch?v=Ame8iLPNblY","curated":false,"note":"Lyrics-focused devotional channel; no reciter credentials given."}, source:{url:'https://www.artofliving.org/in-en/navratri/ya-devi-sarva-bhutessu-lyrics-meaning-and-significance', name:'Art of Living — lyrics, meaning and significance'}, literal:'She who abides in all beings in the form of power (shakti) — salutations to her, salutations to her, salutations to her, again and again.',
     intended:'From the Devi Mahatmyam, and recited constantly through Navaratri. The claim inside it is bigger than it first sounds: the Goddess is not somewhere else being worshipped, she is the capability already present in everything alive. The threefold namaste mirrors the threefold shanti.',
     links:'Navaratri · Saraswati Puja · Amman / Devi',
     verify:'wording, the Devi Mahatmyam attribution and chapter, transliteration, the literal translation, and the interpretive framing' },
   { id:'saraswati', title:'Saraswati Namastubhyam', level:'simple', lang:'Sanskrit',
     tags:['shloka','sanskrit','simple','devi','study','sect-shakta'],
     verse:['Saraswati namastubhyam, varade kama rupini,','Vidyarambham karishyami, siddhir bhavatu me sada.'],
-    youtube:{"url":"https://www.youtube.com/results?search_query=Saraswati%20Namastubhyam%20slokam%20chanting%20vidyarambham","curated":false}, literal:'Salutations to you, Saraswati, giver of boons, taker of desired form. I am beginning my learning — may I always be successful.',
+    youtube:{"url":"https://www.youtube.com/watch?v=rjapBIbIjHw","curated":false,"note":"Sung by P. Unnikrishnan, an established Carnatic/playback singer, with young performers — real public figures, but not priests specifically."}, source:{url:'https://greenmesg.org/stotras/saraswati/saraswati_namastubhyam.php', name:'greenmesg.org — Sanskrit text with English translation'}, literal:'Salutations to you, Saraswati, giver of boons, taker of desired form. I am beginning my learning — may I always be successful.',
     intended:'The shloka said before study, and the one recited when a child is first taught to write. Said on Vijayadashami, when children traditionally start something new.',
     links:'Saraswati Puja · Ayudha Puja · Vijayadashami · Navaratri',
     verify:'wording, transliteration, the literal translation, and the vidyarambham association' },
   { id:'mahalakshmi', title:'Om Shreem Mahalakshmiyei Namaha', level:'simple', lang:'Sanskrit',
     tags:['shloka','sanskrit','simple','lakshmi','bigday','sect-shakta'],
     verse:['Om Shreem Mahalakshmiyei namaha'],
-    youtube:{"url":"https://www.youtube.com/results?search_query=Om%20Shreem%20Mahalakshmiyei%20Namaha%20chanting%20pandit","curated":false}, literal:'Om. Shreem [her seed-syllable]. Salutations to Mahalakshmi.',
+    youtube:{"url":"https://www.youtube.com/watch?v=vRiyU8dD1fc","curated":false,"note":"Generic mantra-music channel; no reciter credentials given."}, source:{url:'https://www.yogapedia.com/definition/10048/om-shreem-maha-lakshmiyei-namaha', name:'Yogapedia — meaning and components'}, literal:'Om. Shreem [her seed-syllable]. Salutations to Mahalakshmi.',
     intended:'Said at Varalakshmi Vratham and through Deepavali. Worth telling children that the abundance asked for here is not only money — it is also health, learning and good company.',
     links:'Varalakshmi Vratham · Deepavali · Lakshmi',
     verify:'transliteration, the seed-syllable explanation, and the broader reading of what is being asked for' },
   { id:'annapurne', title:'Annapurne Sadapurne — before eating', level:'simple', lang:'Sanskrit',
     tags:['shloka','sanskrit','simple','devi','meal','sect-panhindu'],
     verse:['Annapurne sadapurne, Shankara prana vallabhe,','Gnana vairagya siddhyartham, bhiksham dehi cha Parvati.'],
-    youtube:{"url":"https://www.youtube.com/results?search_query=Annapurne%20Sadapurne%20slokam%20chanting%20before%20meal","curated":false}, literal:'O Annapurna, ever-full, beloved of Shankara — for the sake of wisdom and non-attachment, give alms, O Parvati.',
+    youtube:{"url":"https://www.youtube.com/watch?v=DqHQVouOmi4","curated":false,"note":"Sanskrit-titled stotram channel; reciter not otherwise verified."}, source:{url:'https://shlokam.org/shloka/annapurne-sadhapurne.htm', name:'shlokam.org — Sanskrit lyrics with English meaning'}, literal:'O Annapurna, ever-full, beloved of Shankara — for the sake of wisdom and non-attachment, give alms, O Parvati.',
     intended:'The shloka said over food before eating it. It pairs naturally with every recipe here: what is asked for in return for the meal is not more food but clarity. A good one to start using on Pongal and simply never stop.',
     links:'Thai Pongal · every recipe · Do it Together',
     verify:'wording, transliteration, the literal translation, and whether this is the form commonly used in Tamil homes' },
   { id:'narayanaya', title:'Om Namo Narayanaya', level:'simple', lang:'Sanskrit',
     tags:['shloka','sanskrit','simple','krishna','bedtime','sect-vaishnava'],
     verse:['Om Namo Narayanaya'],
-    youtube:{"url":"https://www.youtube.com/results?search_query=Om%20Namo%20Narayanaya%20ashtakshara%20mantra%20chanting%20Vaishnava%20pandit","curated":false}, literal:'Om — salutation to Narayana.',
+    youtube:{"url":"https://www.youtube.com/watch?v=G4A8n7_DAJI","curated":false,"note":"BhakthiOne devotional channel; no reciter credentials given."}, source:{url:'https://en.wikipedia.org/wiki/Om_Namo_Narayanaya', name:'Wikipedia — Om Namo Narayanaya'}, literal:'Om — salutation to Narayana.',
     intended:'The eight-syllable mantra (ashtakshara), the Vaishnava counterpart to Om Namah Shivaya. Said especially on Vaikunta Ekadasi, when the temple\'s far door is opened.',
     links:'Vaikunta Ekadasi · Krishna Janmashtami · Margazhi',
     verify:'transliteration, the ashtakshara claim, and its Sri Vaishnava significance — this one carries real theological weight and should be checked carefully' },
   { id:'thiruppavai27', title:'Koodarai vellum — the feast verse of the Thiruppavai', level:'deeper', lang:'Tamil',
     tags:['shloka','tamil','deeper','andal','meal','sect-vaishnava'],
     verse:['Koodarai vellum seer Govinda…'],
-    youtube:{"url":"https://www.youtube.com/results?search_query=Thiruppavai%20pasuram%2027%20Koodarai%20vellum%20recitation","curated":false}, literal:'Govinda, of the glory that conquers those who will not join… (the opening words of the twenty-seventh verse).',
+    youtube:{"url":"https://www.youtube.com/watch?v=mDCsCOXUfsk","curated":false,"note":"Tamil-lyrics video matching this specific pasuram; reciter not otherwise verified."}, source:{url:'https://divyaprabandham.koyil.org/index.php/2015/01/thiruppavai-27-kudarai-vellum/', name:'koyil.org — Divya Prabandham, Thiruppavai 27 with commentary'}, literal:'Govinda, of the glory that conquers those who will not join… (the opening words of the twenty-seventh verse).',
     intended:'The Thiruppavai verse about the shared feast — sweet rice, ghee running down to the elbows, everyone eating together. Andal asks for the company as much as the food. Sung in Margazhi and a natural bridge into Pongal\'s sweet rice.',
     links:'Margazhi · Andal · Thai Pongal · sakkarai pongal',
     verify:'Tamil wording, transliteration, which verse number this actually is, the literal translation, and the interpretive Sri Vaishnava meaning — verify carefully' }
@@ -4882,6 +5184,7 @@ function renderShlokas(filter){
       <div class="verse2">${s.verse.map(l=>`<span class="ln">${l}</span>`).join('')}</div>
       <div class="m lit"><b>Word-for-word:</b> ${s.literal}</div>
       <div class="m spirit"><b>What it is really saying:</b> ${s.intended}</div>
+      ${sourceLink(s)}
       <div class="lk">🔗 links to: ${s.links}</div>
       ${ytLink(s)}
     </div>`).join('');
@@ -5239,6 +5542,7 @@ function renderCalendar(filter){
 function show(id){
   document.querySelectorAll('.screen').forEach(s=>s.hidden = (s.id!=='screen-'+id));
   document.getElementById('scroll').scrollTop = 0;
+  if(typeof syncFab === 'function') syncFab();
 }
 
 function setMode(m){
@@ -5387,10 +5691,21 @@ const MONTH_NAME = {JAN:'January',FEB:'February',AUG:'August',SEP:'September',
    recording — see the internal note). `curated:false` = a tuned YouTube search,
    honest about being a starting point rather than an endorsement, since that's
    what actually opens when it's clicked. */
+/* Every shloka now links to one specific video, not a search page — including the
+   15 where nobody here has confirmed the reciter's credentials or listened to
+   check pronunciation. curated:true = real evidence for the reciter (a stated
+   credential, e.g. Ghanapatigal). curated:false = a real, specific video, picked
+   on title/channel/known-performer signals alone, honestly labelled as
+   unconfirmed. See the credibility table in SHARING.md / the project record for
+   the full reasoning per pick. */
 function ytLink(s){
   if(!s.youtube) return '';
-  const label = s.youtube.curated ? '🎥 Hear it chanted' : '🎥 Search recordings';
+  const label = s.youtube.curated ? '🎥 Hear it chanted' : '🎥 A recording (unconfirmed)';
   return `<a class="browse yt" href="${s.youtube.url}" target="_blank" rel="noopener">${label} →</a>`;
+}
+function sourceLink(s){
+  if(!s.source) return '';
+  return `<div class="src-cite">Text: <a href="${s.source.url}" target="_blank" rel="noopener">${s.source.name}</a></div>`;
 }
 
 function shlokaBlock(s, deep){
@@ -5401,6 +5716,7 @@ function shlokaBlock(s, deep){
       <div class="eyebrow">Shloka<span class="langtag">${s.lang}</span></div>
       <div class="verse">${verse}</div>
       <div class="mean"><b>What it means:</b> ${s.literal}</div>
+      ${sourceLink(s)}
       <div class="browse" onclick="show('shlokas')">🕉️ See all the shlokas →</div>
       ${ytLink(s)}
     </div>`;
@@ -5410,6 +5726,7 @@ function shlokaBlock(s, deep){
       <div class="verse">${verse}</div>
       <div class="mean"><b>Word-for-word:</b> ${s.literal}</div>
       <div class="mean spirit"><b>What it is really saying:</b> ${s.intended}</div>
+      ${sourceLink(s)}
       <div class="browse" onclick="show('shlokas')">🕉️ See all the shlokas →</div>
       ${ytLink(s)}
     </div>`;
@@ -5559,7 +5876,153 @@ setSMode('kids');
   if(s) openEveryday(s.id); else renderWeek();
 })();
 
+/* ================= SHARE & FEEDBACK =================
+   Two jobs. Sharing, because parent-to-parent forwarding is the whole distribution
+   model and whether people actually forward this is better signal than anything they
+   say. And feedback that always asks how the person knows me first — a pile of warm
+   responses is meaningless if it might be a pile of close friends being kind.
+
+   Where submissions go: GitHub Pages is static hosting and answers POST with 405, so
+   there is no host-provided form handler to lean on. FEEDBACK_ENDPOINT must point at
+   something that accepts a cross-origin POST — a Google Apps Script web app bound to
+   a Sheet is the recommended one (free, unlimited, data stays in Shri's Drive). See
+   tools/FEEDBACK-SETUP.md for the script and the six steps.
+
+   Until that URL is filled in, submitting says so plainly rather than showing a
+   thank-you. That matters: a 405 from Pages still RESOLVES fetch, so a naive
+   try/catch reports success and the feedback is silently binned — worse than having
+   no feedback button at all. Every submission is also mirrored to localStorage. */
+const FEEDBACK_ENDPOINT = '';
+
+function toast(msg){
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('on');
+  clearTimeout(toast._t);
+  toast._t = setTimeout(()=>t.classList.remove('on'), 2800);
+}
+
+/* one-of-many chip picker */
+function pickOne(btn){
+  [...btn.parentElement.children].forEach(b=>b.classList.toggle('on', b===btn));
+}
+function picked(groupId){
+  const on = document.querySelector('#'+groupId+' .opt.on');
+  return on ? on.textContent.trim() : '';
+}
+
+function shareUrl(){
+  /* file:// and localhost have no URL worth handing anyone — use the public one */
+  const here = location.href.split('#')[0];
+  return (location.protocol.startsWith('http') && !/^https?:\/\/(localhost|127\.)/.test(here))
+    ? here
+    : 'https://shri7-git.github.io/daily-practice/';
+}
+
+async function shareApp(){
+  const url  = shareUrl();
+  const data = {
+    title: 'Daily Practice',
+    text : 'Five minutes a day — a story, a verse, three breaths. An early draft I\'d like your eyes on.',
+    url
+  };
+  record('share-opened', {});
+  if(navigator.share){
+    try { await navigator.share(data); record('share-completed', {}); return; }
+    catch(e){ if(e && e.name === 'AbortError') return; }   /* user dismissed — not an error */
+  }
+  try {
+    await navigator.clipboard.writeText(url);
+    toast('Link copied — paste it to whoever you like');
+  } catch(e){
+    showInfo('📤 Send to someone', 'Copy this link and send it on:<br><br><b>' + url + '</b>');
+  }
+}
+
+function openFeedback(){
+  document.getElementById('fb-sheet').classList.add('open');
+  document.getElementById('fb-bg').classList.add('open');
+}
+function closeFeedback(){
+  document.getElementById('fb-sheet').classList.remove('open');
+  document.getElementById('fb-bg').classList.remove('open');
+}
+
+/* Mirror locally first, then try the network. Local always succeeds, so a failed or
+   unconfigured POST never looks like lost feedback to the person who wrote it. */
+function record(kind, fields){
+  const row = Object.assign({kind, at:new Date().toISOString(), screen:currentScreen()}, fields);
+  try {
+    const all = JSON.parse(localStorage.getItem('dp-feedback') || '[]');
+    all.push(row);
+    localStorage.setItem('dp-feedback', JSON.stringify(all.slice(-200)));
+  } catch(e){ /* private mode, quota, blocked storage — send it anyway */ }
+  return send(row);
+}
+
+function currentScreen(){
+  const s = [...document.querySelectorAll('.screen')].find(x=>!x.hidden);
+  return s ? s.id.replace('screen-','') : '';
+}
+
+/* Returns 'sent' | 'unconfigured' | 'failed'. Never claims success it can't back up.
+   text/plain + no-cors is what an Apps Script web app accepts without a CORS preflight;
+   the response is opaque, so 'sent' means "the POST left the browser", and the
+   localStorage mirror is the backstop if it didn't land. */
+async function send(row){
+  if(!FEEDBACK_ENDPOINT) return 'unconfigured';
+  try {
+    await fetch(FEEDBACK_ENDPOINT, {
+      method:'POST', mode:'no-cors',
+      headers:{'Content-Type':'text/plain;charset=utf-8'},
+      body: JSON.stringify(row)
+    });
+    return 'sent';
+  } catch(e){ return 'failed'; }
+}
+
+async function submitFeedback(){
+  const know  = picked('fb-know');
+  const text  = document.getElementById('fb-text').value.trim();
+  const wrong = document.getElementById('fb-wrong').value.trim();
+  const email = document.getElementById('fb-email').value.trim();
+
+  if(!know && !text && !wrong){
+    toast('Add a line first — anything is useful');
+    return;
+  }
+  const btn = document.getElementById('fb-send');
+  btn.disabled = true; btn.textContent = 'Sending…';
+
+  const status = await record('feedback', {know, text, wrong, email});
+
+  btn.disabled = false; btn.textContent = 'Send';
+
+  if(status === 'sent'){
+    closeFeedback();
+    toast('Thank you — that genuinely helps');
+    document.getElementById('fb-text').value = '';
+    document.getElementById('fb-wrong').value = '';
+    return;
+  }
+  /* Be honest rather than reassuring. What they wrote is still in this browser, so
+     tell them it is kept and not sent, instead of a thank-you that isn't true. */
+  closeFeedback();
+  showInfo('Not sent yet',
+    'Feedback isn\'t wired up on this draft yet, so nothing left your device — '
+    + 'what you wrote is saved in this browser only. Sorry to waste the typing; '
+    + 'if you know Shri, send it to him directly and it will actually land.');
+}
+
+/* The welcome screen already carries a feedback button; the floating one would just
+   duplicate it there, and it sits on top of the "Start today" call to action. */
+function syncFab(){
+  const fab = document.getElementById('fab');
+  if(fab) fab.hidden = (currentScreen() === 'welcome');
+}
+
 show('welcome');
+syncFab();
 </script>
 </body>
 </html>

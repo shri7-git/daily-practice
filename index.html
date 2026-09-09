@@ -1235,6 +1235,15 @@
             <div class="browse" style="margin-top:8px" onclick="openFeedback()">Tell me what you think →</div>
           </div></details>
 
+        <details class="acc"><summary>🔍 Is there any tracking?</summary>
+          <div class="accbody">
+            <p>A little, so I can tell whether this is actually being used. No account, no name
+              attached, no ads, nothing sold — just an anonymous count of visits and which screens get
+              used, kept in a private sheet only I can see.</p>
+            <p>Anything with your name or email on it — like the feedback form — only happens if you
+              type it in yourself, and it goes to me and nobody else.</p>
+          </div></details>
+
         <div style="height:24px"></div>
       </section>
 
@@ -1839,16 +1848,10 @@
       <h3>💬 Tell me what you think</h3>
       <div class="sbody" id="fb-body">
         <div class="q">
-          <label>How do you know me?</label>
-          <div class="hint">So I know whether I'm hearing from friends or from strangers.</div>
-          <div class="opts" id="fb-know">
-            <button class="opt" onclick="pickOne(this)">Family</button>
-            <button class="opt" onclick="pickOne(this)">Friend</button>
-            <button class="opt" onclick="pickOne(this)">Friend of a friend</button>
-            <button class="opt" onclick="pickOne(this)">Work</button>
-            <button class="opt" onclick="pickOne(this)">Temple or community</button>
-            <button class="opt" onclick="pickOne(this)">We've never met</button>
-          </div>
+          <label>Who shared this with you?</label>
+          <div class="hint">A name, or however you found this — so I can see how it's actually
+            spreading, and tell a stranger's honest reaction from a close friend being kind.</div>
+          <input class="fld" id="fb-know" type="text" placeholder="e.g. a name, or 'found it myself'" />
         </div>
         <div class="q">
           <label>What did you make of it?</label>
@@ -11197,11 +11200,20 @@ setSMode('kids');
   if(s) openEveryday(s.id); else renderWeek();
 })();
 
-/* ================= SHARE & FEEDBACK =================
-   Two jobs. Sharing, because parent-to-parent forwarding is the whole distribution
-   model and whether people actually forward this is better signal than anything they
-   say. And feedback that always asks how the person knows me first — a pile of warm
-   responses is meaningless if it might be a pile of close friends being kind.
+/* ================= SHARE, FEEDBACK & USAGE ANALYTICS =================
+   Three jobs sharing one pipe (record()/send()) into the same Sheet. Sharing, because
+   parent-to-parent forwarding is the whole distribution model and whether people
+   actually forward this is better signal than anything they say. Feedback that always
+   asks who shared this first — a pile of warm responses is meaningless if it might be
+   a pile of close friends being kind, and a name also gives an actual referral chain.
+   And passive usage analytics (session/view-duration/pulse/narration-interest, below)
+   — anonymous per-device id, no names attached unless someone types one into the
+   feedback form themselves.
+
+   IMPORTANT: every event kind above has its own fields (uid, visitNum, ref, ms,
+   answer, storyId, …). The Apps Script in tools/FEEDBACK-SETUP.md must have a column
+   for each or that data is silently dropped on arrival — it is NOT auto-derived from
+   what's sent here. Keep the two in sync when adding a new record() call.
 
    Where submissions go: GitHub Pages is static hosting and answers POST with 405, so
    there is no host-provided form handler to lean on. FEEDBACK_ENDPOINT must point at
@@ -11386,7 +11398,7 @@ async function send(row){
 }
 
 async function submitFeedback(){
-  const know  = picked('fb-know');
+  const know  = document.getElementById('fb-know').value.trim();
   const text  = document.getElementById('fb-text').value.trim();
   const wrong = document.getElementById('fb-wrong').value.trim();
   const email = document.getElementById('fb-email').value.trim();
@@ -11405,6 +11417,7 @@ async function submitFeedback(){
   if(status === 'sent'){
     closeFeedback();
     toast('Thank you — that genuinely helps');
+    document.getElementById('fb-know').value = '';
     document.getElementById('fb-text').value = '';
     document.getElementById('fb-wrong').value = '';
     return;

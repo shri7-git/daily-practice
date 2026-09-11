@@ -540,6 +540,16 @@
   .sheet.tall .sbody{overflow-y:auto;flex:1;margin:0 -18px;padding:0 18px}
   .sheet.tall .sbody::-webkit-scrollbar{width:0}
 
+  /* the one-question ask sheet */
+  .ask-hint{font-size:12px;color:var(--muted);line-height:1.5;margin:6px 0 0}
+  .ask-hint:empty{display:none}
+  #ask-opts:empty{display:none}
+  #ask-opts .opt{font-size:13px;padding:9px 13px}
+  /* 1–10 / 0–10 scales: even squares on one or two rows, never a keyboard */
+  #ask-opts.scale{display:grid;grid-template-columns:repeat(6,1fr);gap:6px}
+  #ask-opts.scale .opt{padding:10px 0;text-align:center;font-weight:700;
+    font-variant-numeric:tabular-nums}
+
   .q{margin:0 0 17px}
   .q>label{display:block;font-size:13.5px;font-weight:700;margin:0 0 3px}
   .q .hint{font-size:11.5px;color:var(--muted);margin:0 0 7px;font-weight:400}
@@ -1240,6 +1250,8 @@
             <p>A little, so I can tell whether this is actually being used. No account, no name
               attached, no ads, nothing sold — just an anonymous count of visits and which screens get
               used, kept in a private sheet only I can see.</p>
+            <p>Every so often I'll ask you one short question — never more than one at a time, and
+              skipping it costs nothing.</p>
             <p>Anything with your name or email on it — like the feedback form — only happens if you
               type it in yourself, and it goes to me and nobody else.</p>
           </div></details>
@@ -1250,10 +1262,14 @@
       <section class="screen" id="screen-welcome" hidden>
         
         <div class="arrival">
-          <b>An early draft, not a finished app.</b> Everything here is real content you can
-          read, but it hasn't been checked yet by someone who knows the tradition, and some
-          pages are still marked <i>soon</i>. I'd rather show you it early than polished — use
-          it, and tell me what's wrong.
+          <b>I started building this for my own kids.</b> I wanted them to have the stories I
+          grew up on, in five minutes a day, without it becoming another class. Enough people
+          said they'd want it too that I'm now finding out whether that's true — so right now
+          I'm mostly after your honest reaction.
+          <div style="margin-top:8px"><b>It's an early draft, not a finished app.</b> Everything
+          here is real content you can read, but it hasn't been checked yet by someone who knows
+          the tradition, and some pages are still marked <i>soon</i>. I'd rather show you it early
+          than polished — use it, and tell me what's wrong.</div>
           <div style="margin-top:8px">🔖 <b>Bookmark this page</b> to come back — there's no
           app to install and no account to lose. And if it's worth five minutes to you,
           <a href="#" onclick="event.preventDefault();shareApp()">pass it on</a> to someone
@@ -1829,16 +1845,15 @@
     </div>
 
     
-    <div class="sheet-bg" id="pulse-bg" onclick="closePulse()"></div>
-    <div class="sheet" id="pulse-sheet">
+    <div class="sheet-bg" id="ask-bg" onclick="skipAsk()"></div>
+    <div class="sheet" id="ask-sheet">
       <div class="grab"></div>
-      <h3 id="pulse-q">Was today worth the five minutes?</h3>
-      <div class="opts" style="margin:14px 0">
-        <button class="opt" onclick="answerPulse('yes')">🙂 Yes</button>
-        <button class="opt" onclick="answerPulse('meh')">😐 Not really</button>
-        <button class="opt" onclick="answerPulse('no')">🙁 No</button>
-      </div>
-      <button class="close" onclick="closePulse()">Skip</button>
+      <h3 id="ask-q"></h3>
+      <p id="ask-hint" class="ask-hint"></p>
+      <div class="opts" id="ask-opts" style="margin:14px 0"></div>
+      <textarea class="fld" id="ask-text" hidden placeholder="Optional…"></textarea>
+      <button class="btn-primary" id="ask-send" hidden onclick="sendAsk()" style="margin-top:10px">Send</button>
+      <button class="close" onclick="skipAsk()">Skip</button>
     </div>
 
     
@@ -10865,7 +10880,9 @@ function show(id){
   document.querySelectorAll('.screen').forEach(s=>s.hidden = (s.id!=='screen-'+id));
   document.getElementById('scroll').scrollTop = 0;
   if(typeof syncFab === 'function') syncFab();
-  if(['day','node','sashti','general'].includes(id) && typeof maybeShowPulse==='function') setTimeout(maybeShowPulse, 15000);
+  /* Questions only ever appear over a content screen, and only after someone has been
+     on it long enough to have read something. Never over welcome, never over a library. */
+  if(['day','sashti','general'].includes(id) && typeof maybeAsk==='function') setTimeout(maybeAsk, 20000);
 }
 
 function setMode(m){
@@ -11210,10 +11227,10 @@ setSMode('kids');
    — anonymous per-device id, no names attached unless someone types one into the
    feedback form themselves.
 
-   IMPORTANT: every event kind above has its own fields (uid, visitNum, ref, ms,
-   answer, storyId, …). The Apps Script in tools/FEEDBACK-SETUP.md must have a column
-   for each or that data is silently dropped on arrival — it is NOT auto-derived from
-   what's sent here. Keep the two in sync when adding a new record() call.
+   IMPORTANT: every event kind above has its own fields (uid, visitNum, daysUsed, ref,
+   ms, ask, answer, storyId, …). The Apps Script in tools/FEEDBACK-SETUP.md must have a
+   column for each or that data is silently dropped on arrival — it is NOT auto-derived
+   from what's sent here. Keep the two in sync when adding a new record() call.
 
    Where submissions go: GitHub Pages is static hosting and answers POST with 405, so
    there is no host-provided form handler to lean on. FEEDBACK_ENDPOINT must point at
@@ -11315,13 +11332,18 @@ function sessionInfo(){
 }
 const _session = sessionInfo();
 const _daysSinceFirst = Math.floor((Date.now() - _session.firstSeen) / 86400000);
+/* Distinct days used — declared here, before the first record() call, because every
+   row carries it. See usageDays() under THE ASK LADDER for why this and not
+   days-since-install is the clock the questions are placed against. */
+const _usage = usageDays();
 
 /* Mirror locally first, then try the network. Local always succeeds, so a failed or
    unconfigured POST never looks like lost feedback to the person who wrote it. */
 function record(kind, fields){
   const row = Object.assign({
     kind, at:new Date().toISOString(), screen:currentScreen(),
-    uid:deviceId(), visitNum:_session.visits, daysSinceFirst:_daysSinceFirst
+    uid:deviceId(), visitNum:_session.visits, daysSinceFirst:_daysSinceFirst,
+    daysUsed:_usage.count
   }, fields);
   try {
     const all = JSON.parse(localStorage.getItem('dp-feedback') || '[]');
@@ -11342,38 +11364,242 @@ if(_session.newSession){
 
 /* Screen dwell time: how long a screen was open before the next nav. Answers "where
    do people spend time" without a single question asked. */
-let _screenSince = Date.now();
-let _lastScreen = currentScreen();
+/* `var`, and _lastScreen starts null, deliberately. show() runs BEFORE this line does:
+   the stampDates IIFE further up calls openEveryday() during load, which calls show(),
+   which calls trackScreenChange(). With `let` that is a TDZ ReferenceError, and because
+   it is thrown at the top level of this one big <script> it aborts everything after it —
+   the session row, FEEDBACK_ENDPOINT, the ask ladder, syncFab() and the final
+   show('welcome'), so the app opened on the Janmashtami screen and no feedback or
+   analytics could ever be sent. Silent, because nothing visibly failed. */
+var _screenSince = Date.now();
+var _lastScreen = null;
 function trackScreenChange(){
   const now = Date.now();
+  if(_screenSince == null) _screenSince = now;
   const prev = _lastScreen, ms = now - _screenSince;
   const cur = currentScreen();
   if(prev && prev !== cur && ms > 800) record('view-duration', {viewedScreen:prev, ms});
   _screenSince = now; _lastScreen = cur;
 }
 
-/* ---------------- pulse check: one tap, asked rarely ----------------
-   Deliberately not a survey. Shown at most once every 14 days per device, and only
-   after the person has actually reached the day screen (real use, not a bounce). */
-function maybeShowPulse(){
+/* ================= THE ASK LADDER =================
+   One question at a time, placed by BEHAVIOUR rather than by the calendar.
+
+   The clock is `daysUsed` — the number of DISTINCT days this device has opened the
+   app — not days-since-install and not visit count. Someone who tries it on a Saturday
+   and comes back the next Saturday has used it twice, and should be asked the
+   second-day question, not the fortnight-two question. Calendar time measures how long
+   we've had them; distinct days measures how much of the thing they've actually seen,
+   and only the second earns a question.
+
+   This is Shri's five-question survey (usage frequency · rating · what could improve ·
+   what you like · likelihood to recommend) spread ACROSS the ladder rather than stacked
+   into one form. Same questions, asked when each is answerable: "what do you like" works
+   on day 3, "what could be better" doesn't. It also resolves the two-1-to-10-scales
+   worry — a rating and a recommend score are heavy together on one sheet and weightless
+   a week apart, so they sit at day 18 and day 25 and never share a screen.
+
+   Ladder, by days used — each asked once, except pulse which repeats:
+     1 day   pulse        was it worth five minutes — one tap, repeatable every 14 days
+     2 days  who          who shared this with you — the referral chain, asked early,
+                          while they still remember, instead of waiting for someone to
+                          find the feedback button on their own
+     3 days  like         what do you like — a first impression, caught while it is one
+     5 days  whatfor      is this for a child, or for you — tells us whether the
+                          adult-alone user is real, which a whole set of copy rules
+                          rests on
+     7 days  frequency    how often would you actually use this
+     10 days unprompted   THE question: has anyone asked for the next story without you
+                          bringing it up? That is the project's own definition of "it
+                          sticks", so it gets the best slot on the ladder
+     14 days improve      what could be better — by now they have seen enough to say
+     18 days rating       out of 10, where is this
+     25 days recommend    likelihood to recommend — last of the two scales, deliberately
+                          a week clear of the rating
+     32 days worth        would you keep this at $99/yr — asked only of people who have
+                          used it thirty-odd separate days, i.e. the only people whose
+                          answer means anything. Delete this rung if pricing isn't a
+                          question you want to put to this group yet.
+     lapse   lapse        jumps the queue: returning after 10+ days away, what pulled
+                          you away. Churn reason is the most valuable and least
+                          collected thing here, and it is only askable in this window.
+
+   "Did anything look wrong?" is deliberately NOT on the ladder — it stays on the
+   feedback form, always open, because a factual error needs reporting the moment it is
+   spotted, not on whatever day the ladder gets round to asking.
+
+   Guard rails (all enforced in maybeAsk): never on a first visit, at most ONE ask per
+   visit, at least 4 days between any two asks, never re-ask an answered one, and only
+   ever after 20s on an actual content screen — never over the welcome screen, never
+   over a library, never before someone has read anything. Skipping is free and is
+   itself recorded; a pile of skips is data about the questions, not about the people. */
+
+/* Distinct days used, kept as a small list of YYYY-MM-DD so return-rate and
+   days-to-drop-off stay derivable from the sheet as well as from here. */
+function usageDays(){
+  const d = new Date(), key = d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
   try {
-    const last = Number(localStorage.getItem('dp-pulse-last') || 0);
-    if(Date.now() - last < 14*86400000) return;
-    if(_session.visits < 2 && _daysSinceFirst < 1) return; // let a first-time visitor just look around
-  } catch(e){ return; }
-  document.getElementById('pulse-sheet').classList.add('open');
-  document.getElementById('pulse-bg').classList.add('open');
+    const days = JSON.parse(localStorage.getItem('dp-days') || '[]');
+    const prev = days.length ? days[days.length-1] : null;
+    if(prev !== key){ days.push(key); localStorage.setItem('dp-days', JSON.stringify(days.slice(-120))); }
+    /* gap in days between this visit and the last day used — drives the lapse ask */
+    const gap = prev ? Math.round((new Date(key) - new Date(prev)) / 86400000) : 0;
+    return {count: days.length, gap};
+  } catch(e){ return {count:1, gap:0}; }
 }
-function closePulse(dontRecordSkip){
-  document.getElementById('pulse-sheet').classList.remove('open');
-  document.getElementById('pulse-bg').classList.remove('open');
-  try { localStorage.setItem('dp-pulse-last', String(Date.now())); } catch(e){}
-  if(!dontRecordSkip) record('pulse', {answer:'skipped'});
+
+/* Order here IS priority — maybeAsk takes the first eligible entry. The once-only
+   milestone questions come first and pulse sits last on purpose: pulse is the only
+   repeating one, so at the front it would win every fortnight and crowd out the
+   questions that actually decide things. Last, it is the filler for a visit when
+   nothing more important is due. */
+const ASKS = [
+  { id:'who', after:2,
+    q:'Who shared this with you?',
+    hint:'A name, or however you found it. It tells me how this is actually spreading — and lets me tell a stranger\'s honest reaction from a close friend being kind.',
+    free:'e.g. a name, or "found it myself"', required:true },
+
+  { id:'like', after:3,
+    q:'What do you like about it so far?',
+    hint:'Whatever comes to mind — a page, a story, the length of it.',
+    free:'A line is plenty…', required:true },
+
+  { id:'whatfor', after:5,
+    q:'Who are you using this with?',
+    opts:[['child','A child'],['children','More than one child'],['alone','Just me'],['both','Both']] },
+
+  { id:'frequency', after:7,
+    q:'Honestly — how often would you use this?',
+    hint:'Whatever is true. "When an occasion comes up" is a perfectly good answer.',
+    opts:[['daily','Every day'],['weekly','A few times a week'],['occasion','When an occasion comes up'],['rarely','Probably won\'t']] },
+
+  { id:'unprompted', after:10,
+    q:'Has anyone asked for the next story without you bringing it up?',
+    hint:'The honest answer is the useful one. If nobody has, that tells me more than a compliment would.',
+    opts:[['yes','Yes, unprompted'],['ifreminded','Only if I remind them'],['no','Not yet'],['alone','I practise on my own']] },
+
+  { id:'improve', after:14,
+    q:'What could be better?',
+    hint:'The blunter the better. Nothing here is precious yet.',
+    free:'Anything at all…', required:true },
+
+  { id:'rating', after:18, scale:10, from:1,
+    q:'Out of 10, where is this right now?',
+    hint:'1 is not worth anyone\'s time, 10 is you\'d be upset if it disappeared.' },
+
+  { id:'recommend', after:25, scale:10, from:0,
+    q:'How likely are you to recommend this to another family?',
+    hint:'0 is not a chance, 10 is you\'d send it on today.' },
+
+  { id:'worth', after:32,
+    q:'If this became a real app at $99 a year for the family, would you keep it?',
+    hint:'Nothing is for sale and nothing is being collected — I just need to know whether I\'m building something people would pay for.',
+    opts:[['yes','Yes'],['maybe','Maybe — depends'],['no','No']],
+    then:'What would make that an easy yes — or an easy no?' },
+
+  { id:'lapse', lapse:10,
+    q:'You\'ve been away a bit — what pulled you away?',
+    hint:'No wrong answer, and it doesn\'t need to be flattering.',
+    opts:[['busy','Just got busy'],['forgot','Forgot it existed'],['kids','Kids lost interest'],['content','Content wasn\'t for us'],['other','Something else']],
+    then:'Anything you\'d add?' },
+
+  /* last by design — see the note above the array */
+  { id:'pulse', after:1, every:14*86400000,
+    q:'Was today worth the five minutes?',
+    opts:[['yes','🙂 Yes'],['meh','😐 Not really'],['no','🙁 No']] }
+];
+
+function askState(){
+  try { return JSON.parse(localStorage.getItem('dp-asks') || '{}'); } catch(e){ return {}; }
 }
-function answerPulse(answer){
-  record('pulse', {answer});
-  closePulse(true);
-  toast(answer==='yes' ? 'Good to know — thank you' : 'Thanks — that helps more than you\'d think');
+function saveAskState(s){ try { localStorage.setItem('dp-asks', JSON.stringify(s)); } catch(e){} }
+
+let _askedThisVisit = false;
+let _currentAsk = null;
+
+function maybeAsk(){
+  if(_askedThisVisit) return;
+  if(_session.visits < 2 && _usage.count < 2) return;   /* let a first-timer just look around */
+  const s = askState();
+  if(Date.now() - (s._last || 0) < 4*86400000) return;  /* never two asks in the same few days */
+
+  /* lapse jumps the queue — it is only meaningful in the visit they come back on */
+  const pick = (_usage.gap >= 10 && !s.lapse ? ASKS.find(a=>a.id==='lapse') : null)
+    || ASKS.find(a => a.after && _usage.count >= a.after &&
+         (a.every ? (Date.now() - (s[a.id] || 0) >= a.every) : !s[a.id]));
+  if(!pick) return;
+  openAsk(pick);
+}
+
+function openAsk(a){
+  _currentAsk = a; _askedThisVisit = true;
+  document.getElementById('ask-q').textContent = a.q;
+  document.getElementById('ask-hint').textContent = a.hint || '';
+  const opts = document.getElementById('ask-opts');
+  /* a scale question builds its own chips (1–10, or 0–10 for the recommend score) so
+     a number never has to be typed on a phone keyboard */
+  const list = a.scale
+    ? Array.from({length: a.scale + 1 - a.from}, (_,i) => { const n = a.from + i; return [String(n), String(n)]; })
+    : (a.opts || []);
+  opts.classList.toggle('scale', !!a.scale);
+  opts.innerHTML = list.map(([v,l]) =>
+    `<button class="opt" data-v="${v}" onclick="pickAsk(this)">${l}</button>`).join('');
+  const txt = document.getElementById('ask-text'), send = document.getElementById('ask-send');
+  txt.value = '';
+  /* a free-text-only question shows its box straight away; a chip question only
+     reveals one after a chip is tapped, so the one-tap questions stay one tap */
+  txt.hidden = !a.free;
+  txt.placeholder = a.free || 'Optional…';
+  send.hidden = !a.free;
+  document.getElementById('ask-sheet').classList.add('open');
+  document.getElementById('ask-bg').classList.add('open');
+  record('ask-shown', {ask:a.id});
+}
+
+function pickAsk(btn){
+  pickOne(btn);
+  const a = _currentAsk;
+  if(a && a.then){
+    /* chip chosen, and this question has a follow-up worth one line of typing */
+    const txt = document.getElementById('ask-text');
+    txt.hidden = false; txt.placeholder = a.then;
+    document.getElementById('ask-send').hidden = false;
+    document.getElementById('ask-q').textContent = a.then;
+    document.getElementById('ask-hint').textContent = '';
+    return;
+  }
+  sendAsk();
+}
+
+function sendAsk(){
+  const a = _currentAsk; if(!a) return;
+  const on = document.querySelector('#ask-opts .opt.on');
+  const answer = on ? on.dataset.v : '';
+  const text = document.getElementById('ask-text').value.trim();
+  if(a.required && !answer && !text){ toast('A word or two is plenty'); return; }
+  record('ask', {ask:a.id, answer, text});
+  /* the referral answer belongs in the same column as the feedback form's version of
+     the question, so both land together however it was collected */
+  if(a.id === 'who') record('feedback', {know:text, text:'', wrong:'', email:''});
+  closeAsk(true);
+  toast(a.id==='who' ? 'Thank you — that helps a lot' : 'Thanks — that helps more than you\'d think');
+}
+
+function skipAsk(){
+  if(_currentAsk) record('ask', {ask:_currentAsk.id, answer:'skipped'});
+  closeAsk(true);
+}
+
+function closeAsk(stamp){
+  document.getElementById('ask-sheet').classList.remove('open');
+  document.getElementById('ask-bg').classList.remove('open');
+  if(stamp && _currentAsk){
+    const s = askState();
+    s[_currentAsk.id] = Date.now();
+    s._last = Date.now();
+    saveAskState(s);
+  }
+  _currentAsk = null;
 }
 
 function currentScreen(){

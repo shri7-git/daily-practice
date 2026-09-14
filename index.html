@@ -1290,7 +1290,9 @@
             </div>
           </div>
           <p style="margin-top:10px">🔖 <b>Bookmark this page</b> — there's no app to install
-          and no account to lose. And if it's worth five minutes to you,
+          and no account to lose.<span id="remind-line" hidden> Or
+          <a href="#" onclick="event.preventDefault();openRemind()">have me send you a nudge</a>.</span>
+          And if it's worth five minutes to you,
           <a href="#" onclick="event.preventDefault();shareApp()">pass it on</a>.</p>
         </div>
         <div class="wel-hero">
@@ -1896,6 +1898,35 @@
         <button class="btn-ghost" onclick="closeFeedback()">Not now</button>
         <p class="privacy">Goes to me and nobody else. I won't publish your name or pass on
           your email. Please don't include anyone else's personal details.</p>
+      </div>
+    </div>
+
+    
+    <div class="sheet-bg" id="rm-bg" onclick="closeRemind()"></div>
+    <div class="sheet" id="rm-sheet">
+      <div class="grab"></div>
+      <h3>🔔 A nudge, if it helps</h3>
+      <div class="sbody">
+        <p class="ask-hint" style="margin:0 0 12px">There's no app to install, so it's easy
+          to forget this exists. I can send a short email with a link to the day — no
+          streaks, no count of what you've missed, and one tap to stop.</p>
+        <div class="q">
+          <label>How often?</label>
+          <div class="opts" id="rm-opts" style="margin:8px 0 0">
+            <button class="opt" data-v="daily" onclick="pickOne(this)">Every day</button>
+            <button class="opt" data-v="weekly" onclick="pickOne(this)">Once a week</button>
+            <button class="opt" data-v="festivals" onclick="pickOne(this)">Festivals and special days only</button>
+          </div>
+        </div>
+        <div class="q">
+          <label>Email</label>
+          <input class="fld" id="rm-email" type="email" inputmode="email"
+                 autocomplete="email" placeholder="you@example.com" />
+        </div>
+        <button class="btn-primary" id="rm-send" onclick="submitRemind()">Send me a nudge</button>
+        <button class="btn-ghost" onclick="closeRemind()">Not now</button>
+        <p class="privacy">Used for the reminder and nothing else. Never passed on, and
+          every email has an unsubscribe link.</p>
       </div>
     </div>
 
@@ -11300,6 +11331,65 @@ async function shareApp(){
   }
 }
 
+/* ---------------- reminders ----------------
+   Flip to true ONLY after the reminder steps in tools/FEEDBACK-SETUP.md are done — the
+   sending half is a time-driven trigger in Shri's Apps Script, and until it exists an
+   opt-in would be a promise of an email that never arrives. Off, the invitation is
+   simply not shown; nobody is offered something that doesn't work. */
+const REMINDERS_ON = false;
+
+function openRemind(){
+  document.getElementById('rm-sheet').classList.add('open');
+  document.getElementById('rm-bg').classList.add('open');
+  record('remind-opened', {});
+}
+function closeRemind(){
+  document.getElementById('rm-sheet').classList.remove('open');
+  document.getElementById('rm-bg').classList.remove('open');
+}
+
+async function submitRemind(){
+  const email = document.getElementById('rm-email').value.trim();
+  const on = document.querySelector('#rm-opts .opt.on');
+  const cadence = on ? on.dataset.v : '';
+  if(!cadence){ toast('Pick how often first'); return; }
+  /* deliberately loose: a full email regex rejects valid addresses, and the only cost
+     of a bad one here is one bounced nudge */
+  if(!/^\S+@\S+\.\S+$/.test(email)){ toast('That email doesn\'t look right'); return; }
+
+  const btn = document.getElementById('rm-send');
+  btn.disabled = true; btn.textContent = 'Setting up…';
+  const status = await record('reminder', {email, answer:cadence});
+  btn.disabled = false; btn.textContent = 'Send me a nudge';
+
+  closeRemind();
+  if(status === 'sent'){
+    toast('Done — I\'ll send you a nudge');
+    try { localStorage.setItem('dp-remind', cadence); } catch(e){}
+    syncRemind();
+    return;
+  }
+  /* same honesty rule as the feedback form: never a thank-you we can't back up */
+  showInfo('Not set up yet',
+    'Reminders aren\'t wired up on this draft yet, so nothing was saved and no email '
+    + 'will arrive. Bookmark the page instead — that works today.');
+}
+
+/* Hides the invitation when reminders are off, and swaps it for a change-it link once
+   someone has already signed up on this device. */
+function syncRemind(){
+  const line = document.getElementById('remind-line');
+  if(!line) return;
+  line.hidden = !REMINDERS_ON;
+  let set = null;
+  try { set = localStorage.getItem('dp-remind'); } catch(e){}
+  /* BOTH branches write the text. Only writing the signed-up one leaves the invitation
+     permanently replaced for anyone who later turns reminders off again. */
+  line.innerHTML = set
+    ? ' Reminders are on — <a href="#" onclick="event.preventDefault();openRemind()">change them</a>.'
+    : ' Or <a href="#" onclick="event.preventDefault();openRemind()">have me send you a nudge</a>.';
+}
+
 function openFeedback(){
   document.getElementById('fb-sheet').classList.add('open');
   document.getElementById('fb-bg').classList.add('open');
@@ -11452,24 +11542,19 @@ document.addEventListener('scroll', checkReached, {passive:true, capture:true});
    now lands by the SEVENTH distinct day, and the first one lands inside the first
    visit — because for a meaningful share of people there will not be a second.
 
-   Ladder, by days used, each asked once:
-     visit 1  would        having seen it, would you use this? Asked at the end of the
-                           first real visit, not on day 2: this is the one answer worth
-                           having from someone who never comes back, and the honest
-                           version of "should I build this". Follow-up asks why.
-     2 days   pull         which part would you come back for? Tells us what the product
-                           actually is — the stories, the food, the calendar, the adult
-                           layer — which is the difference between building one thing
-                           well and five things thinly.
-     3 days   improve      what would have to be better before you'd use it for real?
-                           Blunt, free text. The only open-ended rung, placed where
-                           someone has seen enough to answer but not so late that we
-                           lose them first.
-     5 days   unprompted   has anyone asked for the next story without you bringing it
-                           up? THE question — the project's own definition of "it
-                           sticks" — so it gets the best slot that is still realistically
-                           reachable.
-     7 days   worth        if it wasn't free, would you keep using it? Seven separate days
+   THREE rungs (cut from five, Shri's call Sep 14 — see the trims below):
+     visit 1  would        having seen it, would you use this, and what kind of use —
+                           a daily habit, days-when-there's-time, or festivals only?
+                           Asked at the end of the first real visit, not on day 2: this
+                           is the one answer worth having from someone who never comes
+                           back. The "probably not" answer, and only that one, opens a
+                           free-text box asking why.
+     2 days   pull         which part would you come back for (chips) AND what would
+                           have to be better (free text) — the old day-2 and day-3
+                           questions merged onto one screen. Tells us what the product
+                           actually is and what is in the way of it, for one
+                           interruption instead of two.
+     5 days   worth        if it wasn't free, would you keep using it? Five separate days
                            of use is a real signal; waiting for thirty just means never
                            asking. Deliberately names NO price and NO currency (Shri's
                            call, Sep 14): the price isn't decided, and a number in one
@@ -11488,12 +11573,20 @@ document.addEventListener('scroll', checkReached, {passive:true, capture:true});
        reason to spend a rung on it.
      who-are-you-using-it-with — interesting, not decision-changing. Partly inferable
        from whether the Go Deeper layer gets opened at all.
-     frequency — "how often would you use this" is the same claim as `would`, asked
-       twice; the passive return-rate answers it better than either.
-     pulse — a repeating one-tapper crowds out the five that matter when the whole
+     frequency, as a separate question — it is now folded into `would`'s own options
+       ("a daily habit" / "days when I have time" / "festivals and special days"), so
+       the intent arrives on day one at no extra cost.
+     pulse — a repeating one-tapper crowds out the questions that matter when the whole
        window is a week.
+     unprompted — "has anyone asked for the next story without you bringing it up?"
+       CUT on Shri's call (Sep 14), its day-5 slot given to the pay question. Worth
+       recording what goes with it: that question was the project's own stated
+       definition of "it sticks" (CLAUDE.md, Current test), and it has no passive
+       proxy — a child asking for the next story is not something telemetry can see.
+       What survives is weaker but real: return rate, days used, and whether people
+       reach step 3. If the ladder ever regains a rung, this is the one to restore.
 
-   One substitution, not a sixth rung: someone returning after 10+ days away gets the
+   One substitution, not a fourth rung: someone returning after 10+ days away gets the
    what-pulled-you-away question INSTEAD of whatever was next in their queue (which
    stays queued). Churn reason is the most valuable thing here and is only askable in
    that window.
@@ -11529,28 +11622,33 @@ function usageDays(){
 
 /* Order here IS priority — maybeAsk takes the first eligible entry. */
 const ASKS = [
+  /* The four options carry BOTH readings at once: is this a yes, and if so what kind of
+     yes. Shri asked for the intent options ("build a daily habit" / "days when I have
+     time" / "festivals only") to appear on the first day, chained off an affirmative
+     answer — but chained, they would have re-asked what this question's own options
+     already say. Folded in instead: one question, one tap, both answers. The free-text
+     follow-up now fires only for "probably not" (see thenIf), because that is the person
+     whose reason we most need and the one least likely to come back and give it later. */
   { id:'would', after:1,
     q:'Now that you\'ve had a look — would you use this?',
     hint:'Whatever is true. "Probably not" is the most useful answer you can give me today.',
-    opts:[['yes','Yes, most days'],['sometimes','Now and then'],['occasion','Only when a festival comes up'],['no','Probably not']],
-    then:'What makes you say that?' },
+    opts:[['daily','Yes — I\'d like to build a daily habit'],
+          ['whentime','Yes — on days when I have time'],
+          ['festivals','Yes — for festivals and special days'],
+          ['no','Probably not']],
+    then:'What makes you say that?', thenIf:['no'] },
 
+  /* Day 2 and day 3 merged into one screen (Shri, Sep 14): the chips say what to build
+     more of, the follow-up box says what is in the way. Both land on ONE row — chip in
+     the `answer` column, text in `what they thought` — so they stay separable in the
+     sheet while costing the person a single interruption instead of two. */
   { id:'pull', after:2,
     q:'What would you actually come back for?',
     hint:'Pick the one that\'s truest. It tells me what to build properly and what to leave alone.',
-    opts:[['stories','The stories'],['together','The recipes and things to do together'],['shloka','The shlokas'],['calendar','The festival calendar'],['deeper','The Go Deeper layer, for me'],['none','Nothing yet, honestly']] },
+    opts:[['stories','The stories'],['together','The recipes and things to do together'],['shloka','The shlokas'],['calendar','The festival calendar'],['deeper','The Go Deeper layer, for me'],['none','Nothing yet, honestly']],
+    then:'And what would have to be better before you\'d use this for real?' },
 
-  { id:'improve', after:3,
-    q:'What would have to be better before you\'d use this for real?',
-    hint:'The blunter the better. Nothing here is precious yet.',
-    free:'Anything at all…', required:true },
-
-  { id:'unprompted', after:5,
-    q:'Has anyone asked for the next story without you bringing it up?',
-    hint:'The honest answer is the useful one. If nobody has, that tells me more than a compliment would.',
-    opts:[['yes','Yes, unprompted'],['ifreminded','Only if I remind them'],['no','Not yet'],['alone','I practise on my own']] },
-
-  { id:'worth', after:7,
+  { id:'worth', after:5,
     q:'If this became a finished app, and it wasn\'t free — would you keep using it?',
     hint:'No price has been set and nothing is for sale. I only need to know whether this is worth building properly.',
     opts:[['yes','Yes'],['depends','Maybe — depends what it costs'],['free','Only if it stays free'],['no','No']],
@@ -11618,7 +11716,9 @@ function openAsk(a){
 function pickAsk(btn){
   pickOne(btn);
   const a = _currentAsk;
-  if(a && a.then){
+  /* thenIf narrows the follow-up to particular answers — q1 asks "what makes you say
+     that?" of the person who said probably-not and nobody else */
+  if(a && a.then && (!a.thenIf || a.thenIf.includes(btn.dataset.v))){
     /* chip chosen, and this question has a follow-up worth one line of typing */
     const txt = document.getElementById('ask-text');
     txt.hidden = false; txt.placeholder = a.then;
@@ -11723,6 +11823,7 @@ function syncFab(){
 
 show('welcome');
 syncFab();
+syncRemind();
 </script>
 </body>
 </html>

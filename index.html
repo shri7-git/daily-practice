@@ -11469,8 +11469,15 @@ document.addEventListener('scroll', checkReached, {passive:true, capture:true});
                            up? THE question — the project's own definition of "it
                            sticks" — so it gets the best slot that is still realistically
                            reachable.
-     7 days   worth        would you keep this at $99 a year? Seven separate days of use
-                           is a real signal; waiting for thirty just means never asking.
+     7 days   worth        if it wasn't free, would you keep using it? Seven separate days
+                           of use is a real signal; waiting for thirty just means never
+                           asking. Deliberately names NO price and NO currency (Shri's
+                           call, Sep 14): the price isn't decided, and a number in one
+                           currency quietly excludes every tester outside that country.
+                           At this sample size the legible read is paid-vs-free anyway —
+                           a price point needs more people than this test will ever have.
+                           The follow-up lets anyone who cares about the number raise it
+                           themselves, in their own currency, unprompted.
 
    Deliberately CUT, and worth knowing why:
      rating /10 and recommend /10 — two scales from twenty-odd friendly testers are
@@ -11544,9 +11551,9 @@ const ASKS = [
     opts:[['yes','Yes, unprompted'],['ifreminded','Only if I remind them'],['no','Not yet'],['alone','I practise on my own']] },
 
   { id:'worth', after:7,
-    q:'If this became a finished app at $99 a year for the family, would you keep it?',
-    hint:'Nothing is for sale and nothing is being collected — I just need to know whether this is worth building.',
-    opts:[['yes','Yes'],['maybe','Maybe — depends'],['no','No']],
+    q:'If this became a finished app, and it wasn\'t free — would you keep using it?',
+    hint:'No price has been set and nothing is for sale. I only need to know whether this is worth building properly.',
+    opts:[['yes','Yes'],['depends','Maybe — depends what it costs'],['free','Only if it stays free'],['no','No']],
     then:'What would make that an easy yes — or an easy no?' },
 
   /* Not a sixth rung: this SUBSTITUTES for whatever is next in the queue when someone

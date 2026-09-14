@@ -591,6 +591,14 @@
     background:var(--saffron-soft);border:1px solid var(--line);
     font-size:12px;line-height:1.55;color:var(--muted)}
   .arrival b{color:var(--ink);font-weight:700}
+  .arrival p{margin:0 0 8px}
+  .arrival p:last-of-type{margin-bottom:0}
+  /* the ask is the point of the whole band — set it off from the backstory above it */
+  .arrival .ask{margin-top:10px;padding-top:9px;border-top:1px solid var(--line)}
+  .arr-links{display:flex;flex-wrap:wrap;gap:6px 16px;margin-top:9px;
+    font-size:12px;font-weight:700;color:var(--saffron)}
+  .arr-links span{cursor:pointer}
+  .arr-links span:active{opacity:.6}
 
   /* ---------- archive ("every day so far") ---------- */
   .arch-mon{font-size:11px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;
@@ -1262,18 +1270,28 @@
       <section class="screen" id="screen-welcome" hidden>
         
         <div class="arrival">
-          <b>I started building this for my own kids.</b> I wanted them to have the stories I
-          grew up on, in five minutes a day, without it becoming another class. Enough people
-          said they'd want it too that I'm now finding out whether that's true — so right now
-          I'm mostly after your honest reaction.
-          <div style="margin-top:8px"><b>It's an early draft, not a finished app.</b> Everything
-          here is real content you can read, but it hasn't been checked yet by someone who knows
-          the tradition, and some pages are still marked <i>soon</i>. I'd rather show you it early
-          than polished — use it, and tell me what's wrong.</div>
-          <div style="margin-top:8px">🔖 <b>Bookmark this page</b> to come back — there's no
-          app to install and no account to lose. And if it's worth five minutes to you,
-          <a href="#" onclick="event.preventDefault();shareApp()">pass it on</a> to someone
-          who'd like it too.</div>
+          <p><b>I built this for my own family.</b> I grew up on these stories — from my
+          grandmother, from my parents, from whatever I could get hold of and read. My children
+          are growing up surrounded by different things, and I didn't want the thread to go
+          quiet just because we moved.</p>
+          <p><b>It's a prototype, not a finished app.</b> I'm a student of this, not a teacher
+          of it. The content is real, but it hasn't been checked yet by someone who knows the
+          tradition, and some pages still say <i>soon</i>.</p>
+          <div class="ask">
+            <p><b>What I'd like from you.</b> A few people said they'd want something like
+            this. I'd like to know whether that's really true before I put more time into it —
+            so have a look around, then tell me honestly whether it's worth building.
+            <i>Not for us</i> is a useful answer, and a much cheaper one to hear now than in a
+            year. I'll ask one short question now and then; skipping is completely fine.</p>
+            <div class="arr-links">
+              <span onclick="openFeedback()">💬 Tell me what you think</span>
+              <span onclick="show('why')">Why it's shaped this way →</span>
+              <span onclick="show('faq')">Questions people ask →</span>
+            </div>
+          </div>
+          <p style="margin-top:10px">🔖 <b>Bookmark this page</b> — there's no app to install
+          and no account to lose. And if it's worth five minutes to you,
+          <a href="#" onclick="event.preventDefault();shareApp()">pass it on</a>.</p>
         </div>
         <div class="wel-hero">
           <div class="lamp">🪔</div>
@@ -1329,16 +1347,6 @@
         </div>
 
         
-        <div class="capture" style="margin-top:16px">
-          <h3>Why this exists</h3>
-          <p>I grew up on stories — from my grandmother, from my parents, from whatever I
-            could get hold of and read. Children growing up here are surrounded by different
-            things. I didn't want the thread to go quiet just because we moved.</p>
-          <p style="margin-bottom:0">So: five minutes a day. A story, a verse, three breaths.
-            Not a class, nothing to keep up with, nothing to fall behind on.</p>
-          <div class="browse" style="margin-top:10px" onclick="show('why')">Why it's shaped this way →</div>
-          <div class="browse" style="margin-top:6px" onclick="show('faq')">Questions people ask →</div>
-        </div>
 
         <div class="share-row">
           <button onclick="shareApp()">📤 Send to someone</button>
@@ -11373,14 +11381,59 @@ if(_session.newSession){
    analytics could ever be sent. Silent, because nothing visibly failed. */
 var _screenSince = Date.now();
 var _lastScreen = null;
+/* screens moved through in THIS visit — the engagement gate on the first ask */
+var _navCount = 0;
 function trackScreenChange(){
   const now = Date.now();
   if(_screenSince == null) _screenSince = now;
   const prev = _lastScreen, ms = now - _screenSince;
   const cur = currentScreen();
-  if(prev && prev !== cur && ms > 800) record('view-duration', {viewedScreen:prev, ms});
+  if(prev && prev !== cur){ _navCount++; if(ms > 800) record('view-duration', {viewedScreen:prev, ms}); }
   _screenSince = now; _lastScreen = cur;
 }
+
+/* ---- two passive signals that answer questions we'd otherwise have to ask ----
+   Both reuse existing sheet columns (`answer` and `viewed screen`) on purpose, so the
+   Apps Script does NOT need a new column or a redeploy to capture them.
+
+   'depth'   — did anyone open the Go Deeper layer at all? The adult layer is one of the
+               project's biggest bets and the most expensive thing to write. Nobody
+               opening it is a finding.
+   'reached' — did they get as far as step 3 (Breathe), i.e. actually do the five
+               minutes, or read the story and leave? The difference between "content
+               people like" and "a practice people do". */
+/* Delegated rather than dropped inside setMode()/setGMode()/… — those five setters are
+   also called during load to put each screen into its default state, and an init call
+   is not a person tapping anything. A real click is. */
+document.addEventListener('click', e => {
+  const b = e.target.closest('button[id^="seg-"]');
+  if(!b) return;
+  record('depth', {answer: /parents$/.test(b.id) ? 'deeper' : 'kids', viewedScreen: currentScreen()});
+});
+
+/* Fires once per screen per visit, when the Breathe heading has actually been scrolled
+   into view. A plain rect check on scroll rather than an IntersectionObserver: IO needs
+   the page to be compositing frames, which makes it untestable in a hidden preview and
+   silently dead in a backgrounded tab. getBoundingClientRect is always truthful. */
+var _reached = {};
+var _breatheHeads = [];
+function checkReached(){
+  for(const el of _breatheHeads){
+    if(el.offsetParent === null) continue;             /* hidden by screen or by mode */
+    const sc = el.closest('.screen');
+    const id = sc ? sc.id.replace('screen-','') : '';
+    if(!id || _reached[id]) continue;
+    const r = el.getBoundingClientRect();
+    if(r.height && r.top < innerHeight && r.bottom > 0){
+      _reached[id] = 1;
+      record('reached', {answer:'breathe', viewedScreen:id});
+    }
+  }
+}
+document.querySelectorAll('.screen .sec-h h2 .step').forEach(el => {
+  if(el.textContent.trim() === '3') _breatheHeads.push(el.closest('.sec-h') || el);
+});
+document.addEventListener('scroll', checkReached, {passive:true, capture:true});
 
 /* ================= THE ASK LADDER =================
    One question at a time, placed by BEHAVIOUR rather than by the calendar.
@@ -11392,52 +11445,71 @@ function trackScreenChange(){
    we've had them; distinct days measures how much of the thing they've actually seen,
    and only the second earns a question.
 
-   This is Shri's five-question survey (usage frequency · rating · what could improve ·
-   what you like · likelihood to recommend) spread ACROSS the ladder rather than stacked
-   into one form. Same questions, asked when each is answerable: "what do you like" works
-   on day 3, "what could be better" doesn't. It also resolves the two-1-to-10-scales
-   worry — a rating and a recommend score are heavy together on one sheet and weightless
-   a week apart, so they sit at day 18 and day 25 and never share a screen.
+   FIVE questions, total (Sep 14 rewrite). The earlier ten-rung ladder ran to 32 days
+   used, which assumed a retention this prototype has no right to expect: it is an
+   unfinished draft, most people will open it a handful of times, and a question placed
+   at day 18 is a question that will never be asked. Everything that decides anything
+   now lands by the SEVENTH distinct day, and the first one lands inside the first
+   visit — because for a meaningful share of people there will not be a second.
 
-   Ladder, by days used — each asked once, except pulse which repeats:
-     1 day   pulse        was it worth five minutes — one tap, repeatable every 14 days
-     2 days  who          who shared this with you — the referral chain, asked early,
-                          while they still remember, instead of waiting for someone to
-                          find the feedback button on their own
-     3 days  like         what do you like — a first impression, caught while it is one
-     5 days  whatfor      is this for a child, or for you — tells us whether the
-                          adult-alone user is real, which a whole set of copy rules
-                          rests on
-     7 days  frequency    how often would you actually use this
-     10 days unprompted   THE question: has anyone asked for the next story without you
-                          bringing it up? That is the project's own definition of "it
-                          sticks", so it gets the best slot on the ladder
-     14 days improve      what could be better — by now they have seen enough to say
-     18 days rating       out of 10, where is this
-     25 days recommend    likelihood to recommend — last of the two scales, deliberately
-                          a week clear of the rating
-     32 days worth        would you keep this at $99/yr — asked only of people who have
-                          used it thirty-odd separate days, i.e. the only people whose
-                          answer means anything. Delete this rung if pricing isn't a
-                          question you want to put to this group yet.
-     lapse   lapse        jumps the queue: returning after 10+ days away, what pulled
-                          you away. Churn reason is the most valuable and least
-                          collected thing here, and it is only askable in this window.
+   Ladder, by days used, each asked once:
+     visit 1  would        having seen it, would you use this? Asked at the end of the
+                           first real visit, not on day 2: this is the one answer worth
+                           having from someone who never comes back, and the honest
+                           version of "should I build this". Follow-up asks why.
+     2 days   pull         which part would you come back for? Tells us what the product
+                           actually is — the stories, the food, the calendar, the adult
+                           layer — which is the difference between building one thing
+                           well and five things thinly.
+     3 days   improve      what would have to be better before you'd use it for real?
+                           Blunt, free text. The only open-ended rung, placed where
+                           someone has seen enough to answer but not so late that we
+                           lose them first.
+     5 days   unprompted   has anyone asked for the next story without you bringing it
+                           up? THE question — the project's own definition of "it
+                           sticks" — so it gets the best slot that is still realistically
+                           reachable.
+     7 days   worth        would you keep this at $99 a year? Seven separate days of use
+                           is a real signal; waiting for thirty just means never asking.
+
+   Deliberately CUT, and worth knowing why:
+     rating /10 and recommend /10 — two scales from twenty-odd friendly testers are
+       noise dressed as data, and both are strictly weaker than "would you use it" and
+       "would you pay". Gone.
+     who-shared-this — now answered passively by ?ref=share on every forwarded link
+       (see shareUrl()), and the always-open feedback form still carries the field. No
+       reason to spend a rung on it.
+     who-are-you-using-it-with — interesting, not decision-changing. Partly inferable
+       from whether the Go Deeper layer gets opened at all.
+     frequency — "how often would you use this" is the same claim as `would`, asked
+       twice; the passive return-rate answers it better than either.
+     pulse — a repeating one-tapper crowds out the five that matter when the whole
+       window is a week.
+
+   One substitution, not a sixth rung: someone returning after 10+ days away gets the
+   what-pulled-you-away question INSTEAD of whatever was next in their queue (which
+   stays queued). Churn reason is the most valuable thing here and is only askable in
+   that window.
 
    "Did anything look wrong?" is deliberately NOT on the ladder — it stays on the
    feedback form, always open, because a factual error needs reporting the moment it is
    spotted, not on whatever day the ladder gets round to asking.
 
-   Guard rails (all enforced in maybeAsk): never on a first visit, at most ONE ask per
-   visit, at least 4 days between any two asks, never re-ask an answered one, and only
-   ever after 20s on an actual content screen — never over the welcome screen, never
-   over a library, never before someone has read anything. Skipping is free and is
-   itself recorded; a pile of skips is data about the questions, not about the people. */
+   Guard rails (all enforced in maybeAsk): at most ONE ask per visit, never two on the
+   same calendar day, never re-ask an answered one, and only ever after 20s on an actual
+   content screen with a few screens already behind them — never over the welcome
+   screen, never over a library, never before someone has read anything. Skipping is
+   free and is itself recorded; a pile of skips is data about the questions, not about
+   the people. */
 
 /* Distinct days used, kept as a small list of YYYY-MM-DD so return-rate and
    days-to-drop-off stay derivable from the sheet as well as from here. */
+function todayKey(){
+  const d = new Date();
+  return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
+}
 function usageDays(){
-  const d = new Date(), key = d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
+  const key = todayKey();
   try {
     const days = JSON.parse(localStorage.getItem('dp-days') || '[]');
     const prev = days.length ? days[days.length-1] : null;
@@ -11448,65 +11520,42 @@ function usageDays(){
   } catch(e){ return {count:1, gap:0}; }
 }
 
-/* Order here IS priority — maybeAsk takes the first eligible entry. The once-only
-   milestone questions come first and pulse sits last on purpose: pulse is the only
-   repeating one, so at the front it would win every fortnight and crowd out the
-   questions that actually decide things. Last, it is the filler for a visit when
-   nothing more important is due. */
+/* Order here IS priority — maybeAsk takes the first eligible entry. */
 const ASKS = [
-  { id:'who', after:2,
-    q:'Who shared this with you?',
-    hint:'A name, or however you found it. It tells me how this is actually spreading — and lets me tell a stranger\'s honest reaction from a close friend being kind.',
-    free:'e.g. a name, or "found it myself"', required:true },
+  { id:'would', after:1,
+    q:'Now that you\'ve had a look — would you use this?',
+    hint:'Whatever is true. "Probably not" is the most useful answer you can give me today.',
+    opts:[['yes','Yes, most days'],['sometimes','Now and then'],['occasion','Only when a festival comes up'],['no','Probably not']],
+    then:'What makes you say that?' },
 
-  { id:'like', after:3,
-    q:'What do you like about it so far?',
-    hint:'Whatever comes to mind — a page, a story, the length of it.',
-    free:'A line is plenty…', required:true },
+  { id:'pull', after:2,
+    q:'What would you actually come back for?',
+    hint:'Pick the one that\'s truest. It tells me what to build properly and what to leave alone.',
+    opts:[['stories','The stories'],['together','The recipes and things to do together'],['shloka','The shlokas'],['calendar','The festival calendar'],['deeper','The Go Deeper layer, for me'],['none','Nothing yet, honestly']] },
 
-  { id:'whatfor', after:5,
-    q:'Who are you using this with?',
-    opts:[['child','A child'],['children','More than one child'],['alone','Just me'],['both','Both']] },
+  { id:'improve', after:3,
+    q:'What would have to be better before you\'d use this for real?',
+    hint:'The blunter the better. Nothing here is precious yet.',
+    free:'Anything at all…', required:true },
 
-  { id:'frequency', after:7,
-    q:'Honestly — how often would you use this?',
-    hint:'Whatever is true. "When an occasion comes up" is a perfectly good answer.',
-    opts:[['daily','Every day'],['weekly','A few times a week'],['occasion','When an occasion comes up'],['rarely','Probably won\'t']] },
-
-  { id:'unprompted', after:10,
+  { id:'unprompted', after:5,
     q:'Has anyone asked for the next story without you bringing it up?',
     hint:'The honest answer is the useful one. If nobody has, that tells me more than a compliment would.',
     opts:[['yes','Yes, unprompted'],['ifreminded','Only if I remind them'],['no','Not yet'],['alone','I practise on my own']] },
 
-  { id:'improve', after:14,
-    q:'What could be better?',
-    hint:'The blunter the better. Nothing here is precious yet.',
-    free:'Anything at all…', required:true },
-
-  { id:'rating', after:18, scale:10, from:1,
-    q:'Out of 10, where is this right now?',
-    hint:'1 is not worth anyone\'s time, 10 is you\'d be upset if it disappeared.' },
-
-  { id:'recommend', after:25, scale:10, from:0,
-    q:'How likely are you to recommend this to another family?',
-    hint:'0 is not a chance, 10 is you\'d send it on today.' },
-
-  { id:'worth', after:32,
-    q:'If this became a real app at $99 a year for the family, would you keep it?',
-    hint:'Nothing is for sale and nothing is being collected — I just need to know whether I\'m building something people would pay for.',
+  { id:'worth', after:7,
+    q:'If this became a finished app at $99 a year for the family, would you keep it?',
+    hint:'Nothing is for sale and nothing is being collected — I just need to know whether this is worth building.',
     opts:[['yes','Yes'],['maybe','Maybe — depends'],['no','No']],
     then:'What would make that an easy yes — or an easy no?' },
 
+  /* Not a sixth rung: this SUBSTITUTES for whatever is next in the queue when someone
+     comes back after a long gap, and that question stays queued for next time. */
   { id:'lapse', lapse:10,
     q:'You\'ve been away a bit — what pulled you away?',
     hint:'No wrong answer, and it doesn\'t need to be flattering.',
     opts:[['busy','Just got busy'],['forgot','Forgot it existed'],['kids','Kids lost interest'],['content','Content wasn\'t for us'],['other','Something else']],
-    then:'Anything you\'d add?' },
-
-  /* last by design — see the note above the array */
-  { id:'pulse', after:1, every:14*86400000,
-    q:'Was today worth the five minutes?',
-    opts:[['yes','🙂 Yes'],['meh','😐 Not really'],['no','🙁 No']] }
+    then:'Anything you\'d add?' }
 ];
 
 function askState(){
@@ -11519,14 +11568,17 @@ let _currentAsk = null;
 
 function maybeAsk(){
   if(_askedThisVisit) return;
-  if(_session.visits < 2 && _usage.count < 2) return;   /* let a first-timer just look around */
+  /* The first question is allowed inside the FIRST visit — for a lot of people there
+     won't be a second — but only once they have actually moved around and read
+     something. Screens seen, not minutes elapsed, is the honest test of that. */
+  if(_navCount < 3) return;
   const s = askState();
-  if(Date.now() - (s._last || 0) < 4*86400000) return;  /* never two asks in the same few days */
+  if(s._lastDay === todayKey()) return;                 /* never two asks in one day */
 
-  /* lapse jumps the queue — it is only meaningful in the visit they come back on */
+  /* lapse substitutes for the queued question — it is only meaningful in the visit
+     they come back on, and the question it displaces stays queued for next time */
   const pick = (_usage.gap >= 10 && !s.lapse ? ASKS.find(a=>a.id==='lapse') : null)
-    || ASKS.find(a => a.after && _usage.count >= a.after &&
-         (a.every ? (Date.now() - (s[a.id] || 0) >= a.every) : !s[a.id]));
+    || ASKS.find(a => a.after && _usage.count >= a.after && !s[a.id]);
   if(!pick) return;
   openAsk(pick);
 }
@@ -11578,11 +11630,8 @@ function sendAsk(){
   const text = document.getElementById('ask-text').value.trim();
   if(a.required && !answer && !text){ toast('A word or two is plenty'); return; }
   record('ask', {ask:a.id, answer, text});
-  /* the referral answer belongs in the same column as the feedback form's version of
-     the question, so both land together however it was collected */
-  if(a.id === 'who') record('feedback', {know:text, text:'', wrong:'', email:''});
   closeAsk(true);
-  toast(a.id==='who' ? 'Thank you — that helps a lot' : 'Thanks — that helps more than you\'d think');
+  toast('Thank you — that helps more than you\'d think');
 }
 
 function skipAsk(){
@@ -11597,6 +11646,7 @@ function closeAsk(stamp){
     const s = askState();
     s[_currentAsk.id] = Date.now();
     s._last = Date.now();
+    s._lastDay = todayKey();
     saveAskState(s);
   }
   _currentAsk = null;

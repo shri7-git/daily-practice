@@ -1874,8 +1874,7 @@
       <div class="sbody" id="fb-body">
         <div class="q">
           <label>Who shared this with you?</label>
-          <div class="hint">A name, or however you found this — so I can see how it's actually
-            spreading, and tell a stranger's honest reaction from a close friend being kind.</div>
+          <div class="hint">A name, or however you found this.</div>
           <input class="fld" id="fb-know" type="text" placeholder="e.g. a name, or 'found it myself'" />
         </div>
         <div class="q">
@@ -11621,6 +11620,17 @@ function usageDays(){
 }
 
 /* Order here IS priority — maybeAsk takes the first eligible entry. */
+/* NO HINT LINE UNDER A QUESTION (Shri, Sep 16). A question is its wording plus its
+   options, and nothing else. Every hint that was here had drifted into steering: one
+   nominated "Probably not" as the most useful answer, one said the chips decided what
+   got built and what got dropped, one said the answer decided whether this was worth
+   building properly, one invited an unflattering answer. Each reads as helpful and each
+   pushes toward a particular chip — which is exactly the thing a survey exists to avoid.
+   The `hint` field still renders if set; the rule is that it stays unset.
+
+   Same rule for option labels: no adverb that flatters or apologises for one choice
+   ("Nothing yet, honestly" became "Nothing yet"), and no follow-up that presupposes its
+   own answer ("what would have to be better" presumes something must be). */
 const ASKS = [
   /* The four options carry BOTH readings at once: is this a yes, and if so what kind of
      yes. Shri asked for the intent options ("build a daily habit" / "days when I have
@@ -11631,7 +11641,6 @@ const ASKS = [
      whose reason we most need and the one least likely to come back and give it later. */
   { id:'would', after:1,
     q:'Now that you\'ve had a look — would you use this?',
-    hint:'Whatever is true. "Probably not" is the most useful answer you can give me today.',
     opts:[['daily','Yes — I\'d like to build a daily habit'],
           ['whentime','Yes — on days when I have time'],
           ['festivals','Yes — for festivals and special days'],
@@ -11644,13 +11653,11 @@ const ASKS = [
      sheet while costing the person a single interruption instead of two. */
   { id:'pull', after:2,
     q:'What would you actually come back for?',
-    hint:'Pick the one that\'s truest. It tells me what to build properly and what to leave alone.',
-    opts:[['stories','The stories'],['together','The recipes and things to do together'],['shloka','The shlokas'],['calendar','The festival calendar'],['deeper','The Go Deeper layer, for me'],['none','Nothing yet, honestly']],
-    then:'And what would have to be better before you\'d use this for real?' },
+    opts:[['stories','The stories'],['together','The recipes and things to do together'],['shloka','The shlokas'],['calendar','The festival calendar'],['deeper','The Go Deeper layer, for me'],['none','Nothing yet']],
+    then:'Anything getting in the way?' },
 
   { id:'worth', after:5,
     q:'If this became a finished app, and it wasn\'t free — would you keep using it?',
-    hint:'No price has been set and nothing is for sale. I only need to know whether this is worth building properly.',
     opts:[['yes','Yes'],['depends','Maybe — depends what it costs'],['free','Only if it stays free'],['no','No']],
     then:'What would make that an easy yes — or an easy no?' },
 
@@ -11658,7 +11665,6 @@ const ASKS = [
      comes back after a long gap, and that question stays queued for next time. */
   { id:'lapse', lapse:10,
     q:'You\'ve been away a bit — what pulled you away?',
-    hint:'No wrong answer, and it doesn\'t need to be flattering.',
     opts:[['busy','Just got busy'],['forgot','Forgot it existed'],['kids','Kids lost interest'],['content','Content wasn\'t for us'],['other','Something else']],
     then:'Anything you\'d add?' }
 ];
@@ -11820,6 +11826,23 @@ function syncFab(){
   const fab = document.getElementById('fab');
   if(fab) fab.hidden = (currentScreen() === 'welcome');
 }
+
+/* A phone tab is rarely closed — it is backgrounded and reopened days later. Two things
+   go wrong when that happens, and both look like the app being broken rather than stale:
+     1. "Today" is computed once at load, so a tab left open overnight still shows
+        YESTERDAY's story. That is the serious one.
+     2. GitHub Pages serves this page with max-age=600, so a long-lived tab can also be
+        running an old build after a publish.
+   Reloading when the page comes back after a long absence fixes both, and means nobody
+   ever has to be told to refresh — an instruction that makes a product feel broken.
+   Four hours is deliberately generous: long enough that nobody is interrupted mid-read
+   or mid-story, short enough that a new day is always a fresh load. */
+let _hiddenAt = null;
+document.addEventListener('visibilitychange', () => {
+  if(document.visibilityState === 'hidden'){ _hiddenAt = Date.now(); return; }
+  if(_hiddenAt && Date.now() - _hiddenAt > 4*60*60*1000) location.reload();
+  _hiddenAt = null;
+});
 
 show('welcome');
 syncFab();

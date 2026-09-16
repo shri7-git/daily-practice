@@ -26,6 +26,10 @@
     }
   }
   *{box-sizing:border-box}
+  /* nothing styled bare <a> before this, so every in-app link rendered in the browser's
+     default blue — and purple once visited, which in dark mode read as a broken link */
+  .phone a{color:var(--saffron);text-decoration:none;font-weight:600}
+  .phone a:hover{text-decoration:underline}
   body{margin:0;background:var(--bg);color:var(--ink);
     font-family:"Segoe UI",system-ui,-apple-system,Roboto,Helvetica,Arial,sans-serif;
     line-height:1.5;-webkit-font-smoothing:antialiased;padding:8px 0 24px}

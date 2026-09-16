@@ -11621,16 +11621,12 @@ function usageDays(){
 
 /* Order here IS priority — maybeAsk takes the first eligible entry. */
 /* NO HINT LINE UNDER A QUESTION (Shri, Sep 16). A question is its wording plus its
-   options, and nothing else. Every hint that was here had drifted into steering: one
-   nominated "Probably not" as the most useful answer, one said the chips decided what
-   got built and what got dropped, one said the answer decided whether this was worth
-   building properly, one invited an unflattering answer. Each reads as helpful and each
-   pushes toward a particular chip — which is exactly the thing a survey exists to avoid.
-   The `hint` field still renders if set; the rule is that it stays unset.
-
-   Same rule for option labels: no adverb that flatters or apologises for one choice
-   ("Nothing yet, honestly" became "Nothing yet"), and no follow-up that presupposes its
-   own answer ("what would have to be better" presumes something must be). */
+   options, and nothing else. Every hint that used to sit here had drifted into steering
+   — each read as helpful and each pushed toward one particular chip, which is the thing
+   a survey exists to avoid. The `hint` field still renders if set; the rule is that it
+   stays unset. Same rule for option labels (no adverb that flatters or apologises for
+   one choice) and for follow-ups (none that presupposes its own answer). See SIGNALS.md
+   for the specifics and for the one imbalance left in `would` on purpose. */
 const ASKS = [
   /* The four options carry BOTH readings at once: is this a yes, and if so what kind of
      yes. Shri asked for the intent options ("build a daily habit" / "days when I have

@@ -528,6 +528,8 @@
   .recipe .top.p3{background:linear-gradient(160deg,#fbe7c4,#f0c877)}
   .recipe .top.p4{background:linear-gradient(160deg,#e5e0f6,#c9befa)}
   .recipe .top.p5{background:linear-gradient(160deg,#dcf3ee,#c7e6b8)}
+  .recipe .top.p6{background:linear-gradient(160deg,#fdf1c7,#f6d66b)}
+  .recipe .top.p7{background:linear-gradient(160deg,#dbeaf8,#a8c9ee)}
 
   /* age-tier chip — replaces raw "Ages X-Y" numbers, structural fix */
   .tier{display:inline-flex;align-items:center;gap:4px;font-size:10.5px;font-weight:700;
@@ -1016,16 +1018,7 @@
           <div class="sec-h"><div class="ic leaf-soft">🌬️</div>
             <h2><span class="step">3</span>Breathe</h2>
             <div class="cnt">~1 min</div></div>
-          <div class="prac breathe">
-            <div class="breaths"><i></i><i></i><i></i><span>three breaths</span></div>
-            <b>Three breaths, mouth closed.</b>
-            Sit tall, lips gently shut — exactly what the geese asked of the tortoise. Breathe in slowly
-            through the nose, out slowly through the nose. Three times, without a word. Then see who can
-            keep it up the longest.
-            <div class="why">Three is the count said at
-              the end of a prayer — once for the world, once for other people, once for what is inside
-              us.</div>
-            <div class="browse" style="color:var(--peacock)" onclick="openPractice('quietmouth')">See how →</div></div>
+          <div id="g-breathe"></div>
         </section>
 
         <section id="g-sec-story">
@@ -2034,6 +2027,7 @@ const TAGS = {
   breath:   {group:'ptype', label:'Breathing', pub:true},
   movement: {group:'ptype', label:'Movement',  pub:true},
   stillness:{group:'ptype', label:'Stillness', pub:true},
+  sound:    {group:'ptype', label:'Sound',     pub:true},
 
   /* --- kitchen / effort --- */
   nocook:   {group:'effort', label:'No cooking', pub:true},
@@ -9913,7 +9907,7 @@ const FESTIVALS = [
     tags:['festival','universal','sect-panhindu','srilanka'], action:'day',
     kid:'The rivers are the fullest they will be all year, because the rains have come. So today people go down to the water and say thank you to it — with flowers, with a lamp floated on the surface, and with food eaten on the bank.<br><br>Water is the one thing nothing alive can do without. Once a year the Tamil calendar stops and points at that.',
     adult:'<b>Pathinettam Perukku</b> — the eighteenth day of Aadi, when the Kaveri and the other rivers are in flood. It is an agricultural festival in origin, tied to the monsoon reaching the delta, and it is one of the clearest examples in the calendar of a festival that is about a <i>physical fact</i> rather than a story.<br><br>Married women traditionally tie a fresh <i>kaappu</i> (thread) at the water\'s edge, and families cook and eat by the river.<br><br>Worth naming for a diaspora family: there is no Kaveri outside your door. A canal, a lake, a tap, or the sea all work — the object of attention is water itself.',
-    story:'f-river', shloka:'annapurne', practice:'three', together:['kolam'] },
+    story:'f-river', shloka:'annapurne', practice:'river', together:['kolam'] },
 
   { mon:'AUG', day:'7',  yr:'2026', name:'Varalakshmi Vratham', emoji:'🪷', hue:'h-rose',
     hook:'Welcoming Lakshmi, goddess of abundance, into the home.',
@@ -9931,7 +9925,7 @@ const FESTIVALS = [
     tags:['festival','soon','andal','sect-vaishnava'], action:'day',
     kid:'A man called Periyazhwar was watering his tulsi plants one morning and found a baby girl lying under them. He took her home and named her Kodhai, and she grew up to be Andal — who wrote poems to Krishna so good that they are still sung every single morning of Margazhi, twelve hundred years later.<br><br>Nobody knows who her family were. It never mattered.',
     adult:'Andal is the only woman among the twelve <b>Azhwars</b>, and the author of the <b>Thiruppavai</b> (30 verses) and the <b>Nachiyar Thirumozhi</b>.<br><br>The argument her life makes is the one this whole project rests on: she has no lineage, no rank and no ordination, and she is placed at the centre of Sri Vaishnava practice purely on the strength of her devotion. Tell it straight and it makes the case against hierarchy without anyone having to editorialise.<br><br>Aadi Pooram in August and Margazhi in December are the two ends of one thread — and Periyazhwar, her foster father, also sings to the infant Krishna, which ties this day to Janmashtami in September.',
-    story:'andalkid', shloka:'thiruppavai1', practice:'three', together:['kolam','margazhidawn'] },
+    story:'andalkid', shloka:'thiruppavai1', practice:'bee', together:['kolam','margazhidawn'] },
 
   /* --- */
 
@@ -9973,7 +9967,7 @@ const FESTIVALS = [
     tags:['festival','major','devi','sect-shakta'], action:'day',
     kid:'Today everything you use to learn or to work gets a day off. Books go in a pile in front of the Goddess. So do pencils, a violin, a cricket bat, a laptop, the car keys, the kitchen knives — and then <b>nobody is allowed to use them</b> until tomorrow.<br><br>Children usually enjoy this rule enormously, until they realise it includes their own things.',
     adult:'<b>Saraswati Puja</b> and <b>Ayudha Puja</b> fall together on the ninth night. <i>Ayudha</i> means weapon or implement: historically arms were laid down and honoured, and the practice generalised to whatever a household actually works with — tools, instruments, ledgers, vehicles.<br><br>The claim underneath it is worth drawing out for a child: your competence is not entirely your own. It arrives through instruments, teachers and materials, and once a year you set them down and look at them.<br><br>Books being unreadable for a day is also the origin of the delightful loophole every Tamil student knows — you cannot possibly study today.',
-    story:'f-tools', shloka:'saraswati', practice:'three', together:['sundal','golu'] },
+    story:'f-tools', shloka:'saraswati', practice:'bee', together:['sundal','golu'] },
 
   { mon:'OCT', day:'21', yr:'2026', name:'Vijayadashami', emoji:'✏️', hue:'h-gold',
     hook:'The tenth day — when children start something new.',
@@ -9982,7 +9976,7 @@ const FESTIVALS = [
     tags:['festival','major','devi','sect-shakta'], action:'day',
     kid:'The tenth day, after the nine nights. This is the day Tamil children are traditionally taught their <b>first letters</b> — a grown-up holds their finger and writes in a tray of rice.<br><br>Grown-ups start things today too. Pick something you have wanted to learn and take the first step, however small. Today is the day that is supposed to work.',
     adult:'<b>Vijayadashami</b> — "the tenth of victory" — the day Mahishasura falls, and by long convention the most auspicious day in the year to begin anything. <b>Vidyarambham</b>, the initiation into letters, happens today: the child\'s finger is guided to write in rice or sand, usually a form of "Om" or a Ganesha salutation.<br><br>The pedagogy embedded here is quite deliberate. Learning does not begin with a book; it begins with an adult\'s hand on a child\'s hand. In a diaspora household where the language is being lost, that is not a bad thing to reproduce literally — write a Tamil letter together, with your hand over theirs.<br><br>It is also the natural day to start the Thiruppavai habit, two months before Margazhi asks for it.',
-    story:'f-firstletters', shloka:'saraswati', practice:'three', together:['golu'] },
+    story:'f-firstletters', shloka:'saraswati', practice:'bow', together:['golu'] },
 
   /* --- Aippasi (Oct-Nov) --- */
   { mon:'NOV', day:'8',  yr:'2026', name:'Deepavali', emoji:'🪔', hue:'h-night',
@@ -10024,7 +10018,7 @@ const FESTIVALS = [
     tags:['festival','andal','sect-vaishnava'], action:'day',
     kid:'Today a month begins in which something happens every single morning: one of Andal\'s thirty poems, read before it gets light. One a day, for thirty days, until Pongal.<br><br>Outside, the kolam at the doorstep gets bigger every morning too. The whole street quietly competes and nobody admits it.',
     adult:'Margazhi is the month the Tamil year takes most seriously: cold, dark mornings, and a daily practice rather than a single festival. Andal\'s <b>Thiruppavai</b> runs one verse a day for thirty days, and in Sri Vaishnava households it is the most reliably kept observance of the year <i>because</i> it is daily.<br><br>This matters for what we are building. The Thiruppavai is a thirty-day streak that has been running for roughly twelve hundred years, in company, first thing in the morning, at low intensity. The format we are asking families to adopt is not our invention — it is the oldest one here.<br><br>It also ends perfectly: the last verse, then Pongal the next morning.',
-    story:'f-kolam', shloka:'thiruppavai27', practice:'three', together:['kolam','margazhidawn'] },
+    story:'f-kolam', shloka:'thiruppavai27', practice:'bee', together:['kolam','margazhidawn'] },
 
   { mon:'DEC', day:'24', yr:'2026', name:'Arudra Darshanam', emoji:'🔥', hue:'h-clay',
     hook:'The night the dancing Shiva is carried out to be seen.',
@@ -10366,8 +10360,118 @@ const PRACTICES = [
       <div class="prac"><b>Say it together:</b> "Full up, and then over the top." The only breathing
         exercise here that ends in shouting on purpose — save it for Pongal and it stays special.</div>
       <div class="links"><b>Links to:</b> Thai Pongal · The Pot That Boils Over · Sakkarai pongal</div>
+    ` },
+
+  /* ================= SOUND, AND TWO MORE STORY SHAPES (Sep 2026) =================
+     Everything above moves the arms. These four change what the breath itself does:
+     two you can hear, two tied to serials that had nothing of their own.
+     `brief` is the one-line version shown on a day screen's tile. */
+  { id:'bee', emoji:'🐝', top:'p6', title:'Three breaths, humming like a bee', tag:'<span>Songs &amp; poems</span> · sound',
+    brief:'Breathe in through the nose, then hum all the way out — mmmm — with a finger resting on each ear. Three hums.',
+    tags:['practice','breath','sound','universal','little','middle','older','sect-panhindu'],
+    body:`
+      <div class="age">Three breaths, with a sound in them · for singing and poem days</div>
+      <h2>🐝 Three breaths, humming like a bee</h2>
+      <p>The old name is <b>bhramari</b> — the bee. You breathe in quietly and hum on the way out, and
+      the hum fills your whole head.</p>
+      <ol class="steps">
+        <li>Sit tall, lips closed. Rest one finger gently on the flap in front of each ear.</li>
+        <li><b>Breathe in</b> slowly through the nose.</li>
+        <li><b>Breathe out</b> as a long, low hum — <i>mmmmm</i> — until the breath runs out.</li>
+        <li>Three hums. Then take your fingers away and listen to the room.</li>
+      </ol>
+      <div class="prac"><b>Try this:</b> hum together and see whose lasts longest. The littlest ones
+        often win.</div>
+      <div class="links"><b>Links to:</b> Andal's Thirty Mornings · The Oldest Tamil Poems ·
+        Saraswati Puja · The Donkey Who Could Sing</div>
+    ` },
+  { id:'sea', emoji:'🌊', top:'p7', title:'Three breaths, like the sea', tag:'<span>Ocean stories</span> · sound',
+    brief:'Breathe out slowly through the nose with a soft sound at the back of the throat — like waves pulling back off the sand. Three waves.',
+    tags:['practice','breath','sound','hanuman','vishnu','middle','older','sect-panhindu'],
+    body:`
+      <div class="age">Three breaths, with a sound in them · for stories about the ocean</div>
+      <h2>🌊 Three breaths, like the sea</h2>
+      <p>Hanuman leaps it, Rama builds a bridge over it, the gods churn it for a pot of nectar. There
+      is a lot of sea in these stories. This is how to breathe like one — the old name is
+      <b>ujjayi</b>.</p>
+      <ol class="steps">
+        <li>First, fog a mirror: breathe out through an open mouth with a soft <i>haaa</i>, as if
+          steaming up glass.</li>
+        <li>Now make the same sound with your <b>mouth closed</b>, breathing out through the nose. It
+          sounds like waves pulling back off the sand.</li>
+        <li><b>Breathe in</b> slowly, then <b>breathe out</b> slowly with the sea in it.</li>
+        <li>Three waves.</li>
+      </ol>
+      <div class="prac"><b>Try this:</b> close your eyes and listen to everyone else's sea. A whole
+        family doing it at once sounds like a beach.</div>
+      <div class="links"><b>Links to:</b> Hanuman · The Ramayana · The Little Bird and the Sea ·
+        Vishnu's Ten Arrivals</div>
+    ` },
+  { id:'bow', emoji:'🏹', top:'p3', title:'Three breaths, drawing the bow', tag:'<span>Rama &amp; Arjuna</span> · movement',
+    brief:'Stand side-on, one arm out holding the bow. Breathe in and draw the string back to your cheek; breathe out slowly and let the arrow fly. Three arrows, swapping sides.',
+    tags:['practice','breath','movement','vishnu','krishna','middle','older','sect-vaishnava'],
+    body:`
+      <div class="age">Three breaths, with the movement in them · the Ramayana and the Mahabharata</div>
+      <h2>🏹 Three breaths, drawing the bow</h2>
+      <p>Rama and Arjuna are the two great archers of the old stories, and an archer's whole skill is
+      a slow in-breath and a steady out-breath.</p>
+      <ol class="steps">
+        <li>Stand side-on, feet apart. Stretch your front arm out straight — that hand holds the bow.</li>
+        <li><b>Breathe in</b> slowly and pull your other hand back along the string, elbow high, until it
+          reaches your cheek. Feel the chest open.</li>
+        <li><b>Breathe out</b> slowly, and at the very end let the string go.</li>
+        <li>Three arrows. Turn round for the second one, so both arms get a turn.</li>
+      </ol>
+      <div class="prac"><b>Try this:</b> pick a spot on the wall before each arrow and keep your eyes
+        on it the whole breath — the way Arjuna saw only the bird's eye.</div>
+      <div class="links"><b>Links to:</b> The Ramayana · The Mahabharata · Vijayadashami</div>
+    ` },
+  { id:'river', emoji:'💦', top:'p2', title:'Three breaths, the river coming down', tag:'<span>River days</span> · movement',
+    brief:'Breathe in and reach both arms high above your head. Breathe out slowly and let your hands pour down in front of you like water, all the way to the floor. Three rivers.',
+    tags:['practice','breath','movement','shiva','universal','little','middle','older','sect-panhindu'],
+    body:`
+      <div class="age">Three breaths, with the movement in them · Aadi Perukku and the Ganga</div>
+      <h2>💦 Three breaths, the river coming down</h2>
+      <p>The Ganga falls out of the sky and Shiva catches her in his hair. The Kaveri rises in Aadi and
+      fills the fields. Both are water arriving from somewhere high up.</p>
+      <ol class="steps">
+        <li>Stand tall with your feet together.</li>
+        <li><b>Breathe in</b> and reach both arms up high, fingers wide — the river at the top of the
+          mountain.</li>
+        <li><b>Breathe out</b> slowly and let your hands pour down in front of you, wriggling like
+          water, bending at the knees until they reach the floor.</li>
+        <li>Three rivers. Come back up slowly each time.</li>
+      </ol>
+      <div class="prac"><b>Try this:</b> make the out-breath as long as the river. See if yours is
+        still going when your hands touch the floor.</div>
+      <div class="links"><b>Links to:</b> Aadi Perukku · How the River Came Down · Shiva</div>
     ` }
 ];
+
+/* The breathing a serial carries while it runs, so an ordinary day's tile matches its
+   story. Arcs not listed take the plain three breaths. */
+const ARC_PRACTICE = {
+  tortoise:'quietmouth', 'st-donkey':'bee',
+  ramayana:'bow', mahabharata:'bow',
+  hanuman:'sea', 'st-tittibha':'sea', 'vishnu-avatars':'sea',
+  ganga:'river',
+  'thiruppavai-arc':'bee', alwars:'bee', sangam:'bee',
+  'krishna-childhood':'mountain', 'krishna-friends':'mountain',
+  'murugan-tales':'peacock', 'murugan-tales2':'peacock', valli:'peacock',
+  'ganesha-tales':'elephant', 'ganesha-tales2':'elephant',
+  'amman-tales':'lion', 'amman-tales2':'lion', meenakshi:'lion'
+};
+
+/* the breathe tile, shared by the festival and everyday screens */
+function breatheTile(pr){
+  const how = pr.brief || (pr.tag.replace(/<[^>]+>/g,'') + ' — tap through for the whole thing.');
+  return `<div class="prac breathe">
+      <div class="breaths"><i></i><i></i><i></i><span>three breaths</span></div>
+      <b>${pr.title}.</b> ${how}
+      <div class="why">Three is the count said at the end of a prayer — once for the world, once for
+      other people, once for what is inside us.</div>
+      <div class="browse" style="color:var(--peacock)" onclick="openPractice('${pr.id}')">See how →</div></div>`;
+}
 
 const SH_FILTER_COPY = {
   all:     {t:'All shlokas', s:''},
@@ -10874,6 +10978,11 @@ function openEveryday(storyId, forDate){
   if(gk) gk.innerHTML = gsh ? shlokaBlock(gsh,false) : '';
   if(gp) gp.innerHTML = gsh ? shlokaBlock(gsh,true)  : '';
 
+  /* 3 · breathe — the arc's own exercise, or the plain three breaths */
+  const gpr = PRACTICES.find(x=>x.id===(ARC_PRACTICE[s.series]||'three'));
+  const gb = document.getElementById('g-breathe');
+  if(gb && gpr) gb.innerHTML = breatheTile(gpr);
+
   /* what this day connects to */
   const anch = document.getElementById('g-anchor-links');
   if(anch){
@@ -11179,13 +11288,7 @@ function openDay(name){
   /* 3 · breathe — one tile, movement folded in */
   const pr = PRACTICES.find(p=>p.id===(f.practice||'three'));
   document.getElementById('d-breathe').innerHTML = pr
-    ? `<div class="prac breathe">
-            <div class="breaths"><i></i><i></i><i></i><span>three breaths</span></div>
-            <b>${pr.title}.</b>
-         ${pr.tag.replace(/<[^>]+>/g,'')} — tap through for the whole thing.
-         <div class="why">Three is the count said at the end of a prayer — once for the world, once for
-         other people, once for what is inside us.</div>
-         <div class="browse" style="color:var(--peacock)" onclick="openPractice('${pr.id}')">See how →</div></div>`
+    ? breatheTile(pr)
     : missing('The breathing');
 
   /* Do it Together — explicit ids if given, else everything tagged for this deity */

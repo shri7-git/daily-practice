@@ -713,7 +713,7 @@
       
       <section class="screen" id="screen-node">
         <div class="appbar" id="node-appbar">
-          <button class="back" onclick="show('calendar')">‹ Calendar</button>
+          <button class="back" onclick="goBack('calendar')">‹ Calendar</button>
           <div class="cal">Aavani · Sep 2026</div>
         </div>
 
@@ -885,7 +885,7 @@
       
       <section class="screen" id="screen-calendar" hidden>
         <div class="appbar">
-          <button class="back" onclick="show('node')">‹ Festival</button>
+          <button class="back" onclick="goBack('node')">‹ Festival</button>
           <div class="cal"></div>
         </div>
         <div class="libnav">
@@ -917,7 +917,7 @@
       
       <section class="screen" id="screen-shlokas" hidden>
         <div class="appbar">
-          <button class="back" onclick="show('node')">‹ Festival</button>
+          <button class="back" onclick="goBack('node')">‹ Festival</button>
           <div class="cal"></div>
         </div>
         <div class="libnav">
@@ -942,7 +942,7 @@
       
       <section class="screen" id="screen-stories" hidden>
         <div class="appbar">
-          <button class="back" onclick="show('welcome')">‹ Home</button>
+          <button class="back" onclick="goBack('welcome')">‹ Home</button>
           <div class="cal"></div>
         </div>
         <div class="libnav">
@@ -963,7 +963,7 @@
       
       <section class="screen" id="screen-recipes" hidden>
         <div class="appbar">
-          <button class="back" onclick="show('node')">‹ Festival</button>
+          <button class="back" onclick="goBack('node')">‹ Festival</button>
           <div class="cal"></div>
         </div>
         <div class="libnav">
@@ -984,7 +984,7 @@
       
       <section class="screen" id="screen-rituals" hidden>
         <div class="appbar">
-          <button class="back" onclick="show('node')">‹ Festival</button>
+          <button class="back" onclick="goBack('node')">‹ Festival</button>
           <div class="cal"></div>
         </div>
         <div class="libnav">
@@ -1005,7 +1005,7 @@
       
       <section class="screen" id="screen-practices" hidden>
         <div class="appbar">
-          <button class="back" onclick="show('node')">‹ Festival</button>
+          <button class="back" onclick="goBack('node')">‹ Festival</button>
           <div class="cal"></div>
         </div>
         <div class="libnav">
@@ -1026,7 +1026,7 @@
       
       <section class="screen" id="screen-general" hidden>
         <div class="appbar">
-          <button class="back" onclick="show('welcome')">‹ Home</button>
+          <button class="back" onclick="goBack('welcome')">‹ Home</button>
           <div class="streak">🔥 12-day streak</div>
         </div>
 
@@ -1107,7 +1107,7 @@
       
       <section class="screen" id="screen-entity" hidden>
         <div class="appbar">
-          <button class="back" onclick="show('node')">‹ Krishna Janmashtami</button>
+          <button class="back" onclick="goBack('node')">‹ Krishna Janmashtami</button>
           <div class="cal"></div>
         </div>
 
@@ -1182,7 +1182,7 @@
       
       <section class="screen" id="screen-archive" hidden>
         <div class="appbar">
-          <button class="back" onclick="show('welcome')">‹ Home</button>
+          <button class="back" onclick="goBack('welcome')">‹ Home</button>
           <span class="cal" id="arch-count"></span>
         </div>
         <div class="arch-lead">
@@ -1197,7 +1197,7 @@
       
       <section class="screen" id="screen-faq" hidden>
         <div class="appbar">
-          <button class="back" onclick="show('welcome')">‹ Home</button>
+          <button class="back" onclick="goBack('welcome')">‹ Home</button>
           <span class="cal">FAQs</span>
         </div>
 
@@ -1431,7 +1431,7 @@
       
       <section class="screen" id="screen-why" hidden>
         <div class="appbar">
-          <button class="back" onclick="show('welcome')">‹ Home</button>
+          <button class="back" onclick="goBack('welcome')">‹ Home</button>
           <span class="cal">What is this all about?</span>
         </div>
 
@@ -1548,7 +1548,7 @@
       
       <section class="screen" id="screen-sashti" hidden>
         <div class="appbar">
-          <button class="back" onclick="show('calendar')">‹ Calendar</button>
+          <button class="back" onclick="goBack('calendar')">‹ Calendar</button>
           <div class="cal">Karthigai · Nov 2026</div>
         </div>
 
@@ -1742,7 +1742,7 @@
       
       <section class="screen" id="screen-day" hidden>
         <div class="appbar">
-          <button class="back" onclick="show('calendar')">‹ Calendar</button>
+          <button class="back" onclick="goBack('calendar')">‹ Calendar</button>
           <div class="cal" id="d-month"></div>
         </div>
 
@@ -1827,7 +1827,7 @@
       
       <section class="screen" id="screen-concept" hidden>
         <div class="appbar">
-          <button class="back" onclick="show('sashti')">‹ Skanda Sashti</button>
+          <button class="back" onclick="goBack('sashti')">‹ Skanda Sashti</button>
           <div class="cal"></div>
         </div>
 
@@ -11745,10 +11745,30 @@ function renderCalendar(filter){
 
 /* ---------------- interaction ---------------- */
 
-function show(id){
+/* Back buttons follow where the person actually came from, not a fixed parent.
+   _navStack holds the screens visited; each back button is relabelled from its top. */
+var _navStack = [];
+var SCREEN_LABEL = {welcome:'Home', node:'Janmashtami', calendar:'Calendar', sashti:'Skanda Sashti',
+  general:'Today', day:'Today', shlokas:'Shlokas', stories:'Stories', recipes:'Recipes',
+  rituals:'Rituals', practices:'Breathing', entity:'Yashoda', concept:'Standing your ground',
+  archive:'Archive', faq:'Questions', why:'Why'};
+function currentScreenId(){
+  const s = Array.from(document.querySelectorAll('.screen')).find(x=>!x.hidden);
+  return s ? s.id.replace('screen-','') : null;
+}
+function goBack(fallback){
+  const target = _navStack.length ? _navStack.pop() : fallback;
+  show(target, true);
+}
+function show(id, isBack){
+  const from = currentScreenId();
+  if(!isBack && from && from!==id) _navStack.push(from);
   if(id==='archive' && typeof renderArchive==='function') renderArchive();
   if(typeof trackScreenChange==='function') trackScreenChange();
   document.querySelectorAll('.screen').forEach(s=>s.hidden = (s.id!=='screen-'+id));
+  const prev = _navStack[_navStack.length-1];
+  const btn = document.querySelector('#screen-'+id+' .back');
+  if(btn && prev && SCREEN_LABEL[prev]) btn.textContent = '‹ ' + SCREEN_LABEL[prev];
   document.getElementById('scroll').scrollTop = 0;
   if(typeof syncFab === 'function') syncFab();
   /* Questions only ever appear over a content screen, and only after someone has been

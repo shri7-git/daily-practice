@@ -902,6 +902,8 @@
           <p id="cal-sub"></p>
         </div>
         <div class="cal-list" id="cal-list"></div>
+        <div style="text-align:center;margin:4px 16px 14px"><button class="back" id="cal-past-toggle" onclick="togglePastFestivals()" style="margin:0 auto"></button></div>
+        <div class="cal-list" id="cal-past-list" hidden></div>
         <div class="cal-item" id="cal-today-card" style="cursor:pointer" onclick="goToday()">
           <div class="cal-when" style="width:auto;font-size:22px">📖</div>
           <div class="cal-main">
@@ -11707,7 +11709,8 @@ function openEveryday(storyId, forDate){
   show('general');
 }
 
-let calFilter='all';
+let calFilter='all', showPastFestivals=false;
+function togglePastFestivals(){ showPastFestivals=!showPastFestivals; renderCalendar(calFilter); }
 function renderCalendar(filter){
   calFilter = filter || 'all';
   const c = FILTER_COPY[calFilter] || {t:tagLabel(calFilter), s:''};
@@ -11718,8 +11721,14 @@ function renderCalendar(filter){
     + ['all','major','soon'].map(f=>`<button class="chip ${calFilter===f?'on':''}" onclick="renderCalendar('${f}')">${FILTER_COPY[f].t}</button>`).join('')
     + `</div>`
     + chipRow('By god', FESTIVALS, 'deity', calFilter, 'renderCalendar');
-  const list = byTag(FESTIVALS, calFilter).filter(f=>festStatus(f)!=='past');
-  document.getElementById('cal-list').innerHTML = list.map(f=>{
+  const all = byTag(FESTIVALS, calFilter);
+  const list = all.filter(f=>festStatus(f)!=='past');
+  const pastList = all.filter(f=>festStatus(f)==='past');
+  const pastEl = document.getElementById('cal-past-list'), pastBtn = document.getElementById('cal-past-toggle');
+  pastBtn.parentElement.hidden = !pastList.length;
+  pastBtn.textContent = showPastFestivals ? '▴ Hide past festivals' : '▾ See past festivals (' + pastList.length + ')';
+  pastEl.hidden = !showPastFestivals;
+  const renderItem = f=>{
     const st = festStatus(f);
     const relBadge = st==='today' ? `<span class="reldate today">Today</span>`
                     : st==='past'  ? `<span class="reldate past">${relLabel(f)}</span>`
@@ -11733,7 +11742,9 @@ function renderCalendar(filter){
         <p class="hook">${f.hook}</p>
       </div>
     </div>`;
-  }).join('');
+  };
+  document.getElementById('cal-list').innerHTML = list.map(renderItem).join('');
+  pastEl.innerHTML = pastList.map(renderItem).join('');
 
   /* the quick-link card at the bottom: real festival if today lines up,
      otherwise the everyday demo, dated honestly to the viewer's actual day */

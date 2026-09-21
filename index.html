@@ -817,7 +817,7 @@
             <div class="trad">A widely-used Krishna mantra (the 12-syllable dwadashakshari).</div>
             <div class="src-cite">Text: <a href="https://shlokam.org/shloka/om-namo-bhagavate-vasudevaya.htm" target="_blank" rel="noopener">shlokam.org — Sanskrit lyrics with English meaning</a></div>
             <div class="browse" onclick="show('shlokas')">🕉️ See all the shlokas →</div>
-            <a class="browse yt" href="https://www.youtube.com/watch?v=felGgBmnx-I" target="_blank" rel="noopener">🎥 A recording (unconfirmed) →</a>
+            <a class="browse yt" href="https://www.youtube.com/watch?v=felGgBmnx-I" target="_blank" rel="noopener">🎥 A recording of the shloka →</a>
           </div>
 
           <div class="shloka parent-only">
@@ -833,7 +833,7 @@
             <div class="trad">A well-known Krishna <i>dhyana</i> (contemplation) shloka, broadly Vaishnava.</div>
             <div class="src-cite">Text: <a href="https://jkyog.in/en/wisdom/blog/vasudeva-sutam-devam" target="_blank" rel="noopener">JKYog — Krishnashtakam by Adi Shankaracharya, Sanskrit + meaning</a></div>
             <div class="browse" onclick="show('shlokas')">🕉️ See all the shlokas →</div>
-            <a class="browse yt" href="https://www.youtube.com/watch?v=E18BcYdjjA0" target="_blank" rel="noopener">🎥 A recording (unconfirmed) →</a>
+            <a class="browse yt" href="https://www.youtube.com/watch?v=E18BcYdjjA0" target="_blank" rel="noopener">🎥 A recording of the shloka →</a>
           </div>
         </section>
 
@@ -1257,9 +1257,17 @@
               That is not an accident.</p>
           </div></details>
 
+        <details class="acc"><summary>🧺 Did you produce all this content?</summary>
+          <div class="accbody">
+            <p>No. It's a compilation from many different sources. Part of the value here is not
+              to create content, but to be one collective place for a lot of good content that
+              already exists today.</p>
+            <p>Sources are named where we can. And <span class="lk-inline" onclick="var d=this.closest('details').nextElementSibling;d.open=true;d.scrollIntoView({behavior:'smooth',block:'center'})">has an expert checked all this?</span> Not fully.</p>
+          </div></details>
+
         <details class="acc"><summary>✅ Has an expert checked all this?</summary>
           <div class="accbody">
-            <p>Not fully, and some of it is subjective. If you know better, please
+            <p>No, an expert hasn't checked all of this. Not fully, and some of it is subjective. If you know better, please
               <span class="lk-inline" onclick="openFeedback()">tell me</span>.</p>
           </div></details>
 
@@ -1678,7 +1686,7 @@
               birth-name — the first chant many Tamil children are ever given.</div>
             <div class="browse" onclick="show('shlokas')">🕉️ See all the shlokas →</div>
             <div class="src-cite">Text: <a href="https://mahakatha.com/mantras/subramanya/om-saravanabhavaya-namah/" target="_blank" rel="noopener">Mahakatha — meaning and significance</a></div>
-            <a class="browse yt" href="https://www.youtube.com/watch?v=Kjvl2C2zXbI" target="_blank" rel="noopener">🎥 A recording (unconfirmed) →</a>
+            <a class="browse yt" href="https://www.youtube.com/watch?v=Kjvl2C2zXbI" target="_blank" rel="noopener">🎥 A recording of the shloka →</a>
           </div>
 
           <div class="shloka sparent-only" hidden>
@@ -1698,7 +1706,7 @@
               longer text for these six days.</div>
             <div class="browse" onclick="show('shlokas')">🕉️ See all the shlokas →</div>
             <div class="src-cite">Text: <a href="https://mahakatha.com/mantras/subramanya/om-saravanabhavaya-namah/" target="_blank" rel="noopener">Mahakatha — meaning and significance</a></div>
-            <a class="browse yt" href="https://www.youtube.com/watch?v=Kjvl2C2zXbI" target="_blank" rel="noopener">🎥 A recording (unconfirmed) →</a>
+            <a class="browse yt" href="https://www.youtube.com/watch?v=Kjvl2C2zXbI" target="_blank" rel="noopener">🎥 A recording of the shloka →</a>
           </div>
         </section>
 
@@ -11919,7 +11927,7 @@ const MONTH_NAME = {JAN:'January',FEB:'February',AUG:'August',SEP:'September',
    the full reasoning per pick. */
 function ytLink(s){
   if(!s.youtube) return '';
-  const label = s.youtube.curated ? '🎥 Hear it chanted' : '🎥 A recording (unconfirmed)';
+  const label = s.youtube.curated ? '🎥 Hear it chanted' : '🎥 A recording of the shloka';
   return `<a class="browse yt" href="${s.youtube.url}" target="_blank" rel="noopener">${label} →</a>`;
 }
 function sourceLink(s){

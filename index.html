@@ -1944,6 +1944,7 @@
       <div class="grab"></div>
       <h3>💬 Tell me what you think</h3>
       <div class="sbody" id="fb-body">
+        <div id="fb-asks"></div>
         <div class="q">
           <label>Who shared this with you?</label>
           <div class="hint">A name, or however you found this.</div>
@@ -12240,7 +12241,27 @@ function syncRemind(){
     : ' Or <a href="#" onclick="event.preventDefault();openRemind()">have me send you a nudge</a>.';
 }
 
+/* The ask-ladder questions also live at the top of the feedback sheet, so someone who
+   opens it on purpose can answer them there instead of waiting for a pop-up. Same ASKS
+   data, same `ask` rows in the sheet; anything already answered is left out. */
+function renderFbAsks(){
+  const s = askState();
+  const box = document.getElementById('fb-asks');
+  box.innerHTML = ASKS.filter(a => a.after && !s[a.id]).map(a =>
+    `<div class="q" data-ask="${a.id}">
+      <label>${a.q}</label>
+      <div class="opts" style="margin-top:8px">${a.opts.map(([v,l]) =>
+        `<button class="opt" data-v="${v}" onclick="fbPick(this)">${l}</button>`).join('')}</div>
+      <textarea class="fld" hidden style="margin-top:8px" placeholder="${a.then || 'Optional…'}"></textarea>
+    </div>`).join('');
+}
+function fbPick(btn){
+  pickOne(btn);
+  const q = btn.closest('.q'), a = ASKS.find(x => x.id === q.dataset.ask);
+  q.querySelector('textarea').hidden = !(a.then && (!a.thenIf || a.thenIf.includes(btn.dataset.v)));
+}
 function openFeedback(){
+  renderFbAsks();
   document.getElementById('fb-sheet').classList.add('open');
   document.getElementById('fb-bg').classList.add('open');
 }
@@ -12639,14 +12660,24 @@ async function submitFeedback(){
   const wrong = document.getElementById('fb-wrong').value.trim();
   const email = document.getElementById('fb-email').value.trim();
 
-  if(!know && !text && !wrong){
+  const answers = [...document.querySelectorAll('#fb-asks .q')].map(q => {
+    const on = q.querySelector('.opt.on');
+    return on ? {id:q.dataset.ask, answer:on.dataset.v, text:q.querySelector('textarea').value.trim()} : null;
+  }).filter(Boolean);
+
+  if(!know && !text && !wrong && !answers.length){
     toast('Add a line first — anything is useful');
     return;
   }
   const btn = document.getElementById('fb-send');
   btn.disabled = true; btn.textContent = 'Sending…';
 
-  const status = await record('feedback', {know, text, wrong, email});
+  let status = 'sent';
+  for(const a of answers){
+    status = await record('ask', {ask:a.id, answer:a.answer, text:a.text});
+    const st = askState(); st[a.id] = Date.now(); saveAskState(st);
+  }
+  if(know || text || wrong || email) status = await record('feedback', {know, text, wrong, email});
 
   btn.disabled = false; btn.textContent = 'Send';
 

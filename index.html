@@ -12215,19 +12215,15 @@ function syncRemind(){
     : ' Or <a href="#" onclick="event.preventDefault();openRemind()">have me send you a nudge</a>.';
 }
 
-/* The ask-ladder questions also live at the top of the feedback sheet, so someone who
-   opens it on purpose can answer them there instead of waiting for a pop-up. Same ASKS
-   data, same `ask` rows in the sheet; anything already answered is left out.
-
-   CONSEQUENCE WORTH KNOWING: once a device has answered all three, this sheet shows
-   only the free-text fields — so testing the app yourself permanently hides the ladder
-   from your own copy, and the form looks like it lost the questions. It hasn't. The
-   internal reset link below (working copy only, stripped from the shared build) puts
-   them back so the sheet can be previewed the way a tester first meets it. */
+/* The ask-ladder questions also live at the top of the feedback sheet. Tapping "Tell me
+   what you think" is itself the opt-in (Shri, Sep 21), so the pacing rules that govern
+   the pop-ups — one per visit, one per day, never re-asked — do not apply here: ALL
+   three are listed every time, answered or not. Same ASKS data, same `ask` rows. Someone
+   who answers again just adds a row, which is fine. Answering here still stamps the
+   question as done, so the pop-up ladder never repeats it. */
 function renderFbAsks(){
-  const s = askState();
   const box = document.getElementById('fb-asks');
-  box.innerHTML = ASKS.filter(a => a.after && !s[a.id]).map(a =>
+  box.innerHTML = ASKS.filter(a => a.after).map(a =>
     `<div class="q" data-ask="${a.id}">
       <label>${a.q}</label>
       <div class="opts" style="margin-top:8px">${a.opts.map(([v,l]) =>
@@ -12251,9 +12247,9 @@ function renderFbReset(){
   const total = ASKS.filter(a => a.after).length;
   const answered = ASKS.filter(a => a.after && s[a.id]).length;
   document.getElementById('fb-reset-msg').textContent = answered
-    ? answered + ' of ' + total + ' ladder questions are hidden here because this device '
-      + 'already answered them. '
-    : 'All ladder questions are showing, as a new tester sees them. ';
+    ? answered + ' of ' + total + ' ladder questions are answered on this device, so the '
+      + 'pop-ups will skip them. This sheet always lists all of them. '
+    : 'No ladder questions answered yet, so the pop-ups will fire as a new tester sees them. ';
 }
 function resetAsks(){
   try { localStorage.removeItem('dp-asks'); } catch(e){}

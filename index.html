@@ -1405,7 +1405,7 @@
             <div class="wtile" onclick="show('practices')">
               <div class="ic">🌬️</div><h3>Breathing</h3>
             </div>
-            <div class="wtile" onclick="show('concept')">
+            <div class="wtile" onclick="show('themes')">
               <div class="ic">💭</div><h3>Themes</h3>
             </div>
             <div class="wtile" onclick="show('archive')">
@@ -1829,7 +1829,7 @@
       
       <section class="screen" id="screen-concept" hidden>
         <div class="appbar">
-          <button class="back" onclick="goBack('sashti')">‹ Skanda Sashti</button>
+          <button class="back" onclick="goBack('themes')">‹ Themes</button>
           <div class="cal"></div>
         </div>
 
@@ -1876,6 +1876,30 @@
         </div>
 
         
+        <div style="height:18px"></div>
+      </section>
+
+      
+      <section class="screen" id="screen-themes" hidden>
+        <div class="appbar">
+          <button class="back" onclick="goBack('welcome')">‹ Home</button>
+          <div class="cal"></div>
+        </div>
+        <div class="grp">
+          <h1 style="font-size:22px;margin:6px 0 4px">💭 Themes</h1>
+          <p style="color:var(--muted);font-size:13.5px;margin:0 0 12px">Ideas that keep turning up, in different stories.</p>
+          <div class="grid2" id="themes-list"></div>
+        </div>
+        <div style="height:18px"></div>
+      </section>
+
+      
+      <section class="screen" id="screen-theme" hidden>
+        <div class="appbar">
+          <button class="back" onclick="goBack('themes')">‹ Themes</button>
+          <div class="cal"></div>
+        </div>
+        <div id="theme-body"></div>
         <div style="height:18px"></div>
       </section>
 
@@ -11762,7 +11786,7 @@ var _navStack = [];
 var SCREEN_LABEL = {welcome:'Home', node:'Janmashtami', calendar:'Calendar', sashti:'Skanda Sashti',
   general:'Today', day:'Today', shlokas:'Shlokas', stories:'Stories', recipes:'Recipes',
   rituals:'Rituals', practices:'Breathing', entity:'Yashoda', concept:'Standing your ground',
-  archive:'Archive', faq:'Questions', why:'Why'};
+  archive:'Archive', faq:'Questions', why:'Why', themes:'Themes', theme:'Theme'};
 function currentScreenId(){
   const s = Array.from(document.querySelectorAll('.screen')).find(x=>!x.hidden);
   return s ? s.id.replace('screen-','') : null;
@@ -11771,6 +11795,43 @@ function goBack(fallback){
   const target = _navStack.length ? _navStack.pop() : fallback;
   show(target, true);
 }
+/* ---------------- themes ---------------- */
+const THEMES = [
+  { id:'ground', emoji:'🛡️', title:'Standing your ground', line:'the frightened thing is beaten by someone who refuses to run', screen:'concept' },
+  { id:'slow', emoji:'⏳', title:'Slowing down before you act', grad:'linear-gradient(160deg,#b9862e,#7a5416)',
+    line:'the wise one pauses, listens, and answers only once they have thought',
+    sub:'In story after story, the one who rushes ends up in trouble and the one who waits ends up wise.',
+    stories:[['tortoise1','🐢','The Tortoise Who Talked Too Much','opening your mouth at the wrong moment'],
+             ['st-threefish','🐟','The Three Fish and the Fishermen\'s Voices','seeing trouble coming and moving early'],
+             ['ya-thirsty','💧','Four Brothers Who Never Came Back','the one who stopped to answer first']],
+    practices:[['quietmouth','🤐','Three breaths, mouth closed','listening before speaking']] },
+  { id:'rank', emoji:'💛', title:'Love that needs no rank', grad:'linear-gradient(160deg,#c0335f,#7d1f3d)',
+    line:'a hunter, a child, a girl who wakes a village with a song',
+    sub:'The tradition keeps telling stories where devotion counts, and birth, learning and status do not.',
+    stories:[['ka-hunter','🏹','A Hunter Who Loved a God He\'d Never Been Taught About','worship nobody had approved of'],
+             ['ny1','🔥','The Boy Who Was Fed by a Goddess','a small child, a big welcome'],
+             ['tp1','🌅','Wake Up, It Is Margazhi','a girl who wakes a whole village with a song'],
+             ['al1','🕯️','Three Strangers in a Doorway','room for one more, and one more']] }
+];
+function renderThemes(){
+  document.getElementById('themes-list').innerHTML = THEMES.map(t=>
+    `<div class="node-card wide" onclick="${t.screen?`show('${t.screen}')`:`openTheme('${t.id}')`}"><div class="ic">${t.emoji}</div>
+      <div><h3>${t.title}</h3><p>${t.line}</p></div></div>`).join('');
+}
+function openTheme(id){
+  const t = THEMES.find(x=>x.id===id); if(!t) return;
+  const card = (fn,ic,h,p)=>`<div class="node-card wide" onclick="${fn}"><div class="ic">${ic}</div><div><h3>${h}</h3><p>${p}</p></div></div>`;
+  document.getElementById('theme-body').innerHTML =
+    `<div class="ehero" style="background:${t.grad}"><div class="avatar">${t.emoji}</div><div class="kind">💭 Theme</div>
+       <h1>${t.title}</h1><div class="sub">${t.sub}</div></div>`
+    + `<div class="grp"><h2>📖 Stories that carry it</h2><div class="grid2">`
+    + t.stories.map(x=>card(`openStory('${x[0]}')`,x[1],x[2],x[3])).join('') + `</div></div>`
+    + (t.practices ? `<div class="grp"><h2>🌬️ Breathing that teaches it</h2><div class="grid2">`
+    + t.practices.map(x=>card(`openPractice('${x[0]}')`,x[1],x[2],x[3])).join('') + `</div></div>` : '');
+  show('theme');
+}
+document.addEventListener('DOMContentLoaded', renderThemes);
+
 function show(id, isBack){
   const from = currentScreenId();
   if(!isBack && from && from!==id) _navStack.push(from);

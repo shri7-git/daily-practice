@@ -457,6 +457,19 @@
   .prac.breathe .browse{background:var(--panel);border:1px solid var(--leaf-line);
     border-radius:999px;padding:6px 13px;margin-top:10px}
 
+  /* Go Deeper breathing: an explanation, never a second exercise */
+  .deep-breath{padding:14px 16px}
+  .deep-breath h3{margin:0 0 8px;font-size:15px;font-weight:800}
+  .deep-breath p{margin:0 0 9px;font-size:13px;line-height:1.55}
+  .deep-breath p:last-child{margin-bottom:0}
+  .res{margin-top:12px;border-top:1px solid var(--line);padding-top:10px}
+  .res-h{font-size:9.5px;font-weight:800;letter-spacing:.6px;text-transform:uppercase;
+    color:var(--muted);margin-bottom:7px}
+  a.res-a{display:block;font-size:12.5px;font-weight:600;color:var(--peacock);
+    text-decoration:none;padding:5px 0}
+  a.res-a span{display:block;font-size:11px;font-weight:400;color:var(--muted);margin-top:1px}
+  a.res-a:active{opacity:.6}
+
   /* grouped filter chips (By god / By language / By depth …) */
   .chip-grp{padding:0 0 2px}
   .chip-grp .grp-lbl{font-size:9.5px;font-weight:800;letter-spacing:.6px;text-transform:uppercase;
@@ -732,6 +745,14 @@
               the end of a prayer — once for the world, once for other people, once for what is inside
               us.</div>
             <div class="browse" style="color:var(--peacock)" onclick="openPractice('sesha')">See how →</div></div>
+        </section>
+
+
+        
+        <section class="parent-only"  id="sec-breathe-deep">
+          <div class="sec-h"><div class="ic leaf-soft">🌬️</div>
+            <h2>The breathing, explained</h2></div>
+          <div id="sec-breathe-deep-body"></div>
         </section>
 
         
@@ -1021,6 +1042,13 @@
           <div id="g-breathe"></div>
         </section>
 
+
+        
+        <section class="gparent-only" hidden id="g-breathe-deep">
+          <div class="sec-h"><div class="ic leaf-soft">🌬️</div>
+            <h2>The breathing, explained</h2></div>
+          <div id="g-breathe-deep-body"></div>
+        </section>
         <section id="g-sec-story">
           <div class="sec-h"><div class="ic leaf-soft">📖</div>
             <h2><span class="gkid-only"><span class="step">1</span>Story</span><span
@@ -1689,11 +1717,17 @@
             peacock.</b> Stand tall. Breathe in and sweep both arms wide and up behind you — chest open,
             shoulders back, like the peacock Murugan rides. Breathe out and fold them in small. Three
             times.
-            <div class="why">Standing tall is not the
-              same as being loud — which is rather the point of today's story.</div>
+            <div class="why">Tall, and quiet with it — like the hero of today's story.</div>
             <div class="browse" style="color:var(--peacock)" onclick="openPractice('peacock')">See how →</div></div>
         </section>
 
+
+        
+        <section class="sparent-only" hidden id="s-breathe-deep">
+          <div class="sec-h"><div class="ic leaf-soft">🌬️</div>
+            <h2>The breathing, explained</h2></div>
+          <div id="s-breathe-deep-body"></div>
+        </section>
         <section class="skid-only" id="s-tog-kid">
           <div class="sec-h"><div class="ic">🍲</div><h2>Do it Together</h2>
             <div class="cnt">recipes &amp; rituals</div></div>
@@ -1777,10 +1811,17 @@
           <div id="d-breathe"></div>
         </section>
 
+
+        
+        <section class="dparent-only" hidden id="d-breathe-deep">
+          <div class="sec-h"><div class="ic leaf-soft">🌬️</div>
+            <h2>The breathing, explained</h2></div>
+          <div id="d-breathe-deep-body"></div>
+        </section>
         <section id="d-sec-together">
           <div class="sec-h"><div class="ic">🍲</div><h2>Do it Together</h2>
             <div class="cnt">recipes &amp; activities</div></div>
-          <div class="recipes" id="d-together"></div>
+          <div id="d-together"></div>
         </section>
 
         <section class="dparent-only" hidden>
@@ -2824,6 +2865,203 @@ const STORIES = [
         to get rid of before you could honestly celebrate this year?"</div>
       <div class="links"><b>Links to:</b> Thai Pongal · Bhogi · Mattu Pongal · Aadi Perukku ·
         Annapurne Sadapurne</div>
+    `
+  },
+
+  /* ============ FESTIVAL READINGS for days that had none of their own (Sep 2026) ============
+     Each festival names its readings in `reading:`. These add to the day's "What we're
+     marking" note — they never restate it. */
+  {
+    id:'mahalaya-adult', emoji:'🕯️', thumb:'t2', age:'📖 For grown-ups · 5 min read',
+    tags:['story','adults','universal','sect-panhindu','srilanka'],
+    source:'On <b>Mahalaya Amavasai</b>',
+    title:'Fifteen days for the people who came before', overlay:null, audio:null,
+    blurb:'The fortnight of the ancestors, the story of why it exists, and the crows on the wall.',
+    body:`
+      <div class="age">On Mahalaya Amavasai</div>
+      <p>Mahalaya closes <b>Pitru Paksha</b>, the dark fortnight given over to ancestors, and falls on the
+      new moon just before Navaratri begins.</p>
+
+      <p><b>Why fifteen days.</b> The story most families tell is Karna's. After the war he reached heaven
+      and was served gold to eat — he had given gold generously all his life, but never food. He was
+      allowed back to earth for fifteen days to feed his ancestors, and those days became the fortnight.
+      It is a popular telling rather than a passage from the epic itself, and a good one to know.</p>
+
+      <p><b>What the rite does.</b> <i>Tarpanam</i> means "satisfying": water with black sesame is poured
+      from the hand while the names of three generations are said. The names are the rite. A family that
+      says them has kept the essential part.</p>
+
+      <p><b>The crows.</b> Across Tamil homes, a portion of rice goes out on the wall for the crows before
+      anyone eats on an amavasai — the ancestors are said to come as crows. Many children's first memory of
+      this day is watching to see whether a crow comes.</p>
+
+      <p><b>The same new moon, somewhere else.</b> In Bengal, Mahalaya is the dawn the goddess is called
+      home — a radio recitation of the Devi's victory, heard in the dark at 4am, opens Durga Puja. One
+      tradition turns toward the dead on this day and another toward the goddess, and both are getting
+      the house ready.</p>
+
+      <div class="spark"><b>Thought spark</b>"Which story about someone in our family should we make sure
+        gets passed on?"</div>
+      <div class="links"><b>Links to:</b> Mahalaya Amavasai · Navaratri begins ·
+        <a href="https://en.wikipedia.org/wiki/Pitru_Paksha" target="_blank" rel="noopener">Pitru Paksha (Wikipedia)</a></div>
+    `
+  },
+  {
+    id:'saraswati-adult', emoji:'📚', thumb:'t3', age:'📖 For grown-ups · 5 min read',
+    tags:['story','adults','saraswati','devi','sect-shakta'],
+    source:'On <b>Saraswati</b>',
+    title:'A river that became a voice', overlay:null, audio:null,
+    blurb:'Before she was the goddess of learning, Saraswati was a river. What each thing in her hands is for.',
+    body:`
+      <div class="age">On Saraswati Puja</div>
+      <p>In the <i>Rig Veda</i>, Saraswati is first of all a <b>river</b> — praised as the best of mothers,
+      the best of rivers. Over the centuries she becomes identified with <i>Vak</i>, speech, and from speech
+      grows everything that is carried in words: learning, poetry, music. A river that became a voice.</p>
+
+      <p><b>What she holds.</b> A <b>veena</b>, for music. A <b>book</b>, for learning. A <b>mala</b>, for
+      practice — the patient repetition that turns knowing into knowing well. She sits in white, beside a
+      <b>swan</b>, which in Indian poetry can separate milk from water: the gift of telling what matters
+      from what does not.</p>
+
+      <p><b>A Tamil home for her.</b> Temples to Saraswati alone are rare. The best known in Tamil Nadu is
+      at <b>Koothanur</b>, near Mayiladuthurai, linked with the poet Ottakoothar, where families bring
+      children before they start school.</p>
+
+      <p><b>Why the books rest.</b> Laying everything you learn and work with in front of her for a day is
+      a way of saying that skill arrives through teachers, tools and years of practice. The day off is the
+      thank-you.</p>
+
+      <div class="spark"><b>Thought spark</b>"What is one thing you use every day that you have never
+        thanked?"</div>
+      <div class="links"><b>Links to:</b> Saraswati Puja · Saraswati Namastubhyam · Vijayadashami ·
+        <a href="https://en.wikipedia.org/wiki/Saraswati" target="_blank" rel="noopener">Saraswati (Wikipedia)</a></div>
+    `
+  },
+  {
+    id:'vijaya-adult', emoji:'✏️', thumb:'t1', age:'📖 For grown-ups · 5 min read',
+    tags:['story','adults','devi','sect-shakta'],
+    source:'On <b>Vijayadashami</b>',
+    title:'Four victories on one tenth day', overlay:null, audio:null,
+    blurb:'Durga, Rama, the Pandavas and the first letter — why so many stories land on the same day.',
+    body:`
+      <div class="age">On Vijayadashami</div>
+      <p>Vijayadashami means "the tenth day of victory", and at least four victories have gathered on it.</p>
+
+      <p><b>The goddess.</b> After nine nights, Durga's battle with Mahishasura ends — the reading that
+      closes Navaratri in Tamil and Bengali homes alike.</p>
+
+      <p><b>Rama.</b> Across North India this is the day Rama defeats Ravana, and towering effigies of
+      Ravana are burnt at the end of weeks of Ramlila performances. Many diaspora children know
+      "Dussehra" from their friends before they know it from home.</p>
+
+      <p><b>The Pandavas.</b> At the end of their year in hiding, the brothers took back the weapons they
+      had hidden in a <i>shami</i> tree. In Karnataka and Maharashtra, shami leaves are exchanged today as
+      "gold" between friends. Mysuru's Dasara procession is the grandest single celebration of the day.</p>
+
+      <p><b>The first letter.</b> In Tamil Nadu and Kerala, it is the day of <i>vidyarambham</i>: a child's
+      finger traced through rice to write a first letter. That evening the golu is closed, often by laying
+      one doll down to sleep.</p>
+
+      <p>The common thread is a finish line that turns into a starting line. Something long is completed,
+      and the day is spent beginning something new.</p>
+
+      <div class="spark"><b>Thought spark</b>"What would you like to start today, now that something is
+        finished?"</div>
+      <div class="links"><b>Links to:</b> Vijayadashami · Navaratri · The Ramayana · The Mahabharata ·
+        <a href="https://en.wikipedia.org/wiki/Vijayadashami" target="_blank" rel="noopener">Vijayadashami (Wikipedia)</a></div>
+    `
+  },
+  {
+    id:'deepavali-adult', emoji:'🪔', thumb:'t2', age:'📖 For grown-ups · 5 min read',
+    tags:['story','adults','universal','krishna','sect-panhindu','srilanka'],
+    source:'On <b>Deepavali</b>',
+    title:'One night of lamps, many reasons', overlay:null, audio:null,
+    blurb:'A mother, her son, and the wish he made — and the other stories your neighbours are telling on the same night.',
+    body:`
+      <div class="age">On Deepavali</div>
+      <p><b>A family story underneath the battle.</b> Narakasura is the son of <b>Bhudevi</b>, the Earth.
+      In many Tamil tellings it is Satyabhama — herself a form of Bhudevi — who strikes the final blow. The
+      mother ends what her son had become, and then grants the wish he makes as he dies: that the day be
+      kept with lamps, new clothes and sweets.</p>
+
+      <p><b>The same night, other stories.</b> In much of North India the lamps welcome Rama home to
+      Ayodhya and Lakshmi into the house. In Bengal it is Kali Puja. Jains mark the <i>nirvana</i> of
+      Mahavira. Sikhs celebrate Bandi Chhor Divas, the release of Guru Hargobind from prison. A diaspora
+      child's school friends may be celebrating any of these — and every one of them lights lamps.</p>
+
+      <p><b>Why lamps on this night.</b> Deepavali falls on or around the new moon of Aippasi, one of the
+      darkest nights of the year. <i>Deepa-avali</i> simply means "a row of lamps".</p>
+
+      <p><b>The Tamil morning.</b> The greeting of the day is <i>"Ganga snanam aacha?"</i> — "have you had
+      your Ganga bath?" — because the oil bath before dawn is said to carry the Ganga in it that one
+      morning.</p>
+
+      <div class="spark"><b>Thought spark</b>"Narakasura asked to be remembered with a party. How would you
+        like people to celebrate you?"</div>
+      <div class="links"><b>Links to:</b> Deepavali · Narakasura · The Deepavali oil bath ·
+        <a href="https://en.wikipedia.org/wiki/Naraka_Chaturdashi" target="_blank" rel="noopener">Naraka Chaturdashi (Wikipedia)</a></div>
+    `
+  },
+  {
+    id:'karthigai-adult', emoji:'⛰️', thumb:'t1', age:'📖 For grown-ups · 5 min read',
+    tags:['story','adults','shiva','murugan','sect-saiva','srilanka'],
+    source:'On <b>Karthigai Deepam</b>',
+    title:'The hill that is the god', overlay:null, audio:null,
+    blurb:'Tiruvannamalai, the flame on the summit, and why the same star belongs to both Shiva and Murugan.',
+    body:`
+      <div class="age">On Karthigai Deepam</div>
+      <p><b>Arunachala.</b> The column of fire in today's story — the light with no top and no bottom — is
+      said to have settled at Tiruvannamalai as a hill. Here the hill itself is worshipped as Shiva. The
+      temple at its foot is one of the five "element" temples, the one for <b>fire</b>.</p>
+
+      <p><b>The flame on the summit.</b> At dusk on Karthigai, a great lamp — a cauldron of ghee with a
+      thick wick — is lit on top of the hill, and people across the town and the plains around it see it
+      at the same moment. It keeps burning for days. Hundreds of thousands walk the fourteen-kilometre path
+      around the hill, the <i>girivalam</i>, barefoot.</p>
+
+      <p><b>Ramana Maharshi.</b> The twentieth century's best-known Tamil sage lived on this hill for over
+      fifty years and spoke of it as his teacher. Visitors from all over the world still come because of
+      him.</p>
+
+      <p><b>Why Murugan shares the day.</b> Karthigai is also the name of the star and of the six maidens,
+      the Krittikas, who raised the six infant Murugans born from sparks of Shiva's eye. The father's fire
+      and the son's birth-fire share a night.</p>
+
+      <div class="spark"><b>Thought spark</b>"If a place could be a teacher, which place has taught you
+        something?"</div>
+      <div class="links"><b>Links to:</b> Karthigai Deepam · The Light With No Top and No Bottom · Murugan ·
+        <a href="https://en.wikipedia.org/wiki/Arunachala" target="_blank" rel="noopener">Arunachala (Wikipedia)</a></div>
+    `
+  },
+  {
+    id:'vaikunta-adult', emoji:'🚪', thumb:'t3', age:'📖 For grown-ups · 5 min read',
+    tags:['story','adults','vishnu','krishna','sect-vaishnava'],
+    source:'On <b>Vaikunta Ekadasi</b>',
+    title:'Twenty days of song before the door', overlay:null, audio:null,
+    blurb:'At Srirangam the door opens in the middle of a festival of Tamil poetry — and the festival ends with a poet reaching the Lord.',
+    body:`
+      <div class="age">On Vaikunta Ekadasi</div>
+      <p><b>The festival around the door.</b> At Srirangam, Vaikunta Ekadasi sits inside the
+      <b>Adhyayana Utsavam</b> — ten days and ten nights (<i>pagal pathu</i> and <i>ra pathu</i>) in which
+      the four thousand verses of the Alwars are sung before Ranganatha. The door opens on the first
+      morning of the ten nights.</p>
+
+      <p><b>Tamil in the sanctum.</b> The centre of the festival is Nammalvar's <i>Thiruvaimozhi</i>. Sri
+      Vaishnava tradition calls these Tamil poems a Veda, and the festival gives them the place usually
+      held by Sanskrit scripture.</p>
+
+      <p><b>How it ends.</b> On the last day the temple enacts <i>Nammalvar Moksham</i>: the poet's image
+      is carried to the Lord's feet and covered in tulsi — the poet himself arriving where his verses were
+      going.</p>
+
+      <p><b>Why ekadasi is kept fasting.</b> In the Padma Purana, a goddess born from Vishnu on the
+      eleventh day defeats the demon Muran, and Vishnu names the day after her and blesses those who keep
+      it.</p>
+
+      <div class="spark"><b>Thought spark</b>"If you could walk through one door and arrive anywhere, where
+        would you want it to open?"</div>
+      <div class="links"><b>Links to:</b> Vaikunta Ekadasi · The Singers of Vishnu · Andal ·
+        <a href="https://en.wikipedia.org/wiki/Vaikuntha_Ekadashi" target="_blank" rel="noopener">Vaikuntha Ekadashi (Wikipedia)</a></div>
     `
   },
   {
@@ -9891,6 +10129,252 @@ const TOGETHER = [
       <div class="links"><b>Links to:</b> Vaikunta Ekadasi · Om Namo Narayanaya · Margazhi</div>
     `
   }
+,
+
+  /* ============ Go Deeper observances for the festival days (Sep 2026) ============
+     Named per festival in `deeper:`, so a day's two layers never share a card. Plus one
+     kids' item for Mahalaya, which had nothing to do. */
+  {
+    id:'namesdish', emoji:'🍛', top:'r3', title:'Cook their favourite, say their names', tag:'<span>Mahalaya</span> · kids help',
+    tags:['ritual','recipe','kids','universal','cook','kidslead','sect-panhindu','srilanka'],
+    body:`
+      <div class="age">Mahalaya Amavasai · anyone can do this</div>
+      <h2>🍛 Cook their favourite, say their names</h2>
+      <p>Ask a grown-up what a grandparent or great-grandparent loved to eat — a sweet, a kuzhambu, a
+      particular way with rice. Make it today, together.</p>
+      <ol class="steps">
+        <li>Before anyone eats, put a small portion on a plate for them.</li>
+        <li>Say their names out loud, one by one. Children can say the names too.</li>
+        <li>Put a little rice outside for the crows — many families say the ancestors come as crows.</li>
+        <li>Then everyone eats, and somebody tells one story about them.</li>
+      </ol>
+      <div class="links"><b>Links to:</b> Mahalaya Amavasai · Fifteen days for the people who came before</div>
+    `
+  },
+  {
+    id:'tarpanam', emoji:'💧', top:'r2', title:'Tarpanam, at home', tag:'<span>Observance</span> · Mahalaya',
+    tags:['ritual','adults','universal','sect-panhindu','srilanka'],
+    body:`
+      <div class="age">Observance · Mahalaya Amavasai</div>
+      <h2>💧 Tarpanam, at home</h2>
+      <p>The formal rite is led by a priest and follows a family's own lineage. Most diaspora families
+      keep a simpler form at home, and it holds the essential part: water, sesame and names.</p>
+      <ol class="steps">
+        <li>In the morning, after a bath, sit facing south with a small vessel of water and a pinch of
+          black sesame (<i>ellu</i>).</li>
+        <li>Say the names of three generations — parents, grandparents, great-grandparents — as far as you
+          know them.</li>
+        <li>With each name, pour a little water with sesame from the right palm into a plate.</li>
+        <li>Pour the water at the foot of a tree or plant afterwards.</li>
+      </ol>
+      <div class="fornote"><b>If you do not know the names.</b> This is the day to ask. Phoning the oldest
+        relative you have and writing the names down is itself a way of keeping Mahalaya.</div>
+      <div class="links"><b>Links to:</b> Mahalaya Amavasai · Cook their favourite ·
+        <a href="https://en.wikipedia.org/wiki/Tarpana" target="_blank" rel="noopener">Tarpana (Wikipedia)</a></div>
+    `
+  },
+  {
+    id:'riverrices', emoji:'🍋', top:'r1', title:'Five rices for the river', tag:'<span>Observance</span> · Aadi Perukku',
+    tags:['ritual','recipe','adults','universal','cook','sect-panhindu'],
+    body:`
+      <div class="age">Observance · Aadi Perukku, the 18th of Aadi</div>
+      <h2>🍋 Five rices for the river</h2>
+      <p>On Aadi Perukku families carry <i>kalanda sadam</i> — mixed rices — to the riverbank: lemon,
+      tamarind, coconut, curd and a sweet jaggery rice. The river is fed first, then everybody eats
+      on the bank.</p>
+      <p><b>The thread.</b> Women tie a fresh yellow <i>kaappu</i> thread at the water's edge, and in many
+      families newly married couples come back to the river together this day.</p>
+      <p><b>Away from the Kaveri.</b> A bowl of water with a few flowers and a lit lamp in it stands in
+      for the river perfectly well. Make two of the rices, offer a spoonful of each to the water, and
+      eat the rest outside if the weather allows.</p>
+      <div class="links"><b>Links to:</b> Aadi Perukku · What it means to treat a river as a person ·
+        <a href="https://en.wikipedia.org/wiki/Aadi_Perukku" target="_blank" rel="noopener">Aadi Perukku (Wikipedia)</a></div>
+    `
+  },
+  {
+    id:'kalasam', emoji:'🏺', top:'r4', title:'Setting up the kalasam', tag:'<span>Observance</span> · Varalakshmi',
+    tags:['ritual','adults','lakshmi','sect-panhindu'],
+    body:`
+      <div class="age">Observance · Varalakshmi Vratham</div>
+      <h2>🏺 Setting up the kalasam</h2>
+      <p>The goddess is invited into a <b>kalasam</b>: a pot filled with rice or water, mango leaves at its
+      mouth, a coconut on top, and on the coconut a face of the goddess — often a silver mask kept in the
+      family for years.</p>
+      <p><b>The thread.</b> A yellow thread, the <i>nombu charadu</i>, is tied on the right wrist after the
+      puja, and kept on for a while afterwards.</p>
+      <p><b>Who keeps it.</b> Traditionally, married women, for the wellbeing of the household. Many
+      families today keep it as a whole-house puja with everyone present, and that works well too.</p>
+      <p><b>The next morning</b> the kalasam is gently moved — "sent off" — and the rice from it is cooked,
+      so nothing offered is wasted.</p>
+      <div class="links"><b>Links to:</b> Varalakshmi Vratham · Mahalakshmi · What is actually being asked for ·
+        <a href="https://en.wikipedia.org/wiki/Varalakshmi_Vratam" target="_blank" rel="noopener">Varalakshmi Vratam (Wikipedia)</a></div>
+    `
+  },
+  {
+    id:'ganeshapuja', emoji:'🌿', top:'r2', title:'The home Ganesha puja, in order', tag:'<span>Observance</span> · Ganesha Chaturthi',
+    tags:['ritual','adults','ganesha','sect-panhindu'],
+    body:`
+      <div class="age">Observance · Ganesha Chaturthi</div>
+      <h2>🌿 The home Ganesha puja, in order</h2>
+      <ol class="steps">
+        <li><b>Bring the clay image home</b> and place it on a plank or a mound of rice. An umbrella over it
+          is traditional.</li>
+        <li><b>Invite him in</b> — a lamp, water sprinkled, a flower offered — and say the shloka.</li>
+        <li><b>Offer arugampul</b> (durva grass), his favourite, in small bunches of three blades. Many
+          families offer 21 kinds of leaf (<i>patri</i>) and 21 kozhukattai.</li>
+        <li><b>Keep him a day, three, five or more</b>, with a lamp each evening.</li>
+        <li><b>Let him go.</b> At home, dissolve the image in a bucket of water, then pour the clay water on
+          your plants — he returns to the soil.</li>
+      </ol>
+      <p>Tulsi, which is dear to Vishnu, is traditionally kept away from Ganesha's worship, and the moon is
+      not looked at on this night.</p>
+      <div class="links"><b>Links to:</b> Ganesha Chaturthi · Kozhukattai · The one night you are told not to look up ·
+        <a href="https://en.wikipedia.org/wiki/Ganesh_Chaturthi" target="_blank" rel="noopener">Ganesh Chaturthi (Wikipedia)</a></div>
+    `
+  },
+  {
+    id:'thamboolam', emoji:'🥥', top:'r3', title:'Visiting golus, and the thamboolam', tag:'<span>Observance</span> · Navaratri',
+    tags:['ritual','adults','devi','sect-shakta'],
+    body:`
+      <div class="age">Observance · the nine nights</div>
+      <h2>🥥 Visiting golus, and the thamboolam</h2>
+      <p>Navaratri is a festival of visiting. Each evening, women and children go from house to house to
+      see each other's golu, sing one song, and leave with a <b>thamboolam</b>: betel leaves and areca nut,
+      turmeric and kumkumam, a fruit, a small gift, and a paper cone of sundal.</p>
+      <p><b>The golu itself.</b> The steps are an odd number — three, five, seven or nine. A wooden couple,
+      the <i>marapachi</i> dolls, are placed first, and the family adds to the collection a little every
+      year.</p>
+      <p><b>In the diaspora</b> this is often the most social week of the year: a golu tour with a list of
+      addresses. Inviting someone who has never seen one is very much in the spirit of it.</p>
+      <div class="links"><b>Links to:</b> Navaratri · Setting up the Golu · Navaratri sundal ·
+        <a href="https://en.wikipedia.org/wiki/Golu_(festival)" target="_blank" rel="noopener">Golu (Wikipedia)</a></div>
+    `
+  },
+  {
+    id:'vidyarambham', emoji:'🍚', top:'r1', title:'Writing the first letter', tag:'<span>Observance</span> · Vijayadashami',
+    tags:['ritual','adults','saraswati','devi','sect-shakta'],
+    body:`
+      <div class="age">Observance · Vijayadashami morning</div>
+      <h2>🍚 Writing the first letter</h2>
+      <p><b>Vidyarambham</b> — "the beginning of learning". A child of two or three sits in an adult's lap
+      in front of a plate of raw rice, and the adult guides the child's finger to write a first letter.</p>
+      <p><b>What is written.</b> Often "Om" or a line to Ganesha; in Kerala, <i>Hari Sri</i>. In a Tamil
+      home, writing <b>அ</b> — "a", the first letter of the Tamil alphabet and of the Thirukkural — is a
+      lovely choice.</p>
+      <p><b>For everyone else.</b> Older children and adults can keep the same idea by starting something
+      today: the first page of a new book, the first lesson of an instrument, the first letter of a
+      script you have been meaning to learn.</p>
+      <div class="links"><b>Links to:</b> Vijayadashami · Saraswati · Four victories on one tenth day ·
+        <a href="https://en.wikipedia.org/wiki/Vidyarambham" target="_blank" rel="noopener">Vidyarambham (Wikipedia)</a></div>
+    `
+  },
+  {
+    id:'marundhu', emoji:'🫚', top:'r2', title:'Deepavali marundhu, and the 4am order', tag:'<span>Observance</span> · Deepavali',
+    tags:['ritual','recipe','adults','universal','cook','sect-panhindu','srilanka'],
+    body:`
+      <div class="age">Observance · Deepavali, before dawn</div>
+      <h2>🫚 Deepavali marundhu, and the 4am order</h2>
+      <p>A Tamil Deepavali morning runs in a set order.</p>
+      <ol class="steps">
+        <li>Warm sesame oil (<i>nallennai</i>) is put on everyone's head, usually by the eldest.</li>
+        <li>The oil bath — the <i>Ganga snanam</i> — with shikakai powder.</li>
+        <li>New clothes, set out the night before in front of the gods.</li>
+        <li>A few crackers, then sweets and savouries.</li>
+        <li>And then a spoonful of <b>Deepavali marundhu</b>.</li>
+      </ol>
+      <p><b>The marundhu</b> ("medicine") is a dark, sticky lehyam of dry ginger, pepper, cumin, ajwain
+      and jaggery cooked in ghee — made to settle the stomach after a morning of sweets. Every family's
+      recipe differs slightly, and the grandmother's version is usually the one people miss.</p>
+      <div class="links"><b>Links to:</b> Deepavali · The Deepavali oil bath · One night of lamps, many reasons</div>
+    `
+  },
+  {
+    id:'girivalam', emoji:'⛰️', top:'r4', title:'The walk around the hill', tag:'<span>Observance</span> · Karthigai',
+    tags:['ritual','adults','shiva','sect-saiva','srilanka'],
+    body:`
+      <div class="age">Observance · Karthigai Deepam</div>
+      <h2>⛰️ The walk around the hill</h2>
+      <p><b>Girivalam</b> is walking all the way round a sacred hill, keeping it on your right. At
+      Tiruvannamalai the path is about fourteen kilometres, walked barefoot, past eight shrines to the
+      eight directions. It is walked on every full moon, and on Karthigai by enormous crowds.</p>
+      <p><b>At home.</b> The lamps are lit at dusk, and the first is lit from the lamp in the prayer
+      room, then carried to every doorway and window. Some families walk once round their own home or
+      block in the evening, with a lamp, in the same spirit.</p>
+      <div class="links"><b>Links to:</b> Karthigai Deepam · The hill that is the god · A row of lamps at the door ·
+        <a href="https://en.wikipedia.org/wiki/Annamalaiyar_Temple" target="_blank" rel="noopener">Arunachalesvara Temple (Wikipedia)</a></div>
+    `
+  },
+  {
+    id:'thiruvathiraikali', emoji:'🍯', top:'r3', title:'Thiruvathirai kali and the seven-vegetable kootu', tag:'<span>Observance</span> · Thiruvathirai',
+    tags:['ritual','recipe','adults','shiva','cook','sect-saiva','srilanka'],
+    body:`
+      <div class="age">Observance · Thiruvathirai / Arudra Darshanam</div>
+      <h2>🍯 Thiruvathirai kali and the seven-vegetable kootu</h2>
+      <p><b>The story behind the dish.</b> Sendanar was a woodcutter at Chidambaram with nothing to offer
+      Shiva but a simple sweet of rice and jaggery — <i>kali</i>. The next morning the priests found kali
+      scattered in the sanctum, and the Lord had accepted it before anything else. So kali is made for
+      Nataraja on this day.</p>
+      <p><b>The meal.</b> Kali — rice and moong dal roasted, cooked with jaggery and cardamom — is eaten with
+      <b>ezhu kari kootu</b>, a stew of seven vegetables (often including pumpkin, broad beans, raw banana,
+      yam and sweet potato).</p>
+      <p><b>The fast.</b> Many women keep a fast (<i>nombu</i>) on this day for the family's wellbeing,
+      breaking it with the kali.</p>
+      <div class="links"><b>Links to:</b> Thiruvathirai · Arudra Darshanam · Nataraja ·
+        <a href="https://en.wikipedia.org/wiki/Thiruvathira" target="_blank" rel="noopener">Thiruvathira (Wikipedia)</a></div>
+    `
+  },
+  {
+    id:'bhogifire', emoji:'🥁', top:'r1', title:'Bhogi: drums and a small fire', tag:'<span>Observance</span> · Bhogi',
+    tags:['ritual','adults','universal','sect-panhindu','srilanka'],
+    body:`
+      <div class="age">Observance · Bhogi, before dawn</div>
+      <h2>🥁 Bhogi: drums and a small fire</h2>
+      <p><b>The drums.</b> Children wake early and beat small <i>bhogi melam</i> drums while the fire is
+      lit — the noise is half the fun.</p>
+      <p><b>What goes on the fire today.</b> Traditionally, worn-out mats and baskets, dry leaves and dried
+      cow-dung cakes — natural things. Cities like Chennai now ask families to keep plastic and tyres out
+      of the fire, and many families give usable things away instead of burning them.</p>
+      <p><b>Indra.</b> In some accounts the day honours Indra, god of rain, whose rains made the harvest
+      possible — so the new year begins by thanking the weather.</p>
+      <div class="links"><b>Links to:</b> Bhogi · The Morning You Throw Things Away · Thai Pongal ·
+        <a href="https://en.wikipedia.org/wiki/Bhogi" target="_blank" rel="noopener">Bhogi (Wikipedia)</a></div>
+    `
+  },
+  {
+    id:'suryapot', emoji:'☀️', top:'r3', title:'Facing the sun: the pot, the turmeric, the cane', tag:'<span>Observance</span> · Thai Pongal',
+    tags:['ritual','adults','universal','sect-panhindu','srilanka'],
+    body:`
+      <div class="age">Observance · Thai Pongal morning</div>
+      <h2>☀️ Facing the sun: the pot, the turmeric, the cane</h2>
+      <ol class="steps">
+        <li>A kolam is drawn where the pot will stand — outdoors, in the open, where the sun can see it.</li>
+        <li>A <b>new pot</b> is tied at the neck with a fresh turmeric plant and sometimes a ginger plant.</li>
+        <li>Milk goes in first. When it rises and spills over, everyone shouts <i>Pongalo Pongal!</i></li>
+        <li>Rice goes in, then jaggery, ghee, cashews and cardamom.</li>
+        <li>The pongal is offered on a banana leaf to the sun, with sugarcane and fruit, before anyone eats.</li>
+      </ol>
+      <p>The date follows the sun, not the moon — it is the day the sun enters Makara — which is why Pongal
+      lands on almost the same date every year.</p>
+      <div class="links"><b>Links to:</b> Thai Pongal · Sakkarai pongal · The festival with no god at the centre</div>
+    `
+  },
+  {
+    id:'kanupidi', emoji:'🍙', top:'r4', title:'Kanu pidi and the day of visits', tag:'<span>Observance</span> · Mattu Pongal',
+    tags:['ritual','adults','universal','sect-panhindu'],
+    body:`
+      <div class="age">Observance · Mattu Pongal and Kaanum Pongal</div>
+      <h2>🍙 Kanu pidi and the day of visits</h2>
+      <p><b>Kanu pidi.</b> Early in the morning, in many Tamil homes, the women and girls lay small balls of
+      coloured rice — turmeric yellow, kumkum red, plain white, and some sweet pongal — on a turmeric leaf
+      in the open, for the crows and birds, praying for the wellbeing of their brothers. It is especially
+      kept in Tamil Brahmin families.</p>
+      <p><b>The cattle.</b> The animals are bathed, their horns painted, garlanded with bells, and fed the
+      pongal before anyone else.</p>
+      <p><b>Kaanum Pongal.</b> The next day, the fourth, is for going out and seeing people — relatives,
+      the beach, a picnic. <i>Kaanum</i> means "seeing".</p>
+      <div class="links"><b>Links to:</b> Mattu Pongal · Mattu Pongal — thanking the animals · Thai Pongal</div>
+    `
+  }
 ];
 
 /* Festival calendar. */
@@ -9907,6 +10391,7 @@ const FESTIVALS = [
     tags:['festival','universal','sect-panhindu','srilanka'], action:'day',
     kid:'The rivers are the fullest they will be all year, because the rains have come. So today people go down to the water and say thank you to it — with flowers, with a lamp floated on the surface, and with food eaten on the bank.<br><br>Water is the one thing nothing alive can do without. Once a year the Tamil calendar stops and points at that.',
     adult:'<b>Pathinettam Perukku</b> — the eighteenth day of Aadi, when the Kaveri and the other rivers are in flood. It is an agricultural festival in origin, tied to the monsoon reaching the delta, and it is one of the clearest examples in the calendar of a festival that is about a <i>physical fact</i> rather than a story.<br><br>Married women traditionally tie a fresh <i>kaappu</i> (thread) at the water\'s edge, and families cook and eat by the river.<br><br>Worth naming for a diaspora family: there is no Kaveri outside your door. A canal, a lake, a tap, or the sea all work — the object of attention is water itself.',
+    reading:['ganga-adult','harvest-adult'], deeper:['riverrices'],
     story:'f-river', shloka:'annapurne', practice:'river', together:['kolam'] },
 
   { mon:'AUG', day:'7',  yr:'2026', name:'Varalakshmi Vratham', emoji:'🪷', hue:'h-rose',
@@ -9916,6 +10401,7 @@ const FESTIVALS = [
     tags:['festival','lakshmi','sect-shakta'], action:'day',
     kid:'Today Lakshmi is invited into the house as a guest. A pot is dressed up to be her — cloth, jewellery, sometimes a face — and set in the cleanest corner, and then the family gives her the best of what they have.<br><br>What is being asked for is not money exactly. It is <i>enough</i>: enough food, enough health, enough good people around you.',
     adult:'A <i>vratham</i> — a vow — traditionally kept by married women on a Friday in Aadi, invoking Lakshmi in the form that grants boons (<i>vara</i>).<br><br>The kalasham (pot) is decorated to embody her, and the offering is typically nine varieties.<br><br>Two honest notes. First, this is one of the more gendered observances in the calendar — worth deciding in advance whether you present it as women\'s or as the household\'s. Second, prosperity festivals sit awkwardly with modern ears; the traditional reading is that Lakshmi is <i>shri</i>, auspiciousness and sufficiency, and departs from a house that is greedy or unkind.',
+    reading:['lakshmi-adult'], deeper:['kalasam'],
     story:'charumathi', shloka:'mahalakshmi', practice:'three', together:['pancha','kolam'] },
 
   { mon:'AUG', day:'14', yr:'2026', name:'Aadi Pooram · Andal', emoji:'🌸', hue:'h-rose',
@@ -9925,7 +10411,8 @@ const FESTIVALS = [
     tags:['festival','soon','andal','sect-vaishnava'], action:'day',
     kid:'A man called Periyazhwar was watering his tulsi plants one morning and found a baby girl lying under them. He took her home and named her Kodhai, and she grew up to be Andal — who wrote poems to Krishna so good that they are still sung every single morning of Margazhi, twelve hundred years later.<br><br>Nobody knows who her family were. It never mattered.',
     adult:'Andal is the only woman among the twelve <b>Azhwars</b>, and the author of the <b>Thiruppavai</b> (30 verses) and the <b>Nachiyar Thirumozhi</b>.<br><br>The argument her life makes is the one this whole project rests on: she has no lineage, no rank and no ordination, and she is placed at the centre of Sri Vaishnava practice purely on the strength of her devotion. Tell it straight and it makes the case against hierarchy without anyone having to editorialise.<br><br>Aadi Pooram in August and Margazhi in December are the two ends of one thread — and Periyazhwar, her foster father, also sings to the infant Krishna, which ties this day to Janmashtami in September.',
-    story:'andalkid', shloka:'thiruppavai1', practice:'bee', together:['kolam','margazhidawn'] },
+    reading:['andal-adult','thiruppavai-adult'], deeper:['margazhidawn'],
+    story:'andalkid', shloka:'thiruppavai1', practice:'bee', together:['kolam'] },
 
   /* --- */
 
@@ -9939,6 +10426,7 @@ const FESTIVALS = [
     tags:['festival','major','ganesha','sect-panhindu'], action:'day',
     kid:'Ganesha is the one you say hello to before anything else — before a shloka, before a journey, before the first page of a new notebook. He is the one who moves whatever is in your way.<br><br>Today he is made out of <b>clay</b>, kept for a day or a few, and then taken to water and let go. Which is a strange and lovely thing to do with something you just made: you make it beautifully, and then you give it back.',
     adult:'<b>Vinayaka Chaturthi</b>, on the fourth day of the waxing moon in Aavani/Bhadrapada.<br><br>Two threads worth knowing. First, <i>vighna-harta</i> — he removes obstacles, and in some readings <i>places</i> them, which is a more interesting theology than the greeting-card version: what is in your way may also be his.<br><br>Second, the immersion (<i>visarjana</i>) is the whole point. The image is deliberately temporary and made of earth. In Maharashtra this became enormous and public; in Tamil homes it stays small and domestic. Plaster-of-Paris idols are now a genuine pollution problem and there is a real movement back to clay — a rare case where the traditional practice is also the environmentally sound one.',
+    reading:['ganesha-adult','ganeshatales-adult','ganesha2-adult'], deeper:['ganeshapuja'],
     story:'ganeshahead', shloka:'vakratunda', practice:'elephant', together:['kozhukattai','pancha'] },
 
   /* --- Purattasi (Sep-Oct) --- */
@@ -9949,7 +10437,8 @@ const FESTIVALS = [
     tags:['festival','universal','sect-panhindu'], action:'day',
     kid:'Today is for remembering the people in your family who came before you and are no longer here — your great-grandparents, and their parents, and back and back.<br><br>Food is cooked and offered to them first. Then somebody says their names out loud. That is what the day is: saying the names, so they stay in the family.',
     adult:'The <i>amavasai</i> (new moon) of Purattasi, closing the fortnight of <b>Pitru Paksha</b>, on which <i>tarpanam</i> is offered to three generations of ancestors.<br><br>The formal rite is priest-led and lineage-specific, and in the diaspora most families simply do not have access to it. What survives, and what is worth keeping, is smaller and harder: cook what they liked, say the names, tell the children one true story about a person they never met.<br><br>Also worth saying plainly to a child: this is a day about death, and we are not pretending otherwise. Handled directly it is one of the least frightening ways a family can talk about it.',
-    story:'f-ancestors', shloka:'asatoma', practice:'three', together:[] },
+    reading:['mahalaya-adult'], deeper:['tarpanam'],
+    story:'f-ancestors', shloka:'asatoma', practice:'three', together:['namesdish'] },
 
   { mon:'OCT', day:'11', yr:'2026', name:'Navaratri begins', emoji:'🪆', hue:'h-rose',
     hook:'Nine nights of the Goddess — the Golu steps go up.',
@@ -9958,6 +10447,7 @@ const FESTIVALS = [
     tags:['festival','major','devi','sect-shakta'], action:'day',
     kid:'For nine nights the Goddess is the centre of everything. In Tamil houses that means the <b>Golu</b>: steps covered in cloth, filled with figures — gods at the top, then people, then animals, then at the bottom a whole tiny world of shops and streets that the children arrange however they like.<br><br>People come to visit every evening, sing something, and leave with a paper cone of sundal.',
     adult:'Nine nights, conventionally divided three-and-three-and-three between <b>Durga</b>, <b>Lakshmi</b> and <b>Saraswati</b> — power, abundance, knowledge.<br><br>The Tamil expression is the <b>Golu</b> (Kolu) rather than the Bengali pandal or the Gujarati garba, and it is worth noticing what the arrangement is <i>saying</i>: the divine at the top, and at the bottom, deliberately, a market and a street. The whole world is on the same staircase.<br><br>The <b>Devi Mahatmyam</b> is the textual centre, and the Mahishasura story it tells is the same architecture as Narakasura at Deepavali and Soorapadman at Skanda Sashti. Reading the three in one year is one of the more useful things this calendar can do.',
+    reading:['devi-adult','amman2-adult'], deeper:['thamboolam'],
     story:'durga', shloka:'yadevi', practice:'lion', together:['sundal','golu'] },
 
   { mon:'OCT', day:'20', yr:'2026', name:'Saraswati Puja · Ayudha Puja', emoji:'📚', hue:'h-water',
@@ -9967,6 +10457,7 @@ const FESTIVALS = [
     tags:['festival','major','devi','sect-shakta'], action:'day',
     kid:'Today everything you use to learn or to work gets a day off. Books go in a pile in front of the Goddess. So do pencils, a violin, a cricket bat, a laptop, the car keys, the kitchen knives — and then <b>nobody is allowed to use them</b> until tomorrow.<br><br>Children usually enjoy this rule enormously, until they realise it includes their own things.',
     adult:'<b>Saraswati Puja</b> and <b>Ayudha Puja</b> fall together on the ninth night. <i>Ayudha</i> means weapon or implement: historically arms were laid down and honoured, and the practice generalised to whatever a household actually works with — tools, instruments, ledgers, vehicles.<br><br>The claim underneath it is worth drawing out for a child: your competence is not entirely your own. It arrives through instruments, teachers and materials, and once a year you set them down and look at them.<br><br>Books being unreadable for a day is also the origin of the delightful loophole every Tamil student knows — you cannot possibly study today.',
+    reading:['saraswati-adult'], deeper:['thamboolam'],
     story:'f-tools', shloka:'saraswati', practice:'bee', together:['sundal','golu'] },
 
   { mon:'OCT', day:'21', yr:'2026', name:'Vijayadashami', emoji:'✏️', hue:'h-gold',
@@ -9976,6 +10467,7 @@ const FESTIVALS = [
     tags:['festival','major','devi','sect-shakta'], action:'day',
     kid:'The tenth day, after the nine nights. This is the day Tamil children are traditionally taught their <b>first letters</b> — a grown-up holds their finger and writes in a tray of rice.<br><br>Grown-ups start things today too. Pick something you have wanted to learn and take the first step, however small. Today is the day that is supposed to work.',
     adult:'<b>Vijayadashami</b> — "the tenth of victory" — the day Mahishasura falls, and by long convention the most auspicious day in the year to begin anything. <b>Vidyarambham</b>, the initiation into letters, happens today: the child\'s finger is guided to write in rice or sand, usually a form of "Om" or a Ganesha salutation.<br><br>The pedagogy embedded here is quite deliberate. Learning does not begin with a book; it begins with an adult\'s hand on a child\'s hand. In a diaspora household where the language is being lost, that is not a bad thing to reproduce literally — write a Tamil letter together, with your hand over theirs.<br><br>It is also the natural day to start the Thiruppavai habit, two months before Margazhi asks for it.',
+    reading:['vijaya-adult'], deeper:['vidyarambham'],
     story:'f-firstletters', shloka:'saraswati', practice:'bow', together:['golu'] },
 
   /* --- Aippasi (Oct-Nov) --- */
@@ -9986,6 +10478,7 @@ const FESTIVALS = [
     tags:['festival','major','universal','sect-panhindu'], action:'day',
     kid:'Everybody knows Deepavali. What most people do not know is that in Tamil houses it happens in the <b>dark, early morning</b> — woken before it is light, oil rubbed into your hair, a bath, new clothes, and then sweets for breakfast.<br><br>The lamps come later. The strange bit — sweets at six in the morning — comes first.',
     adult:'The Tamil Deepavali and the North Indian Diwali share a name and very little else. Here it is <b>Naraka Chaturthi</b>: Krishna and Satyabhama defeating Narakasura, marked before sunrise with the oil bath (<i>ganga snanam</i>), rather than Rama\'s return marked in the evening.<br><br>The detail that carries the day is Narakasura\'s dying request — that the day of his death be one of bathing, new clothes, lamps and sweets rather than mourning. Every Tamil family with oil in their hair at 5am is keeping a promise made to somebody who had done everything wrong.<br><br>On fireworks: they are not ancient, they are an environmental and animal-welfare problem, and they are also the thing children love most. Decide your family\'s line rather than improvising it on the night.',
+    reading:['deepavali-adult'], deeper:['marundhu'],
     story:'narakasura', shloka:'asatoma', practice:'flame', together:['oilbath','pancha'] },
 
   { mon:'NOV', day:'15', yr:'2026', name:'Skanda Sashti', emoji:'🔱',hook:'Murugan\'s six days against fear itself.',
@@ -9999,6 +10492,7 @@ const FESTIVALS = [
     tags:['festival','shiva','sect-saiva','srilanka'], action:'day',
     kid:'Tonight every doorstep gets a <b>row</b> of lamps — along the step, the windowsills, the balcony edge. Not one lamp on its own. A line of them, so the whole street turns into light.<br><br>And on a hill called Tiruvannamalai, one enormous lamp is lit at the very top, and people can see it from miles away.',
     adult:'Older in Tamil practice than Deepavali, and quite possibly the oldest festival of lights recorded in Tamil literature — there are references in the Sangam corpus.<br><br>The story behind it is the <i>lingodbhava</i>: Vishnu and Brahma arguing about primacy, and a pillar of light appearing whose top and bottom neither can find. At <b>Tiruvannamalai</b> the hill itself is treated as that pillar, and the Mahadeepam is lit at the summit.<br><br>Practically, this is the easiest festival in the calendar to keep in a flat in another country. You need lamps and a doorway. That is the entire requirement.',
+    reading:['karthigai-adult','shivatales-adult'], deeper:['girivalam'],
     story:'karthigai', shloka:'namahshivaya', practice:'flame', together:['lamprow','poriurundai'] },
 
   { mon:'DEC', day:'11', yr:'2026', name:'Thiruvathirai', emoji:'💃', hue:'h-clay',
@@ -10008,6 +10502,7 @@ const FESTIVALS = [
     tags:['festival','shiva','sect-saiva'], action:'day',
     kid:'Shiva dances. Not for fun exactly — the story is that the world keeps going <i>because</i> he is dancing, and the day he stops, it stops.<br><br>Today there is a sweet made almost nowhere else in the year: <b>Thiruvathirai kali</b>, warm and thick, eaten with a vegetable stew called kootu.',
     adult:'The Athirai (Ardra) star in Margazhi, honouring Shiva as <b>Nataraja</b>, lord of the dance.<br><br>The <i>ananda tandava</i> is worth unpacking once for an adult: the drum is creation, the fire destruction, the raised hand protection, and the foot rests on a dwarf figure representing forgetfulness. It is a statement that creation and destruction are one continuous motion, not a sequence.<br><br><b>Kali</b> here is the dish, not the goddess — a genuinely common confusion worth heading off with your children before somebody else muddles it.',
+    reading:['shiva-adult'], deeper:['thiruvathiraikali'],
     story:'f-thiruvathirai', shloka:'namahshivaya', practice:'flame', together:['pancha'] },
 
   /* --- Margazhi (Dec-Jan): the month of the Thiruppavai --- */
@@ -10018,7 +10513,8 @@ const FESTIVALS = [
     tags:['festival','andal','sect-vaishnava'], action:'day',
     kid:'Today a month begins in which something happens every single morning: one of Andal\'s thirty poems, read before it gets light. One a day, for thirty days, until Pongal.<br><br>Outside, the kolam at the doorstep gets bigger every morning too. The whole street quietly competes and nobody admits it.',
     adult:'Margazhi is the month the Tamil year takes most seriously: cold, dark mornings, and a daily practice rather than a single festival. Andal\'s <b>Thiruppavai</b> runs one verse a day for thirty days, and in Sri Vaishnava households it is the most reliably kept observance of the year <i>because</i> it is daily.<br><br>This matters for what we are building. The Thiruppavai is a thirty-day streak that has been running for roughly twelve hundred years, in company, first thing in the morning, at low intensity. The format we are asking families to adopt is not our invention — it is the oldest one here.<br><br>It also ends perfectly: the last verse, then Pongal the next morning.',
-    story:'f-kolam', shloka:'thiruppavai27', practice:'bee', together:['kolam','margazhidawn'] },
+    reading:['thiruppavai-adult','alwars-adult'], deeper:['margazhidawn'],
+    story:'f-kolam', shloka:'thiruppavai27', practice:'bee', together:['kolam'] },
 
   { mon:'DEC', day:'24', yr:'2026', name:'Arudra Darshanam', emoji:'🔥', hue:'h-clay',
     hook:'The night the dancing Shiva is carried out to be seen.',
@@ -10027,6 +10523,7 @@ const FESTIVALS = [
     tags:['festival','shiva','sect-saiva'], action:'day',
     kid:'The word for today means <b>the seeing</b>. Once a year the dancing Shiva is brought out of the temple so that people can look at him properly — not a picture of him, him.<br><br>It happens at the darkest time of the year, which is the best time to bring something out to be seen.',
     adult:'<i>Darshanam</i> is the operative word: not worship, <b>seeing</b> — and in the temple grammar, being seen in return. Nataraja is brought out for abhishekam and procession on the Arudra star in Margazhi, near the winter solstice.<br><br>Chidambaram is the centre of this, where the shrine famously contains empty space (<i>chidambara rahasyam</i>) behind the curtain. That an image-rich tradition places, at its most important dance shrine, a deliberate nothing is the kind of detail worth having in your pocket.',
+    reading:['shiva-adult','nayanmar-adult'], deeper:['thiruvathiraikali'],
     story:'f-arudra', shloka:'namahshivaya', practice:'flame', together:['pancha'] },
 
   { mon:'DEC', day:'30', yr:'2026', name:'Vaikunta Ekadasi', emoji:'🚪', hue:'h-night',
@@ -10036,7 +10533,8 @@ const FESTIVALS = [
     tags:['festival','krishna','sect-vaishnava'], action:'day',
     kid:'In some temples there is a door that stays closed all year. Today — one day only — it is opened, and everybody walks through it.<br><br>At Srirangam the queue for that door is so long that people wait most of the night. All to walk through a doorway.',
     adult:'The <i>ekadasi</i> (eleventh day) in Margazhi, when the <b>paramapada vasal</b> — the gate of the highest state — is opened.<br><br>The reading is unusually direct: the door stands for the passage out of this life, and walking through it while alive is a rehearsal of the one thing that cannot be rehearsed. It is kept fasting and largely awake, so people do it hungry and tired, which is not incidental.<br><br>Away from a temple the honest minimum is small: keep the fast in whatever form is truthful for you, say <b>Om Namo Narayanaya</b> once with attention, and if there is a temple within reach, take the children — the queue is the memory they will keep. As with any fast: skip it without guilt if you are pregnant, unwell or diabetic.',
-    story:'f-gate', shloka:'narayanaya', practice:'three', together:['vaikunta'] },
+    reading:['vaikunta-adult','alwars-adult'], deeper:['vaikunta'],
+    story:'f-gate', shloka:'narayanaya', practice:'three', together:['kolam'] },
 
   /* --- Thai (Jan-Feb): the harvest, and the natural finale --- */
   { mon:'JAN', day:'14', yr:'2027', name:'Bhogi', emoji:'🔥', hue:'h-clay',
@@ -10046,6 +10544,7 @@ const FESTIVALS = [
     tags:['festival','universal','sect-panhindu'], action:'day',
     kid:'Tomorrow is Pongal. Today is the day you get rid of things: the house is cleaned out, and the old, broken, worn-out stuff goes on a bonfire in the street.<br><br>It is the best possible order to do things in. Throw out first. Celebrate second.',
     adult:'Bhogi clears the ground for Pongal — a genuine clear-out, with the discarded burnt at dawn, and in some accounts an offering to Indra for the rains.<br><br>The sequencing is the interesting part, and it is the opposite of how most of us handle a new year: Bhogi does not ask you to resolve to be better, it asks you to physically remove things first, and only then feast. Decluttering as liturgy.<br><br>One caution worth stating: the bonfires are a real air-quality problem in Tamil cities now, and burning household plastic is genuinely harmful. The practice adapts fine — clear out, donate, and light something small.',
+    reading:['harvest-adult'], deeper:['bhogifire'],
     story:'f-bhogi', shloka:'annapurne', practice:'three', together:['kolam'] },
 
   { mon:'JAN', day:'15', yr:'2027', name:'Thai Pongal', emoji:'🍚', hue:'h-gold',
@@ -10055,6 +10554,7 @@ const FESTIVALS = [
     tags:['festival','major','universal','sect-panhindu','srilanka'], action:'day',
     kid:'Everybody comes outside. A new pot goes on a fire with rice and milk and jaggery, and then the whole family just <b>stands there watching it</b> — waiting for it to boil over and spill down the sides. The moment it does, everyone shouts <b>"Pongalo Pongal!"</b><br><br>Which is very odd, because on any other day of the year a pot boiling over is a small disaster. Today it is the entire point.',
     adult:'The first day of <b>Thai</b>, and the closest thing the Tamil calendar has to a purely secular festival — no deity at the centre, no story of a demon defeated. The sun, the rain, the cattle and the field are thanked directly.<br><br><i>Pongal</i> means "it overflows." The dish and the festival share a name, and the ritual requirement is <b>excess</b> — you cook something that cannot be contained and let it spill in front of everybody.<br><br>It is also the most portable festival here, and the most useful for a mixed or non-religious household: a harvest thank-you needs no theological commitment from anyone at the table. For Sri Lankan Tamil families it carries additional weight as a marker of Tamil identity rather than of sect.',
+    reading:['harvest-adult'], deeper:['suryapot'],
     story:'pongalpot', shloka:'annapurne', practice:'potrising', together:['sakkaraipongal','kolam'] },
 
   { mon:'JAN', day:'16', yr:'2027', name:'Mattu Pongal', emoji:'🐄', hue:'h-water',
@@ -10064,6 +10564,7 @@ const FESTIVALS = [
     tags:['festival','universal','sect-panhindu','srilanka'], action:'day',
     kid:'Yesterday was for people. Today is for the <b>animals</b> — the cows especially, who get their horns painted, garlands round their necks, bells, and the first bowl of yesterday\'s sweet pongal, before any person eats it.<br><br>No cow? Thank the animal you do have. The dog will allow a garland. The cat will not.',
     adult:'<i>Mattu</i> means cattle. In an agricultural society the ox did the work that made the harvest possible, and the day exists to say so — the animal eats first.<br><br>For a diaspora child raised on cartons of milk, this is the most quietly radical day in the calendar: it insists that the food chain has participants who are owed something. You do not need livestock to teach it. You need to answer the question "where does milk actually come from" honestly.<br><br><b>Jallikattu</b> happens around now and is genuinely contested — simultaneously a matter of deep Tamil pride, a live animal-welfare argument, and the subject of a Supreme Court fight. If your child sees footage they will ask. Have a position.',
+    reading:['harvest-adult'], deeper:['kanupidi'],
     story:'f-mattu', shloka:'annapurne', practice:'potrising', together:['mattupongal','sakkaraipongal'] },
 
   { mon:'FEB', day:'1',  yr:'2027', name:'Thai Poosam', emoji:'🦚', hue:'h-rose',
@@ -10073,7 +10574,8 @@ const FESTIVALS = [
     tags:['festival','murugan','sect-saiva','srilanka'], action:'day',
     kid:'Today people <b>carry things</b> for Murugan — a pot of milk, or a big decorated arch on their shoulders — and they walk, sometimes for miles, all the way to the temple.<br><br>The idea is simple: if you promised something, you carry it yourself, the whole way.',
     adult:'<b>Thaipusam</b> — the Poosam star in Thai, and the largest Murugan festival in the diaspora by a wide margin: Batu Caves in Malaysia, Singapore, and Kataragama in Sri Lanka. For many diaspora Tamil families this, not Pongal, is the most vivid religious event they have ever attended.<br><br>The <b>kavadi</b> is a burden carried as a vow discharged, from a simple pot of milk (<i>paal kavadi</i>) to an ornate shoulder-borne frame. The principle is identical at both ends: you promised, and you carry it yourself.<br><br>On the piercing: it is done in trance, prepared for with weeks of fasting, and practitioners describe no pain. A child who sees a photograph will ask. The honest answer is that some people keep a promise with their whole body, that it is never done casually or alone, and that nobody here is asking them to.',
-    story:'murugan6', shloka:'saravana', practice:'peacock', together:['panchamirtham','kavadi'] }
+    reading:['murugan-adult','murugantales-adult'], deeper:['kavadi'],
+    story:'murugan6', shloka:'saravana', practice:'peacock', together:['panchamirtham'] }
 ];
 
 const FILTER_COPY = {
@@ -10324,7 +10826,7 @@ const PRACTICES = [
         Vakratunda Mahakaya · Kozhukattai</div>
     ` },
   { id:'lion', emoji:'🦁', top:'p4', title:'Three breaths, the lion\'s breath', tag:'<span>Navaratri</span> · loud',
-    tags:['practice','breath','movement','devi','little','middle','older','sect-shakta'],
+    tags:['practice','breath','movement','sound','devi','little','middle','older','sect-shakta'],
     body:`
       <div class="age">Three breaths, with the movement in them · Navaratri</div>
       <h2>🦁 Three breaths, the lion's breath</h2>
@@ -10461,6 +10963,203 @@ const ARC_PRACTICE = {
   'ganesha-tales':'elephant', 'ganesha-tales2':'elephant',
   'amman-tales':'lion', 'amman-tales2':'lion', meenakshi:'lion'
 };
+
+/* The Go Deeper side of each breathing exercise — what it is, where it comes from, what is
+   known about it. Read in the adult layer of every day screen and at the foot of each
+   exercise's own page. It explains; it never adds a second exercise.
+   `watch` = a kid-friendly video, shown on the exercise's page.
+   `more`  = sources an adult can follow up. Exercises that are our own story images have no
+   video: nobody else teaches them, and a borrowed video would be of something else. */
+const PRACTICE_DEEPER = {
+  three:{
+    text:`<p>Every classical breathing practice starts here: noticing the breath before changing it.
+      Patanjali's <i>Yoga Sutras</i> describe pranayama as regulating the in-breath, the out-breath and
+      the pause between them, observed by place, time and number — where you feel it, how long it lasts,
+      how many you take. Counting three is the smallest version of "number".</p>
+      <p>The three comes from the close of the Shanti mantras — <i>shanti, shanti, shanti</i> —
+      traditionally read as peace in three directions: from troubles within us (<i>adhyatmika</i>), from
+      other beings (<i>adhibhautika</i>), and from forces beyond anyone's control (<i>adhidaivika</i>).</p>
+      <p>The body's side is well understood: the heart speeds up a little on each in-breath and slows on
+      each out-breath, so a long, slow out-breath is the part that settles you. What three breaths a day
+      does for a child over months is a more open question — the research on breathing programmes for
+      children is mixed, and we would rather say so.</p>`,
+    more:[
+      {url:'https://www.youtube.com/watch?v=PzkpcA_ZU0E', label:'Recommended yoga protocol for children aged 3–6', who:'Ministry of Ayush, Government of India · English · 1 hr'},
+      {url:'https://www.youtube.com/watch?v=pA8Hj-dZHCI', label:'The science of breath — pranayama', who:'Kaivalyadhama, Lonavla, for the Ministry of Ayush · Hindi · talk'},
+      {url:'https://en.wikipedia.org/wiki/Shanti_Mantras', label:'The Shanti mantras', who:'Wikipedia'}
+    ]},
+
+  sesha:{
+    text:`<p><b>Adisesha</b> — also Ananta, "the endless" — is the great serpent Vishnu rests on, floating
+      on the ocean of milk. <i>Shesha</i> means "what remains": when a world ends, he is what is left for
+      the next one to begin on. Sheltering the newborn Krishna in the storm is the same role in miniature.</p>
+      <p>There is a lovely link to yoga itself. Patanjali, who compiled the <i>Yoga Sutras</i>, is
+      traditionally said to be an incarnation of Adisesha and is often pictured with a serpent's hood
+      over his head — so the shape your hands make here is the shape that crowns the author of the yoga
+      texts. Many teachers in the Krishnamacharya lineage of Chennai still open a class with a verse to
+      him.</p>
+      <p>Arms rising on the in-breath open the chest and let the lungs fill further; lowering them helps
+      the out-breath lengthen.</p>`,
+    more:[{url:'https://en.wikipedia.org/wiki/Shesha', label:'Shesha (Adisesha)', who:'Wikipedia'}]},
+
+  mountain:{
+    text:`<p>Govardhana is the hill Krishna holds up for seven days to shelter his village from Indra's
+      rain — after persuading the cowherds to honour the hill that feeds their cattle. It is still kept as
+      <b>Govardhan Puja</b> (Annakut) the day after Diwali across much of North India, with a "mountain"
+      built out of food.</p>
+      <p>The standing shape is <b>tadasana</b> — "mountain pose", also called <i>samasthiti</i>,
+      "standing evenly" — the base every standing posture starts from. Its name comes from
+      twentieth-century teachers rather than the old texts.</p>
+      <p>Holding the arms up through the third out-breath is the heart of it: effort you choose to stay
+      with, which is what the story is about too.</p>`,
+    watch:{url:'https://www.youtube.com/watch?v=fq11GA-kL-k', label:'Yoga for kids — tadasana, the mountain pose', who:'Ministry of Ayush · Hindi, easy to follow by watching · 3 min'},
+    more:[{url:'https://en.wikipedia.org/wiki/Govardhan_Puja', label:'Govardhan Puja', who:'Wikipedia'},
+          {url:'https://en.wikipedia.org/wiki/Tadasana', label:'Tadasana', who:'Wikipedia'}]},
+
+  quietmouth:{
+    text:`<p>Keeping silence on purpose has a name: <b>mauna</b>. People keep it for a day, a festival or
+      a lifetime, on the idea that speech spends attention and silence gathers it. The best-known Tamil
+      example is <b>Ramana Maharshi</b> at Tiruvannamalai, who for years taught mostly without speaking.</p>
+      <p>Breathing through the nose is the default in almost every traditional practice: the nose warms,
+      filters and slows the air, and a closed mouth makes the breath longer on its own.</p>
+      <p>The tortoise's story comes from the Panchatantra, a book written to teach princes — and knowing
+      when to speak was one of the first things a king had to learn.</p>`,
+    more:[{url:'https://en.wikipedia.org/wiki/Mauna_(silence)', label:'Mauna — silence as a practice', who:'Wikipedia'},
+          {url:'https://en.wikipedia.org/wiki/Ramana_Maharshi', label:'Ramana Maharshi', who:'Wikipedia'}]},
+
+  peacock:{
+    text:`<p>Murugan's peacock has a remarkable origin in Tamil tradition. At the end of Skanda Sashti the
+      demon Soorapadman, split in two by the vel, becomes a peacock and a rooster — and Murugan keeps
+      both: the peacock to ride, the rooster on his banner, the <i>seval kodi</i>. The enemy ends the
+      story carrying him.</p>
+      <p>This is a chest-opening movement: it widens the ribs so the in-breath goes further. Yoga also has
+      a <b>mayurasana</b>, "peacock pose", which is a strong arm balance — a different thing entirely,
+      worth knowing if you look it up.</p>`,
+    more:[{url:'https://en.wikipedia.org/wiki/Mayurasana', label:'Mayurasana, the yoga pose of the same name', who:'Wikipedia'}]},
+
+  flame:{
+    text:`<p>The lamp sits at the centre of Tamil worship — the camphor flame at the end of a puja, the rows
+      at Karthigai, the great flame on the hill at Tiruvannamalai. The steady flame as a picture of a
+      steady mind is old: the <i>Bhagavad Gita</i> compares the settled mind to a lamp in a windless
+      place, burning without a flicker.</p>
+      <p>There is a traditional practice built on the flame too: <b>trataka</b>, steady gazing at a
+      candle, listed in the <i>Hatha Yoga Pradipika</i> among its cleansing practices. Ours borrows the
+      flame and keeps the eyes soft.</p>
+      <p>Breathing out gently enough to leave the flame still is a natural way to slow the out-breath —
+      the calming half of every breath.</p>`,
+    more:[{url:'https://en.wikipedia.org/wiki/Trataka', label:'Trataka, the candle practice', who:'Wikipedia'},
+          {url:'https://en.wikipedia.org/wiki/Karthikai_Deepam', label:'Karthigai Deepam', who:'Wikipedia'}]},
+
+  elephant:{
+    text:`<p><b>Vakratunda</b> — "curved trunk" — is the first word of the shloka said to Ganesha, so this
+      exercise and the verse share a picture. The trunk is often read as strength that can bend: it can
+      uproot a tree and lift a single blade of grass.</p>
+      <p>That blade of grass matters. Ganesha's favourite offering is <b>arugampul</b> (durva grass), and
+      in one story it is what cooled him after he swallowed a fiery demon, Analasura.</p>
+      <p>Loose, heavy swinging is how many traditional sessions begin — the loosening movements called
+      <i>sukshma vyayama</i> — because a relaxed body breathes more easily.</p>`,
+    more:[{url:'https://en.wikipedia.org/wiki/Ganesh_Chaturthi', label:'Ganesha Chaturthi', who:'Wikipedia'}]},
+
+  lion:{
+    text:`<p><b>Simhasana</b>, the lion pose, is one of the oldest named postures. The <i>Hatha Yoga
+      Pradipika</i> describes it — mouth open, gaze at the tip of the nose — and calls it honoured by the
+      best of yogis. The version here is simplified for children.</p>
+      <p>The lion is Durga's mount, carrying her into the battle with Mahishasura that Navaratri
+      remembers; Narasimha, Vishnu as half-lion, is the tradition's other great lion.</p>
+      <p>A loud, open-mouthed out-breath lets go of tension in the face and jaw, and the quiet straight
+      afterwards is a good moment to sit still together.</p>`,
+    watch:{url:'https://www.youtube.com/watch?v=A5RGISC-b84', label:'Lion pose', who:'Cosmic Kids Yoga · English · under a minute'},
+    more:[{url:'https://en.wikipedia.org/wiki/Simhasana', label:'Simhasana', who:'Wikipedia'},
+          {url:'https://en.wikipedia.org/wiki/Hatha_Yoga_Pradipika', label:'The Hatha Yoga Pradipika', who:'Wikipedia'}]},
+
+  potrising:{
+    text:`<p><b>Pongal</b> means "it boils over", and the festival's one essential moment is the pot
+      spilling in front of everyone, greeted with the shout <i>Pongalo Pongal!</i> Many families watch
+      which way it spills and read it as a sign for the year.</p>
+      <p>The pot is new, tied at the neck with a fresh turmeric plant, and cooked outdoors facing the
+      rising sun — a thanksgiving to Surya and to the harvest.</p>
+      <p>The long filling in-breath and spilling-over out-breath make a full breath: belly, then ribs,
+      then the top of the chest, and out again.</p>`,
+    more:[]},
+
+  bee:{
+    text:`<p><b>Bhramari</b> is one of the eight classical breath practices of the <i>Hatha Yoga
+      Pradipika</i>, which likens its sound to humming bees. The fuller traditional form closes the ears,
+      eyes and lips with the fingers (<i>shanmukhi mudra</i>) so the hum is all that is left to notice.</p>
+      <p>There is some interesting science here: humming raises the nitric oxide in the nose many times
+      over compared with quiet breathing, one reason it feels so different from an ordinary breath.</p>
+      <p>The bee is a Tamil poet's creature, too. One of the best-known Sangam poems, in the
+      <i>Kuruntokai</i>, is addressed to a bee — the same poem at the heart of the Madurai story in which
+      Shiva and the poet Nakkeerar argue over it.</p>`,
+    watch:{url:'https://www.youtube.com/watch?v=5_2j5Tro6yk', label:'Breathe like a bee', who:'Yoga Guppy (Rashmi Ramesh) · English, for ages 2–8 · 4 min'},
+    more:[{url:'https://www.youtube.com/watch?v=N6vhUXsCC3U', label:'How to perform bhramari pranayama', who:'Ministry of Ayush, Government of India · Hindi · under a minute'},
+          {url:'https://en.wikipedia.org/wiki/Hatha_Yoga_Pradipika', label:'The Hatha Yoga Pradipika', who:'Wikipedia'},
+          {url:'https://en.wikipedia.org/wiki/Kurunthokai', label:'The Kuruntokai', who:'Wikipedia'}]},
+
+  sea:{
+    text:`<p><b>Ujjayi</b> is usually translated "victorious". The <i>Hatha Yoga Pradipika</i> lists it
+      among its eight breath practices; it is made by gently narrowing the back of the throat so the air
+      makes a soft, even sound.</p>
+      <p>It has a Chennai connection. T. Krishnamacharya, who taught in Mysore and later in Chennai, made
+      ujjayi the steady background breath of posture practice, and through his students it became the
+      breath of most yoga taught around the world today.</p>
+      <p>The sound gives you something to listen to, which makes it easy to keep the breath long and even.
+      And the sea runs all through these stories — Vishnu resting on the ocean of milk, the churning, the
+      bridge to Lanka, Hanuman's leap.</p>`,
+    more:[{url:'https://www.youtube.com/watch?v=v6KZXJkoUu8', label:'Ujjayi pranayama tutorial', who:'Yoga International · English · 1 min'},
+          {url:'https://en.wikipedia.org/wiki/Ujjayi_breath', label:'Ujjayi', who:'Wikipedia'}]},
+
+  bow:{
+    text:`<p>Archery had its own science in the old texts — <b>Dhanurveda</b>, counted among the
+      "secondary Vedas". Rama's bow is <i>Kodanda</i>, Arjuna's is <i>Gandiva</i>, and both epics treat a
+      steady breath and a still gaze as the heart of the skill.</p>
+      <p>The best-loved archery scene is Drona's test: of all his students, only Arjuna says he sees
+      nothing but the bird's eye.</p>
+      <p>Yoga has a posture named for the same image — <b>akarna dhanurasana</b>, "the bow drawn to the
+      ear", a seated pose. Ours is a simpler standing cousin: drawing the string opens the chest on the
+      in-breath, and the slow release lengthens the out-breath.</p>`,
+    more:[{url:'https://www.youtube.com/watch?v=xQYxdVYkk8s', label:'Archer pose — akarna dhanurasana (the seated pose)', who:'Himalayan Institute · English · 8 min'},
+          {url:'https://en.wikipedia.org/wiki/Dhanurveda', label:'Dhanurveda', who:'Wikipedia'}]},
+
+  river:{
+    text:`<p>The Ganga falls from the heavens with force enough to flood the earth, so Shiva catches her in
+      his matted hair and lets her down gently, in streams — the story of <b>Bhagiratha</b>, who brought
+      her down. The Kaveri's rising in the month of Aadi is the Tamil river's own festival, Aadi Perukku.</p>
+      <p>In yoga, the word for the body's channels of breath and energy is <b>nadi</b> — which is also the
+      everyday word for a river. The alternate-nostril practice <i>nadi shodhana</i> means "clearing the
+      rivers". This exercise pictures the same idea with the arms.</p>
+      <p>Letting the hands pour down slowly makes the out-breath long, and bending the knees keeps the
+      back comfortable.</p>`,
+    more:[{url:'https://en.wikipedia.org/wiki/Nadi_(yoga)', label:'Nadi — the channels', who:'Wikipedia'},
+          {url:'https://en.wikipedia.org/wiki/Aadi_Perukku', label:'Aadi Perukku', who:'Wikipedia'}]}
+};
+
+/* the Go Deeper breathing block: the explanation plus its sources — no steps, no count */
+function breatheDeeper(pr){
+  const d = PRACTICE_DEEPER[pr.id];
+  if(!d) return '';
+  const links = [d.watch, ...(d.more||[])].filter(Boolean);
+  return `<div class="card deep-breath">
+      <h3>${pr.emoji} ${pr.title}</h3>
+      ${d.text}
+      ${links.length ? `<div class="res"><div class="res-h">Watch &amp; read</div>${links.map(resLink).join('')}</div>` : ''}
+    </div>`;
+}
+function resLink(r){
+  const icon = /youtube\.com/.test(r.url) ? '🎥' : '📖';
+  return `<a class="res-a" href="${r.url}" target="_blank" rel="noopener">${icon} ${r.label}<span>${r.who}</span></a>`;
+}
+
+/* the two hand-built day screens carry a fixed exercise, so their Go Deeper block is
+   filled once at startup */
+function fillStaticDeepBreath(){
+  const pairs = [['sec-breathe-deep','sesha'], ['s-breathe-deep','peacock']];
+  pairs.forEach(([id,pid])=>{
+    const host = document.getElementById(id+'-body');
+    const pr = PRACTICES.find(x=>x.id===pid);
+    if(host && pr) host.innerHTML = breatheDeeper(pr);
+  });
+}
 
 /* the breathe tile, shared by the festival and everyday screens */
 function breatheTile(pr){
@@ -10982,6 +11681,8 @@ function openEveryday(storyId, forDate){
   const gpr = PRACTICES.find(x=>x.id===(ARC_PRACTICE[s.series]||'three'));
   const gb = document.getElementById('g-breathe');
   if(gb && gpr) gb.innerHTML = breatheTile(gpr);
+  const gbd = document.getElementById('g-breathe-deep-body');
+  if(gbd && gpr) gbd.innerHTML = breatheDeeper(gpr);
 
   /* what this day connects to */
   const anch = document.getElementById('g-anchor-links');
@@ -11121,9 +11822,13 @@ function openRecipe(id){
 }
 function openPractice(id){
   const p = PRACTICES.find(x=>x.id===id);
+  const d = PRACTICE_DEEPER[p.id] || {};
+  const watch = d.watch ? `<div class="res">${resLink(d.watch)}</div>` : '';
+  const deep  = d.text ? `<div class="card deep-breath"><h3>Go Deeper</h3>${d.text}
+      ${(d.more||[]).length ? `<div class="res"><div class="res-h">Read &amp; watch</div>${d.more.map(resLink).join('')}</div>` : ''}</div>` : '';
   document.getElementById('overlay-body').innerHTML =
     `<div class="modal-hero ${p.top}">${p.emoji}</div>
-     <div class="modal-inner">${p.body}</div>`;
+     <div class="modal-inner">${p.body}${watch}${deep}</div>`;
   document.getElementById('overlay').classList.add('open');
 }
 function closeOverlay(){
@@ -11274,7 +11979,9 @@ function openDay(name){
   /* 1 · story — kids get the day's story, adults their own reading if one exists */
   const story  = f.story ? STORIES.find(s=>s.id===f.story) : null;
   const deity  = (f.tags||[]).find(t=>TAGS[t] && TAGS[t].group==='deity');
-  const adultS = byTag(byTag(STORIES,'story'),'adults').filter(s=>deity && s.tags.includes(deity));
+  /* the readings this day names — not "anything about the same god", which used to put the
+     Janmashtami readings on Vaikunta Ekadasi */
+  const adultS = (f.reading||[]).map(id=>STORIES.find(x=>x.id===id)).filter(Boolean);
   document.getElementById('d-story').innerHTML =
       `<div class="dkid-only">${story ? storyCards([story],'Tap to read the story →') : missing('The story')}</div>`
     + `<div class="dparent-only" hidden>${adultS.length ? storyCards(adultS,'Tap to read →') : missing('A longer reading')}</div>`;
@@ -11290,12 +11997,18 @@ function openDay(name){
   document.getElementById('d-breathe').innerHTML = pr
     ? breatheTile(pr)
     : missing('The breathing');
+  const dbd = document.getElementById('d-breathe-deep-body');
+  if(dbd) dbd.innerHTML = pr ? breatheDeeper(pr) : missing('The breathing');
 
-  /* Do it Together — explicit ids if given, else everything tagged for this deity */
-  let tog = (f.together||[]).map(id=>TOGETHER.find(t=>t.id===id)).filter(Boolean);
-  if(!tog.length && deity) tog = byTag(TOGETHER, deity);
-  document.getElementById('d-together').innerHTML = tog.length
-    ? cardsHtml(tog,'openRecipe') : missing('Something to make or do');
+  /* Do it Together — the two layers get different cards: the day's own kids' items, and
+     the day's own observance for the adult layer */
+  const pick = ids => (ids||[]).map(id=>TOGETHER.find(t=>t.id===id)).filter(Boolean);
+  let tog = pick(f.together);
+  if(!tog.length && deity) tog = byTag(byTag(TOGETHER, deity), 'kids');
+  const togA = pick(f.deeper);
+  document.getElementById('d-together').innerHTML =
+      `<div class="dkid-only recipes">${tog.length ? cardsHtml(tog,'openRecipe') : missing('Something to make or do')}</div>`
+    + `<div class="dparent-only recipes" hidden>${togA.length ? cardsHtml(togA,'openRecipe') : missing('The observance')}</div>`;
   document.getElementById('d-sec-together').hidden = false;
 
   document.getElementById('d-band-text').innerHTML =
@@ -11368,6 +12081,7 @@ renderStoryLib('all');
 renderRecipeLib('all');
 renderRitualLib('all');
 renderPracticeLib('all');
+fillStaticDeepBreath();
 setMode('kids');
 setSMode('kids');
 

@@ -1922,6 +1922,8 @@
       <div class="grab"></div>
       <h3>💬 Tell me what you think</h3>
       <div class="sbody" id="fb-body">
+        
+        
         <div id="fb-asks"></div>
         <div class="q">
           <label>Who shared this with you?</label>
@@ -1930,13 +1932,9 @@
         </div>
         <div class="q">
           <label>What did you make of it?</label>
-          <div class="hint">Anything at all — what worked, what didn't, what confused you.</div>
+          <div class="hint">Anything at all — what worked, what didn't, or anything that reads
+            differently from how you know it.</div>
           <textarea class="fld" id="fb-text" placeholder="Type here…"></textarea>
-        </div>
-        <div class="q">
-          <label>Did anything look wrong?</label>
-          <div class="hint">A date, a name, a story told differently from how you know it. Optional.</div>
-          <textarea class="fld" id="fb-wrong" placeholder="Optional…"></textarea>
         </div>
         <div class="q">
           <label>Email <span style="font-weight:400;color:var(--muted)">(optional)</span></label>
@@ -12219,7 +12217,13 @@ function syncRemind(){
 
 /* The ask-ladder questions also live at the top of the feedback sheet, so someone who
    opens it on purpose can answer them there instead of waiting for a pop-up. Same ASKS
-   data, same `ask` rows in the sheet; anything already answered is left out. */
+   data, same `ask` rows in the sheet; anything already answered is left out.
+
+   CONSEQUENCE WORTH KNOWING: once a device has answered all three, this sheet shows
+   only the free-text fields — so testing the app yourself permanently hides the ladder
+   from your own copy, and the form looks like it lost the questions. It hasn't. The
+   internal reset link below (working copy only, stripped from the shared build) puts
+   them back so the sheet can be previewed the way a tester first meets it. */
 function renderFbAsks(){
   const s = askState();
   const box = document.getElementById('fb-asks');
@@ -12236,8 +12240,30 @@ function fbPick(btn){
   const q = btn.closest('.q'), a = ASKS.find(x => x.id === q.dataset.ask);
   q.querySelector('textarea').hidden = !(a.then && (!a.thenIf || a.thenIf.includes(btn.dataset.v)));
 }
+/* Working copy only. SHOW_INTERNAL is rewritten to false by tools/build-shared.ps1, so
+   this never renders for a tester. */
+function renderFbReset(){
+  const el = document.getElementById('fb-reset');
+  if(!el) return;                       /* stripped out of the shared build entirely */
+  el.hidden = !SHOW_INTERNAL;
+  if(!SHOW_INTERNAL) return;
+  const s = askState();
+  const total = ASKS.filter(a => a.after).length;
+  const answered = ASKS.filter(a => a.after && s[a.id]).length;
+  document.getElementById('fb-reset-msg').textContent = answered
+    ? answered + ' of ' + total + ' ladder questions are hidden here because this device '
+      + 'already answered them. '
+    : 'All ladder questions are showing, as a new tester sees them. ';
+}
+function resetAsks(){
+  try { localStorage.removeItem('dp-asks'); } catch(e){}
+  renderFbAsks(); renderFbReset();
+  toast('Ladder reset — this is what a new tester sees');
+}
+
 function openFeedback(){
   renderFbAsks();
+  renderFbReset();
   document.getElementById('fb-sheet').classList.add('open');
   document.getElementById('fb-bg').classList.add('open');
 }
@@ -12633,8 +12659,14 @@ async function send(row){
 async function submitFeedback(){
   const know  = document.getElementById('fb-know').value.trim();
   const text  = document.getElementById('fb-text').value.trim();
-  const wrong = document.getElementById('fb-wrong').value.trim();
   const email = document.getElementById('fb-email').value.trim();
+  /* "Did anything look wrong?" was removed (Shri, Sep 21): it overlapped "what did you
+     make of it", and a question that presumes something is wrong is not a neutral one.
+     The error channel it carried is real — this is unverified religious content and a
+     tester may be the only person who spots a wrong date — so it survives inside that
+     question's hint instead, phrased without the presumption. `wrong` is still sent so
+     the sheet's existing column keeps its shape; it will simply be blank from here. */
+  const wrong = '';
 
   const answers = [...document.querySelectorAll('#fb-asks .q')].map(q => {
     const on = q.querySelector('.opt.on');
@@ -12662,7 +12694,6 @@ async function submitFeedback(){
     toast('Thank you — that genuinely helps');
     document.getElementById('fb-know').value = '';
     document.getElementById('fb-text').value = '';
-    document.getElementById('fb-wrong').value = '';
     return;
   }
   /* Be honest rather than reassuring. What they wrote is still in this browser, so

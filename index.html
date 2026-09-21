@@ -631,7 +631,15 @@
     color:var(--ink);cursor:pointer;box-shadow:var(--shadow)}
   .share-row button:active{transform:scale(.97)}
 
-  /* honest framing band, first thing on the welcome screen */
+  .wel-bookmark{margin:10px 16px 0;padding:8px 12px;border-radius:12px;background:var(--panel);
+    border:1px solid var(--line);font-size:12px;line-height:1.5;color:var(--muted)}
+  .wel-bookmark b{color:var(--ink)}
+  .wel-boxed{margin:10px 16px 0;border:1px solid var(--line);border-radius:13px;
+    padding:16px 18px 16px}
+  .wel-boxed h1{margin-bottom:8px}
+  .wel-boxed .wel-promise{margin-bottom:12px}
+  .wel-boxed .lamp{display:none}
+  /* honest framing band, on the welcome screen just under the hero */
   .arrival{margin:12px 16px 2px;padding:11px 13px;border-radius:13px;
     background:var(--saffron-soft);border:1px solid var(--line);
     font-size:12px;line-height:1.55;color:var(--muted)}
@@ -1324,33 +1332,9 @@
 
       <section class="screen" id="screen-welcome" hidden>
         
-        <div class="arrival">
-          <p><b>I built this for my own family.</b> I grew up on these stories — from my
-          grandmother, from my parents, from whatever I could get hold of and read. My children
-          are growing up surrounded by different things, and I didn't want the thread to go
-          quiet just because we moved.</p>
-          <p><b>It's a prototype, not a finished app.</b> I'm a student of this, not a teacher
-          of it. The content is real, but it hasn't been checked yet by someone who knows the
-          tradition, and some pages still say <i>soon</i>.</p>
-          <div class="ask">
-            <p><b>What I'd like from you.</b> A few people said they'd want something like
-            this. I'd like to know whether that's really true before I put more time into it —
-            so have a look around, then tell me honestly whether it's worth building.
-            <i>Not for us</i> is a useful answer, and a much cheaper one to hear now than in a
-            year. I'll ask one short question now and then; skipping is completely fine.</p>
-            <div class="arr-links">
-              <span onclick="openFeedback()">💬 Tell me what you think</span>
-              <span onclick="show('why')">Why it's shaped this way →</span>
-              <span onclick="show('faq')">Questions people ask →</span>
-            </div>
-          </div>
-          <p style="margin-top:10px">🔖 <b>Bookmark this page</b> — there's no app to install
-          and no account to lose.<span id="remind-line" hidden> Or
-          <a href="#" onclick="event.preventDefault();openRemind()">have me send you a nudge</a>.</span>
-          And if it's worth five minutes to you,
-          <a href="#" onclick="event.preventDefault();shareApp()">pass it on</a>.</p>
-        </div>
-        <div class="wel-hero">
+        <div class="wel-bookmark">🔖 <b>Bookmark this page</b> — nothing to install, no account.<span id="remind-line" hidden> Or
+          <a href="#" onclick="event.preventDefault();openRemind()">have me send you a nudge</a>.</span></div>
+        <div class="wel-hero wel-boxed">
           <div class="lamp">🪔</div>
           <h1>Daily Practice</h1>
 
@@ -1362,6 +1346,24 @@
             <div class="wel-mech-label">Five minutes a day</div>
             <div class="wel-mech-steps">
               <span><b>1</b> Story</span><span><b>2</b> Shloka</span><span><b>3</b> Breathe</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="arrival">
+          <p><b>I built this for my own family.</b> I want my children to be exposed to the
+          culture, habits and values I grew up with.</p>
+          <p><b>I'm not an expert.</b> This is a prototype, so the content hasn't been fully
+          verified yet, and some of it may be subjective.</p>
+          <div class="ask">
+            <p><b>What I'd like from you.</b> A few people have told me they'd find an app like
+            this useful. I've built this prototype to find out — please have a look around and
+            tell me whether it would be useful going forward.</p>
+            <div class="arr-links">
+              <span onclick="openFeedback()">💬 Tell me what you think</span>
+              <span onclick="show('why')">Why it's shaped this way →</span>
+              <span onclick="show('faq')">Questions people ask →</span>
+              <span onclick="shareApp()">📤 Pass it on</span>
             </div>
           </div>
         </div>

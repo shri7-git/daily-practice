@@ -653,10 +653,12 @@
   .arrival{margin:12px 16px 2px;padding:11px 13px;border-radius:13px;
     background:var(--saffron-soft);border:1px solid var(--line);
     font-size:12px;line-height:1.55;color:var(--muted)}
-  .arrival{position:relative;padding-right:34px}
+  .arrival{position:relative;padding-right:46px}
   .arrival[hidden]{display:none}
-  .arrival-x{position:absolute;top:5px;right:6px;width:26px;height:26px;border:0;background:none;
-    font-size:18px;line-height:1;color:var(--muted);cursor:pointer}
+  .arrival-x{position:absolute;top:8px;right:8px;width:28px;height:28px;padding:0;border-radius:50%;
+    border:1.5px solid var(--muted);background:var(--panel);
+    font-size:18px;line-height:1;color:var(--ink);cursor:pointer;
+    display:flex;align-items:center;justify-content:center}
   .arrival-x:active{opacity:.5}
   .arrival b{color:var(--ink);font-weight:700}
   .arrival p{margin:0 0 8px}
@@ -12182,8 +12184,14 @@ function closeArrival(){
   document.getElementById('arrival').hidden = true;
   try { localStorage.setItem('dp-arrival-closed', '1'); } catch(e){}
 }
+/* Shown on the first visit only: the first load records that it has been seen, and every
+   later load (or an explicit close) hides it. */
 (function(){
-  try { if(localStorage.getItem('dp-arrival-closed')) document.getElementById('arrival').hidden = true; } catch(e){}
+  try {
+    if(localStorage.getItem('dp-arrival-closed') || localStorage.getItem('dp-arrival-seen'))
+      document.getElementById('arrival').hidden = true;
+    else localStorage.setItem('dp-arrival-seen', '1');
+  } catch(e){}
 })();
 
 function openRemind(){

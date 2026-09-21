@@ -653,6 +653,11 @@
   .arrival{margin:12px 16px 2px;padding:11px 13px;border-radius:13px;
     background:var(--saffron-soft);border:1px solid var(--line);
     font-size:12px;line-height:1.55;color:var(--muted)}
+  .arrival{position:relative;padding-right:34px}
+  .arrival[hidden]{display:none}
+  .arrival-x{position:absolute;top:5px;right:6px;width:26px;height:26px;border:0;background:none;
+    font-size:18px;line-height:1;color:var(--muted);cursor:pointer}
+  .arrival-x:active{opacity:.5}
   .arrival b{color:var(--ink);font-weight:700}
   .arrival p{margin:0 0 8px}
   .arrival p:last-of-type{margin-bottom:0}
@@ -1360,7 +1365,8 @@
           </div>
         </div>
 
-        <div class="arrival">
+        <div class="arrival" id="arrival">
+          <button class="arrival-x" aria-label="Close" onclick="closeArrival()">×</button>
           <p><b>I built this for my own family.</b> I want my children to be exposed to the
           culture, habits and values I grew up with.</p>
           <p><b>I'm not an expert.</b> This is a prototype, so the content hasn't been fully
@@ -12169,6 +12175,16 @@ async function shareApp(){
    opt-in would be a promise of an email that never arrives. Off, the invitation is
    simply not shown; nobody is offered something that doesn't work. */
 const REMINDERS_ON = true;
+
+/* The "I built this for my own family" note is for the first look. Once closed it stays
+   closed on this device. */
+function closeArrival(){
+  document.getElementById('arrival').hidden = true;
+  try { localStorage.setItem('dp-arrival-closed', '1'); } catch(e){}
+}
+(function(){
+  try { if(localStorage.getItem('dp-arrival-closed')) document.getElementById('arrival').hidden = true; } catch(e){}
+})();
 
 function openRemind(){
   document.getElementById('rm-sheet').classList.add('open');

@@ -351,9 +351,16 @@
     border-radius:14px;padding:12px 14px;text-align:center}
   .wel-mech-label{font-size:10.5px;font-weight:800;letter-spacing:.6px;text-transform:uppercase;
     color:var(--saffron);margin-bottom:8px}
-  .wel-mech-steps{display:flex;justify-content:center;gap:8px;flex-wrap:wrap}
-  .wel-mech-steps span{font-size:12.5px;color:var(--ink);background:var(--panel);
-    border:1px solid var(--line);border-radius:999px;padding:5px 12px}
+  .wel-mech-steps{display:flex;justify-content:center;gap:6px;flex-wrap:nowrap}
+  .wel-mech-steps span{font-size:12.5px;color:var(--ink);background:var(--panel);white-space:nowrap;
+    border:1px solid var(--line);border-radius:999px;padding:5px 10px}
+  .wel-why{display:inline-block;margin-top:9px;font-size:11.5px;font-weight:700;
+    color:var(--saffron);text-decoration:underline;cursor:pointer}
+  .pass-box{margin:10px 16px 2px;padding:11px 13px;border-radius:13px;text-align:center;
+    background:var(--panel);border:1.5px dashed var(--saffron);cursor:pointer;
+    font-size:13px;font-weight:700;color:var(--ink)}
+  .pass-box small{display:block;font-weight:400;font-size:11.5px;color:var(--muted);margin-top:2px}
+  .pass-box:active{opacity:.6}
   .wel-mech-steps b{display:inline-grid;place-items:center;width:16px;height:16px;
     border-radius:50%;background:var(--saffron);color:#fff;font-size:10px;font-weight:800;
     margin-right:5px;vertical-align:-2px}
@@ -1183,11 +1190,11 @@
       <section class="screen" id="screen-faq" hidden>
         <div class="appbar">
           <button class="back" onclick="show('welcome')">‹ Home</button>
-          <span class="cal">Questions</span>
+          <span class="cal">FAQs</span>
         </div>
 
         <div class="why-lead">
-          <h1>Questions people ask</h1>
+          <h1>FAQs</h1>
           <p>Short answers. Where the honest answer is "not yet", it says so.</p>
         </div>
 
@@ -1345,8 +1352,9 @@
           <div class="wel-mech">
             <div class="wel-mech-label">Five minutes a day</div>
             <div class="wel-mech-steps">
-              <span><b>1</b> Story</span><span><b>2</b> Shloka</span><span><b>3</b> Breathe</span>
+              <span><b>1</b> Story</span><span><b>2</b> Shloka</span><span><b>3</b> Breath</span>
             </div>
+            <span class="wel-why" onclick="show('why')">Why 5 mins?</span>
           </div>
         </div>
 
@@ -1356,17 +1364,15 @@
           <p><b>I'm not an expert.</b> This is a prototype, so the content hasn't been fully
           verified yet, and some of it may be subjective.</p>
           <div class="ask">
-            <p><b>What I'd like from you.</b> A few people have told me they'd find an app like
-            this useful. I've built this prototype to find out — please have a look around and
-            tell me whether it would be useful going forward.</p>
+            <p><b>What I'd like from you.</b> Have a look around and tell me whether this
+            would be useful.</p>
             <div class="arr-links">
               <span onclick="openFeedback()">💬 Tell me what you think</span>
-              <span onclick="show('why')">Why it's shaped this way →</span>
-              <span onclick="show('faq')">Questions people ask →</span>
-              <span onclick="shareApp()">📤 Pass it on</span>
+              <span onclick="show('faq')">FAQs →</span>
             </div>
           </div>
         </div>
+        <div class="pass-box" onclick="shareApp()">📤 Pass it on<small>Know a family who'd like this?</small></div>
 
         <div class="wel-body">
           <div class="wel-tiles">
@@ -1398,7 +1404,7 @@
               <div class="ic">🗂️</div><h3>Every day so far</h3>
             </div>
             <div class="wtile" onclick="show('faq')">
-              <div class="ic">❓</div><h3>Questions</h3>
+              <div class="ic">❓</div><h3>FAQs</h3>
             </div>
           </div>
 
@@ -1419,20 +1425,17 @@
       <section class="screen" id="screen-why" hidden>
         <div class="appbar">
           <button class="back" onclick="show('welcome')">‹ Home</button>
-          <span class="cal">Why this exists</span>
+          <span class="cal">Why 5 mins</span>
         </div>
 
         <div class="why-lead">
-          <h1>Why this exists</h1>
+          <h1>Why 5 mins</h1>
           <p>The honest version, in as much detail as you want it.</p>
         </div>
 
         <details class="acc" open>
           <summary>⏳ Five minutes, every day</summary>
           <div class="accbody">
-            <p>Five minutes a day beats an hour once a month. Not because five minutes is a
-              lot — it obviously isn't — but because the every-day part is what compounds.</p>
-
             <div class="curve">
               <svg viewBox="0 0 344 170" role="img"
                    aria-label="Two curves over one year. Improving one percent a day rises slowly, then steeply, to about thirty-seven times. Slipping one percent a day falls close to zero.">

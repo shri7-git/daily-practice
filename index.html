@@ -11718,7 +11718,7 @@ function renderCalendar(filter){
     + ['all','major','soon'].map(f=>`<button class="chip ${calFilter===f?'on':''}" onclick="renderCalendar('${f}')">${FILTER_COPY[f].t}</button>`).join('')
     + `</div>`
     + chipRow('By god', FESTIVALS, 'deity', calFilter, 'renderCalendar');
-  const list = byTag(FESTIVALS, calFilter);
+  const list = byTag(FESTIVALS, calFilter).filter(f=>festStatus(f)!=='past');
   document.getElementById('cal-list').innerHTML = list.map(f=>{
     const st = festStatus(f);
     const relBadge = st==='today' ? `<span class="reldate today">Today</span>`

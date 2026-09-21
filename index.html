@@ -361,8 +361,9 @@
     font-size:13px;font-weight:700;color:var(--ink)}
   .pass-box small{display:block;font-weight:400;font-size:11.5px;color:var(--muted);margin-top:2px}
   .pass-box:active{opacity:.6}
-  .pass-row{display:flex;gap:10px;margin:10px 16px 2px}
-  .pass-row .pass-box{margin:0;flex:1 1 0}
+  .pass-row{display:flex;gap:8px;margin:14px 0 4px}
+  .pass-row .pass-box{margin:0;flex:1 1 0;min-width:0;padding:10px 6px;font-size:12px;line-height:1.3;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px}
   .wel-mech-steps b{display:inline-grid;place-items:center;width:16px;height:16px;
     border-radius:50%;background:var(--saffron);color:#fff;font-size:10px;font-weight:800;
     margin-right:5px;vertical-align:-2px}
@@ -1373,11 +1374,6 @@
             </div>
           </div>
         </div>
-        <div class="pass-row">
-          <div class="pass-box" onclick="shareApp()">📤 Pass it on<small>Know a family who'd like this?</small></div>
-          <div class="pass-box" onclick="openRemind()">🔔 Set up reminders<small>A gentle nudge by email</small></div>
-        </div>
-
         <div class="wel-body">
           <div class="wel-tiles">
             <div class="wtile" onclick="goToday()">
@@ -1413,6 +1409,12 @@
           </div>
 
           <button class="wel-go" onclick="goToday()">Start today →</button>
+
+          <div class="pass-row">
+            <div class="pass-box" onclick="shareApp()">📤 Pass it on</div>
+            <div class="pass-box" onclick="openRemind()">🔔 Set up reminders</div>
+            <div class="pass-box" onclick="openFeedback()">💬 Tell me what you think</div>
+          </div>
         </div>
 
         

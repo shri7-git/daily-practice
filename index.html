@@ -381,7 +381,7 @@
     border-radius:0 12px 12px 0;padding:12px 14px;margin:16px 0 0}
   .wel-honest p{margin:0;font-size:12px;line-height:1.55;color:var(--muted)}
   .wel-go{width:100%;border:0;border-radius:14px;background:var(--saffron);color:#fff;
-    font-size:15px;font-weight:800;padding:14px;cursor:pointer;box-shadow:var(--shadow)}
+    font-size:15px;font-weight:800;padding:14px;cursor:pointer;box-shadow:var(--shadow);margin-bottom:16px}
   .wel-go:active{transform:scale(.98)}
 
   /* ---- today / home ---- */
@@ -1383,21 +1383,14 @@
           </div>
         </div>
         <div class="wel-body">
+          <button class="wel-go" onclick="goToday()">🪔 Start today's 5 minutes →</button>
+
           <div class="wel-tiles">
-            <div class="wtile" onclick="goToday()">
-              <div class="ic">🪔</div><h3>Today's 5 mins</h3>
-            </div>
             <div class="wtile" onclick="show('calendar')">
               <div class="ic">📅</div><h3>Calendar</h3>
             </div>
             <div class="wtile" onclick="show('stories')">
               <div class="ic">📖</div><h3>Stories</h3>
-            </div>
-            <div class="wtile" onclick="show('recipes')">
-              <div class="ic">🍲</div><h3>Recipes</h3>
-            </div>
-            <div class="wtile" onclick="show('rituals')">
-              <div class="ic">🪔</div><h3>Activities</h3>
             </div>
             <div class="wtile" onclick="show('shlokas')">
               <div class="ic">🕉️</div><h3>Shlokas</h3>
@@ -1405,18 +1398,22 @@
             <div class="wtile" onclick="show('practices')">
               <div class="ic">🌬️</div><h3>Breathing</h3>
             </div>
+            <div class="wtile" onclick="show('rituals')">
+              <div class="ic">🪔</div><h3>Activities</h3>
+            </div>
+            <div class="wtile" onclick="show('recipes')">
+              <div class="ic">🍲</div><h3>Recipes</h3>
+            </div>
             <div class="wtile" onclick="show('themes')">
               <div class="ic">💭</div><h3>Themes</h3>
             </div>
             <div class="wtile" onclick="show('archive')">
               <div class="ic">🗂️</div><h3>Every day so far</h3>
             </div>
-            <div class="wtile" onclick="show('faq')">
+            <div class="wtile" style="grid-column:1/-1" onclick="show('faq')">
               <div class="ic">❓</div><h3>FAQs</h3>
             </div>
           </div>
-
-          <button class="wel-go" onclick="goToday()">Start today →</button>
 
           <div class="pass-row">
             <div class="pass-box" onclick="shareApp()">📤 Pass it on</div>
